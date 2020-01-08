@@ -37,7 +37,6 @@ in
 
   # Select internationalisation properties.
   i18n = {
-    consoleFont = "Lat2-Terminus16";
     consoleKeyMap = "us";
     defaultLocale = "en_US.UTF-8";
   };
@@ -144,6 +143,7 @@ in
     firefox
     spotify
     lastpass-cli
+    discord
 
     drm_info  # display info
     mdadm  # RAID drives
@@ -222,7 +222,7 @@ in
         dmenu
         i3status
         # i3blocks
-	      i3lock
+        i3lock
       ];
     };
   };

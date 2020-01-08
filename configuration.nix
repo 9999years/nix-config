@@ -191,6 +191,9 @@ in
     defaultEditor = true;
   };
 
+  # udev.packages = [ pkgs.libu2f-host ];
+  hardware.u2f.enable = true;
+
   # services.openssh.enable = true;
   networking.firewall.allowedTCPPorts = [ 80 443 ];
   # networking.firewall.allowedUDPPorts = [ ... ];

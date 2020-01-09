@@ -133,6 +133,8 @@ in
     fd
     nodejs-12_x
     tree
+    pass
+    qtkeychain
 
     dhall
     dhall-bash
@@ -210,6 +212,8 @@ in
       enableSSHSupport = true;
     };
   };
+
+  services.gnome3.gnome-keyring.enable = true;
 
   # services.openssh.enable = true;
   networking.firewall.allowedTCPPorts = [ 80 443 ];

@@ -1,6 +1,3 @@
-
-Reviewed-by: Rebecca Turner <rbt@sent.as>
-
 # man 5 configuration.nix
 # nixos-help
 { config, pkgs, ... }:

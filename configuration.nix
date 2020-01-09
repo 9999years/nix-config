@@ -1,3 +1,6 @@
+
+Reviewed-by: Rebecca Turner <rbt@sent.as>
+
 # man 5 configuration.nix
 # nixos-help
 { config, pkgs, ... }:
@@ -140,7 +143,7 @@ in
 
     zlib  # For pip Pillow
 
-    firefox
+    firefox-bin
     spotify
     lastpass-cli
     discord

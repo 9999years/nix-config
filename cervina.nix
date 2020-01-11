@@ -10,4 +10,6 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   # Why is the WiFi card called that!!
   networking.interfaces.wlp59s0.useDHCP = true;
+
+  services.xserver.dpi = 175;
 }

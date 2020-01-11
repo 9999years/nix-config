@@ -1,5 +1,6 @@
 { config, pkgs, lib, ... }:
-{
+let background = "/etc/nixos/background-image.jpg";
+in {
   services.xserver = {
     enable = lib.mkDefault true;
     dpi = lib.mkDefault 175;
@@ -10,11 +11,13 @@
     };
 
     displayManager = {
-      lightdm.background = "/etc/nixos/background-image.jpg";
+      lightdm.background = background;
+      auto.enable = true;
+      auto.user = "becca";
     };
 
     desktopManager = rec {
-      default = "xfce";
+      default = "none";
       wallpaper = {
         mode = "fill";
         combineScreens = false;
@@ -32,12 +35,13 @@
           if [ -e $HOME/.background-image ]; then
             ${pkgs.feh}/bin/feh --bg-${wallpaper.mode} \
                                 ${lib.optionalString wallpaper.combineScreens "--no-xinerama"} \
-                                $HOME/.background-image
+                                ${background}
           fi
         '';
       };
     };
 
+    windowManager.default = "i3";
     windowManager.i3 = {
       package = pkgs.i3-gaps;
       enable = true;

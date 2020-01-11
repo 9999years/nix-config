@@ -5,7 +5,7 @@ in {
   networking.interfaces.enp5s0.useDHCP = true;
   networking.interfaces.wlp4s0.useDHCP = true;
 
-  environment.systemPackages = base.packages ++ [
+  environment.systemPackages = base.packages ++ with pkgs; [
     mdadm  # RAID drives
   ];
 }

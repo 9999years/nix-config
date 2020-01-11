@@ -12,12 +12,13 @@ in {
 
     displayManager = {
       lightdm.background = background;
+      # Automatic login
       auto.enable = true;
       auto.user = "becca";
     };
 
     desktopManager = rec {
-      default = "none";
+      default = "xfce";
       wallpaper = {
         mode = "fill";
         combineScreens = false;
@@ -25,7 +26,7 @@ in {
       xterm.enable = false;
       xfce = {
         enable = true;
-        noDesktop = true;
+        noDesktop = false;
         enableXfwm = false;
         # NixOS incorrectly guesses that xfce (or maybe xfwm...?) can handle setting
         # the background. It cannot -- at least not when we're using it like this,

@@ -1,5 +1,5 @@
 { config, pkgs, lib, ... }:
-let background = "/etc/nixos/background-image.jpg";
+let background = "${import ./pkg/background-images}/share/artwork/backgrounds/night-stars.jpg";
 in {
   services.xserver = {
     enable = lib.mkDefault true;

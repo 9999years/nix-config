@@ -42,7 +42,9 @@ in {
     isNormalUser = true;
     extraGroups = [
       "wheel"  # Enable ‘sudo’ for the user.
-      "video"  # Backlight
+      "audio" "sound"  # Not sure if these are necessary.
+      "video"  # Not sure if this is necessary.
+      "networkmanager"
     ];
   };
 

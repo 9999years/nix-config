@@ -85,6 +85,7 @@
   hardware = with pkgs; [
     drm_info  # display info
     pciutils  # lspci
+    lsof
   ];
 
   langs = {

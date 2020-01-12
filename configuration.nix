@@ -34,6 +34,10 @@ in {
     # hardware-configuration.nix picks a better (larger) one for high-DPI displays.
     consoleKeyMap = "us";
     defaultLocale = "en_US.UTF-8";
+    inputMethod = {
+      enabled = "ibus";
+      ibus.engines = with pkgs.ibus-engines; [ uniemoji ];
+    };
   };
 
   time.timeZone = "America/New_York";

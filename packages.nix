@@ -44,6 +44,7 @@
       tree
       sshfs-fuse  # GPL v2
       lftp  # GPL v3+
+      ncdu  # ncurses disk usage
     ];
 
     text = with pkgs; [

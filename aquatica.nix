@@ -1,5 +1,5 @@
-{ config, pkgs, ... }:
-let base = import ./base.nix {};
+{ config, pkgs, lib, ... }:
+let base = import ./base.nix { inherit pkgs lib; };
 in {
   boot.extraModprobeConfig = ''
     options snd_hda_intel index=1
@@ -9,9 +9,9 @@ in {
   networking.interfaces.enp5s0.useDHCP = true;
   networking.interfaces.wlp4s0.useDHCP = true;
 
-  environment.systemPackages = base.packages ++ with pkgs; [
+  environment.systemPackages = base.packages ++ (with pkgs; [
     mdadm  # RAID drives
-  ];
+  ]);
 
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia.modesetting.enable = true;

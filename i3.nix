@@ -26,7 +26,7 @@ in {
       xterm.enable = false;
       xfce = {
         enable = true;
-        noDesktop = false;
+        noDesktop = true;
         enableXfwm = false;
         # NixOS incorrectly guesses that xfce (or maybe xfwm...?) can handle setting
         # the background. It cannot -- at least not when we're using it like this,

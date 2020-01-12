@@ -5,6 +5,8 @@ in {
     options snd_hda_intel index=1
   '';
 
+  networking.hostName = "aquatica";
+
   networking.interfaces.enp4s1.useDHCP = true;
   networking.interfaces.enp5s0.useDHCP = true;
   networking.interfaces.wlp4s0.useDHCP = true;

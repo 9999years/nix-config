@@ -7,6 +7,7 @@
     spotify  # unfree
     discord  # unfree
     feh
+    typora
   ];
 
   git = with pkgs; [

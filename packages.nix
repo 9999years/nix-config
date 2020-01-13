@@ -8,6 +8,7 @@
     discord  # unfree
     feh
     typora
+    (import ./pkg/fontbase { inherit pkgs; })
   ];
 
   git = with pkgs; [
@@ -46,6 +47,7 @@
       sshfs-fuse  # GPL v2
       lftp  # GPL v3+
       ncdu  # ncurses disk usage
+      file
     ];
 
     text = with pkgs; [

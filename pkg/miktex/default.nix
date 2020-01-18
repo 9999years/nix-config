@@ -61,9 +61,7 @@ stdenv.mkDerivation rec {
     '';
 
   patches = [
-    ./patches/autosp-fprintf-security.patch
-    ./patches/curl-zzdb1-and-zzdb3.patch
-    ./patches/rpath.patch
+    ./patches/configure-and-build.patch
   ];
 
   cmakeFlags = "-DWITH_UI_QT=ON";

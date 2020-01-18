@@ -61,11 +61,7 @@ stdenv.mkDerivation rec {
     '';
 
   patches = [
-    ./patches/autosp-fprintf-security.patch
-    ./patches/curl-zzdb1-and-zzdb3.patch
-    ./patches/cfg-ld_library_path.patch
-    ./patches/findtexmf-ld_library_path.patch
-    ./patches/mpc-link-extractor.patch
+    ./patches/configure-and-build.patch
   ];
 
   cmakeFlags = [

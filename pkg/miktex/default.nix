@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
     }
     {
       url = "${ctan}miktex-zzdb3-${majorMinorVersion}.tar.lzma";
-      sha512 = "32np2i0cz5416r8l0z96mlpcrgsgzna1r8ssixsmiicakkf8bd77k5fghcxvh2fijjxyy64v8mlb6hzzw9j04vx5ayhizhay3fkg0zi";
+      sha512 = "1637317j4p9x2nfqynaykhv58zl7vwj23rglln1c6dgibgf84d8xlwfij783rcyxq5xz2ds0y40bv4knzgwanqa2fpcya067hkpqiyp";
     }
     {
       url = "${ctan}miktex-config-${majorMinorVersion}.tar.lzma";
@@ -63,15 +63,10 @@ stdenv.mkDerivation rec {
   patches = [
     ./patches/autosp-fprintf-security.patch
     ./patches/curl-zzdb1-and-zzdb3.patch
-    ./patches/cfg-ld_library_path.patch
-    ./patches/findtexmf-ld_library_path.patch
-    ./patches/mpc-link-extractor.patch
+    ./patches/rpath.patch
   ];
 
-  cmakeFlags = [
-    "-DWITH_UI_QT=ON"
-    "-DMIKTEX_SELF_CONTAINED=TRUE"
-  ];
+  cmakeFlags = "-DWITH_UI_QT=ON";
 
   buildInputs = [
     cmake

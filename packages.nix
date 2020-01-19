@@ -100,6 +100,8 @@ with pkgs;
       # llvmPackages.libclang
       clang-tools
       clang-analyzer
+      autoconf
+      automake
     ];
 
     dhall = [

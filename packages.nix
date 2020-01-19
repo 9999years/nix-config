@@ -10,6 +10,7 @@ with pkgs;
     feh
     typora
     (import ./pkg/fontbase { inherit pkgs; })
+    franz
   ];
 
   git = [
@@ -59,9 +60,9 @@ with pkgs;
       bat  # https://github.com/sharkdp/bat
       # ruplacer
       ripgrep  # rg, https://github.com/BurntSushi/ripgrep
-      ripgrep-all
-      sd # Find-and-replacer, https://github.com/chmln/sd
-      skim # Fuzzy finder, https://github.com/lotabout/skim
+      ripgrep-all  # rga
+      sd  # Find-and-replacer, https://github.com/chmln/sd
+      skim  # Fuzzy finder, https://github.com/lotabout/skim
       toilet  # command-line ascii art generator
       colordiff  # GPL v3
 
@@ -82,8 +83,8 @@ with pkgs;
       ghostscript
       imagemagick7Big  # Derived Apache 2.0
       # bingrep # Binary introspection, https://github.com/m4b/bingrep
-      xsv # CSV data manipulation and analysis tool, https://github.com/BurntSushi/xsv
-      jq  # MIT
+      xsv  # CSV data manipulation and analysis tool, https://github.com/BurntSushi/xsv
+      jq   # MIT
     ];
   };
 
@@ -187,7 +188,7 @@ with pkgs;
       cargo-make # https://github.com/sagiegurari/cargo-make
     ];
 
-    tex = [ texlive ];
+    tex = [ texlive.combined.scheme-medium ];
   };
 
   misc = [

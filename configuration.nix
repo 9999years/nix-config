@@ -40,7 +40,11 @@ in {
     };
   };
 
-  time.timeZone = "America/New_York";
+  time = {
+    timeZone = "America/New_York";
+    # Don't confuse windows with a UTC timestamp.
+    hardwareClockInLocalTime = true;
+  }
 
   # Don't forget to set a password with ‘passwd’.
   users.users.becca = {

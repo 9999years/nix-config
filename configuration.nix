@@ -6,7 +6,7 @@ in {
   imports = [ ./hardware-configuration.nix
 
               ./git.nix
-              ./i3.nix
+              ./plasma5.nix
               ./yubikey.nix
               ./this.nix
             ];

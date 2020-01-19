@@ -1,6 +1,7 @@
 { pkgs, ... }:
+with pkgs;
 {
-  gui = with pkgs; [
+  gui = [
     alacritty
     firefox-bin
     lastpass-cli
@@ -11,7 +12,7 @@
     (import ./pkg/fontbase { inherit pkgs; })
   ];
 
-  git = with pkgs; [
+  git = [
     gitAndTools.gitFull  # GPL v2
     git-lfs  # MIT
     gitAndTools.hub  # github hub, MIT
@@ -21,25 +22,25 @@
     # qtkeychain
   ];
 
-  emacs = with pkgs; [
+  emacs = [
     ispell
     # TODO: tern from npm
   ];
 
-  vim = with pkgs; [
+  vim = [
     neovim
     vim-vint  # vimscript lint: https://github.com/Kuniwak/vint
   ];
 
   devtools = {
     # Terminals, shells, and tty-related tools.
-    terminals = with pkgs; [
+    terminals = [
       fish  # GPL v2 & LGPL v2, OpenBSD License, ISC, NetBSD
       tmux  # ISC License
       reptyr
     ];
 
-    files = with pkgs; [
+    files = [
       fd
       fzf  # MIT
       # fselect # "Find files with SQL-like queries" https://github.com/jhspetersson/fselect
@@ -50,7 +51,7 @@
       file
     ];
 
-    text = with pkgs; [
+    text = [
       silver-searcher
       exa
       just  # github.com/casey/just
@@ -68,14 +69,14 @@
       sourceHighlight  # GPL v3
     ];
 
-    misc = with pkgs; [
+    misc = [
       shellcheck
       graphviz
       nix-index  # nix-index and nix-locate
       hyperfine
     ];
 
-    manipulation = with pkgs; [
+    manipulation = [
       pandoc  # GLP v2+
       pdftk
       ghostscript
@@ -86,29 +87,29 @@
     ];
   };
 
-  hardware = with pkgs; [
+  hardware = [
     drm_info  # display info
     pciutils  # lspci
     lsof
   ];
 
   langs = {
-    clang = with pkgs; [
+    clang = [
       clang
       # llvmPackages.libclang
       clang-tools
       clang-analyzer
     ];
 
-    dhall = with pkgs; [
+    dhall = [
       dhall
       dhall-bash
       dhall-json
     ];
 
-    go = with pkgs; [ go ];
+    go = [ go ];
 
-    haskell = with pkgs; [
+    haskell = [
       ghc
       cabal-install
       stack
@@ -123,13 +124,13 @@
       haskellPackages.hdevtools
     ];
 
-    java = with pkgs; [ openjdk ];
+    java = [ openjdk ];
 
-    node = with pkgs; [ nodejs-12_x ];
+    node = [ nodejs-12_x ];
 
-    perl = with pkgs; [ perl ];  # If nothing else, latexmk needs it.
+    perl = [ perl ];  # If nothing else, latexmk needs it.
 
-    python = with pkgs; ([
+    python = ([
       python38
       zlib  # For pip Pillow
     ] ++ (with python38Packages; [
@@ -169,12 +170,12 @@
       # wcwidth
     ]));
 
-    ruby = with pkgs; [
+    ruby = [
       ruby  # BDS 2-clause
       solargraph  # ruby LSP
     ];
 
-    rust = with pkgs; [
+    rust = [
       rustup
       # cargo-deps # Generates a dep graph, https://github.com/m-cat/cargo-deps
       cargo-edit # https://github.com/killercup/cargo-edit
@@ -185,9 +186,11 @@
       cargo-outdated # https://github.com/kbknapp/cargo-outdated
       cargo-make # https://github.com/sagiegurari/cargo-make
     ];
+
+    tex = [ texlive ];
   };
 
-  misc = with pkgs; [
+  misc = [
     youtube-dl
   ];
 }

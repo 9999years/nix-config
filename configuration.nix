@@ -40,7 +40,11 @@ in {
     };
   };
 
-  time.timeZone = "America/New_York";
+  time = {
+    timeZone = "America/New_York";
+    # Don't confuse windows with a UTC timestamp.
+    hardwareClockInLocalTime = true;
+  };
 
   # Don't forget to set a password with ‘passwd’.
   users.users.becca = {
@@ -51,6 +55,7 @@ in {
       "video"  # Not sure if this is necessary.
       "networkmanager"
     ];
+    shell = "/run/current-system/sw/bin/fish";
   };
 
   # Passwordless sudo
@@ -62,6 +67,8 @@ in {
     enable = true;
     defaultEditor = true;
   };
+
+  programs.fish.enable = true;
 
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = base.packages;

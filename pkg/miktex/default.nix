@@ -4,7 +4,8 @@
 }:
 
 with pkgs;
-stdenv.mkDerivation rec {
+let baseMiKTeX = import ./base.nix { inherit pkgs; };
+in stdenv.mkDerivation rec {
   name = "MiKTeX";
   majorMinorVersion = "2.9";
   version = "${majorMinorVersion}.7250";
@@ -64,7 +65,20 @@ stdenv.mkDerivation rec {
     ./patches/configure-and-build.patch
   ];
 
-  cmakeFlags = "-DWITH_UI_QT=ON";
+  cmakeFlags = [
+    # Parts of the build rely on running the just-built binaries *before*
+    # they're installed. If we don't set their rpaths after building them, that
+    # doesn't work.
+    "-DCMAKE_SKIP_BUILD_RPATH=OFF"
+  ];
+
+  # findtexmf (and a few other programs in the build) complain when $HOME
+  # doesn't exist, so we set $HOME to /build, which exists. findtexmf doesn't
+  # actually *need* $HOME, and ideally would not error in this scenario.
+  preBuild =
+    ''
+      export HOME=$TMPDIR
+    '';
 
   buildInputs = [
     cmake
@@ -104,13 +118,27 @@ stdenv.mkDerivation rec {
     zziplib
   ];
 
-  postInstall =
-    ''
-    "$out/bin/mpm" --admin --verbose --package-level=basic --upgrade
-    "$out/bin/mpm" --admin --verbose --update-db
-    "$out/bin/initexmf" --admin --verbose --set-config-value [MPM]AutoInstall=1
-    "$out/bin/initexmf" --admin --verbose --update-fndb
-    "$out/bin/initexmf" --admin --verbose --mkmaps
-    "$out/bin/initexmf" --admin --verbose --mklinks
-    '';
+#   postInstall =
+#     ''
+#       echo find
+#       find $out/bin
+
+#       echo update-db
+#       "$out/bin/mpm"      --admin --update-db
+
+#       echo autoinstall
+#       "$out/bin/initexmf" --admin --set-config-value [MPM]AutoInstall=1
+#       echo update-fndb
+#       "$out/bin/initexmf" --admin --update-fndb
+
+#       echo mklinks
+#       "$out/bin/initexmf" --admin --mklinks
+
+#       # echo miktexsetup install
+#       # "$out/bin/miktexsetup" --verbose --shared=yes install
+#       # echo miktexsetup finish
+#       # "$out/bin/miktexsetup" --verbose --shared=yes finish
+#       # echo mkmaps
+#       # "$out/bin/initexmf" --mkmaps
+#     '';
 }

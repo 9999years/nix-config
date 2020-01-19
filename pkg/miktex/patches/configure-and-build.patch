@@ -58,6 +58,19 @@ index 766625b..946aeb9 100644
      )
      list(APPEND generated_bootstrapping_files ${CMAKE_CURRENT_BINARY_DIR}/${f})
    endforeach()
+diff --git a/Documentation/CMakeLists.txt b/Documentation/CMakeLists.txt
+index 20b29fa..50274fe 100644
+--- a/Documentation/CMakeLists.txt
++++ b/Documentation/CMakeLists.txt
+@@ -26,7 +26,7 @@ set(PROMPTUNX "&#36; ")
+ set(PROMPTWIN "C:\&gt; ")
+ 
+ if(MIKTEX_UNIX_ALIKE)
+-  set(COMMONINSTALL "/usr/local/share/miktex-texmf")
++  set(COMMONINSTALL "${CMAKE_INSTALL_PREFIX}/share/miktex-texmf")
+   set(USERDATA "~/.miktex/texmfs/data")
+   set(USERINSTALL "~/.miktex/texmfs/install")
+   set(EXESUFFIX "")
 diff --git a/Programs/Preprocessors/autosp/source/autosp.c b/Programs/Preprocessors/autosp/source/autosp.c
 index 6a6b3fa..666bf42 100644
 --- a/Programs/Preprocessors/autosp/source/autosp.c
@@ -84,3 +97,16 @@ index fd3fe2c..bbc31f9 100644
    exit(EXIT_FAILURE);
  }
   
+diff --git a/cmake/modules/RuntimePaths.cmake b/cmake/modules/RuntimePaths.cmake
+index 5b7431f..984cd85 100644
+--- a/cmake/modules/RuntimePaths.cmake
++++ b/cmake/modules/RuntimePaths.cmake
+@@ -29,7 +29,7 @@ endif()
+ 
+ if(MIKTEX_UNIX_ALIKE)
+   set(MIKTEX_SYSTEM_ETC_FONTS_CONFD_DIR "/etc/fonts/conf.d" CACHE PATH "System-wide directory for font configuration data.")
+-  set(MIKTEX_SYSTEM_LINK_TARGET_DIR "/usr/local/bin" CACHE PATH "System-wide directory in which to create symbolic links to MiKTeX binaries.")
++  set(MIKTEX_SYSTEM_LINK_TARGET_DIR "${CMAKE_INSTALL_PREFIX}/bin" CACHE PATH "System-wide directory in which to create symbolic links to MiKTeX binaries.")
+   set(MIKTEX_SYSTEM_VAR_CACHE_DIR "/var/cache" CACHE PATH "Directory for application cache data.")
+   set(MIKTEX_SYSTEM_VAR_LIB_DIR "/var/lib" CACHE PATH "Directory for state information.")
+   set(MIKTEX_SYSTEM_VAR_LOG_DIR "/var/log" CACHE PATH "Directory for log files.")

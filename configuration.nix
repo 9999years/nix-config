@@ -16,6 +16,8 @@ in {
   boot.loader.grub.useOSProber = true;
   boot.loader.grub.configurationLimit = 10;
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  # Set the font earlier in the boot process.
+  boot.earlyVconsoleSetup = true;
 
   hardware.enableRedistributableFirmware = true;
 

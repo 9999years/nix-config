@@ -10,6 +10,7 @@ with pkgs;
     feh
     typora
     (import ./pkg/fontbase { inherit pkgs; })
+    (import ./pkg/glimpse { inherit pkgs; })
     franz
   ];
 

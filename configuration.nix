@@ -18,6 +18,7 @@ in {
   boot.kernelPackages = pkgs.linuxPackages_latest;
   # Set the font earlier in the boot process.
   boot.earlyVconsoleSetup = true;
+  boot.tmpOnTmpfs = true;  # Keep /tmp in RAM
 
   hardware.enableRedistributableFirmware = true;
 
@@ -29,6 +30,7 @@ in {
 
   services.printing.enable = true;
   services.printing.drivers = [ pkgs.hplip ];
+
   services.thermald.enable = true;
 
   sound.enable = true;

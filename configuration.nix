@@ -23,9 +23,12 @@ in {
 
   networking.networkmanager.enable = true;
   networking.nameservers = [ "8.8.8.8" "8.8.4.4" ];
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedTCPPorts = [ 80 443 631 ];
+  networking.firewall.allowedUDPPorts = [ 631 ];
+  networking.firewall.enable = false;
 
   services.printing.enable = true;
+  services.printing.drivers = [ pkgs.hplip ];
   services.thermald.enable = true;
 
   sound.enable = true;

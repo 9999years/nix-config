@@ -73,6 +73,9 @@ in {
     defaultEditor = true;
   };
 
+  # For Glimpse, etc.
+  services.flatpak.enable = true;
+
   programs.fish.enable = true;
 
   nixpkgs.config.allowUnfree = true;

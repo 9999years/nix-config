@@ -24,8 +24,7 @@ in {
 
   networking.networkmanager.enable = true;
   networking.nameservers = [ "8.8.8.8" "8.8.4.4" ];
-  networking.firewall.allowedTCPPorts = [ 80 443 631 ];
-  networking.firewall.allowedUDPPorts = [ 631 ];
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
   networking.firewall.enable = false;
 
   services.printing.enable = true;
@@ -66,9 +65,10 @@ in {
   };
 
   # Passwordless sudo
-  security.sudo.extraConfig = ''
-    %wheel ALL=(ALL:ALL) NOPASSWD: ALL
-    '';
+  # security.sudo.extraConfig = ''
+  #   %wheel ALL=(ALL:ALL) NOPASSWD: ALL
+  #   '';
+  security.sudo.wheelNeedsPassword = false;
 
   services.emacs = {
     enable = true;

@@ -85,6 +85,7 @@ in stdenv.mkDerivation rec {
     poppler_data
     pygtk
     python
+    wrapPython
     shared-mime-info
     webkit
     xorg.libXpm

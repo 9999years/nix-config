@@ -65,18 +65,12 @@ in {
   };
 
   # Passwordless sudo
-  # security.sudo.extraConfig = ''
-  #   %wheel ALL=(ALL:ALL) NOPASSWD: ALL
-  #   '';
   security.sudo.wheelNeedsPassword = false;
 
   services.emacs = {
     enable = true;
     defaultEditor = true;
   };
-
-  # For Glimpse, etc.
-  services.flatpak.enable = true;
 
   programs.fish.enable = true;
 

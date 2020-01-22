@@ -12,6 +12,8 @@ with pkgs;
     (import ./pkg/fontbase { inherit pkgs; })
     (import ./pkg/glimpse { inherit pkgs; })
     franz
+    kdeApplications.spectacle
+    gparted
   ];
 
   git = [
@@ -42,6 +44,11 @@ with pkgs;
       reptyr
     ];
 
+    network = [
+      bind  # nslookup
+      ncat
+    ];
+
     files = [
       fd
       fzf  # MIT
@@ -51,6 +58,9 @@ with pkgs;
       lftp  # GPL v3+
       ncdu  # ncurses disk usage
       file
+      dos2unix
+      unzip
+      wget
     ];
 
     text = [
@@ -191,10 +201,16 @@ with pkgs;
       cargo-make # https://github.com/sagiegurari/cargo-make
     ];
 
-    tex = [ texlive.combined.scheme-medium ];
+    tex = [
+      (texlive.combined {inherit (texlive) scheme-medium latexmk;})
+    ];
   };
 
   misc = [
     youtube-dl
+  ];
+
+  fonts = [
+    stix-two
   ];
 }

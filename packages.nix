@@ -61,6 +61,8 @@ with pkgs;
       dos2unix
       unzip
       wget
+      rsync
+      strings
     ];
 
     text = [

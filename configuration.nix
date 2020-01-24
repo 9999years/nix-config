@@ -74,6 +74,11 @@ in {
 
   programs.fish.enable = true;
 
+  documentation = {
+    dev.enable = true;
+    nixos.includeAllModules = true;
+  };
+
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = base.packages;
 

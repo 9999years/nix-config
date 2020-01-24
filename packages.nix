@@ -62,7 +62,7 @@ with pkgs;
       unzip
       wget
       rsync
-      strings
+      binutils-unwrapped
     ];
 
     text = [

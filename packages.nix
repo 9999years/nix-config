@@ -1,6 +1,9 @@
-{ pkgs, ... }:
-with pkgs;
 {
+  pkgs,
+  unstable ? import (fetchTarball https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz) {},
+  ...
+}:
+with pkgs; rec {
   gui = [
     alacritty
     firefox-bin
@@ -61,6 +64,7 @@ with pkgs;
       dos2unix
       unzip
       wget
+      binutils-unwrapped
     ];
 
     text = [
@@ -84,7 +88,6 @@ with pkgs;
     misc = [
       shellcheck
       graphviz
-      nix-index  # nix-index and nix-locate
       hyperfine
     ];
 
@@ -139,6 +142,12 @@ with pkgs;
     ];
 
     java = [ openjdk ];
+
+    nix = [
+      nixfmt
+      nix-index  # nix-index and nix-locate
+      cachix
+    ];
 
     node = [ nodejs-12_x ];
 

@@ -2,6 +2,9 @@
 # nixos-help
 { config, pkgs, lib, ... }:
 let base = import ./base.nix { inherit pkgs lib; };
+    unstableTarball = fetchTarball
+      https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz;
+    unstable = import unstableTarball { config = config.nixpkgs.config; };
 in {
   imports = [ ./hardware-configuration.nix
 

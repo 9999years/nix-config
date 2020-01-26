@@ -2,6 +2,7 @@
   boot.extraModprobeConfig = ''
     options snd_hda_intel index=1
   '';
+  boot.loader.grub.fontSize = 24;
 
   networking.hostName = "aquatica";
 

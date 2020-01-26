@@ -16,10 +16,17 @@ in {
     ./this.nix
   ];
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.grub.useOSProber = true;
-  boot.loader.grub.configurationLimit = 10;
+  boot.loader = {
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
+    grub = {
+      useOSProber = true;
+      configurationLimit = 10;
+      font = "${pkgs.hack-font}/share/fonts/hack/Hack-Regular.ttf";
+      fontSize = 24;
+    };
+  };
+
   boot.kernelPackages = pkgs.linuxPackages_latest;
   # Set the font earlier in the boot process.
   boot.earlyVconsoleSetup = true;
@@ -93,9 +100,18 @@ in {
 
   fonts = {
     enableDefaultFonts = true;
+    fonts = packages.sets.fonts;
     fontconfig.defaultFonts = {
-      emoji = [ "Twitter Color Emoji" ];
-      monospace = [ "PragmataPro Mono Liga" ];
+      emoji = [
+        "Twitter Color Emoji"
+        "Noto Color Emoji"
+      ];
+      monospace = [
+        "PragmataPro Mono Liga"
+        "Hack"
+        "IBM Plex Mono"
+        "Fira Mono"
+      ];
     };
   };
 

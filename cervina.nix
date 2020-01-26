@@ -9,8 +9,11 @@
   # Why is the WiFi card called that!!
   networking.interfaces.wlp59s0.useDHCP = true;
 
-  i18n.consoleFont = "latarcyrheb-sun32";
-  i18n.consolePackages = with pkgs; [ terminus_font ];
+  boot.loader.grub.fontSize = 32;
+
+  i18n = {
+    consoleFont = "latarcyrheb-sun32";
+  };
 
   services.xserver.dpi = 175;
 

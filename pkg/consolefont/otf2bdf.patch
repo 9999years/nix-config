@@ -1,0 +1,44 @@
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -22,7 +22,7 @@
+ 
+ RM = @RM@
+ CP = @CP@
+-MKINSTALLDIRS = ./mkinstalldirs
++MKINSTALLDIRS = mkdir -p
+ 
+ CC = @CC@
+ CFLAGS = @XX_CFLAGS@ @CFLAGS@
+--- a/otf2bdf.c	2020-01-26 17:07:29.618451684 -0500
++++ b/otf2bdf.c	2020-01-26 17:11:53.478348762 -0500
+@@ -495,7 +495,7 @@
+ print_encoding_table(void)
+ {
+     int ncmaps, i, j;
+-    short pid, eid, lasteid;
++    short pid, eid;
+     char *np, *platform, encoding[64];
+ 
+     printf("Encoding tables available in the font:\n\n");
+@@ -504,7 +504,7 @@
+     printf("Default%.*sDefault%.*s(-pid %d -eid %d)\n",
+            7, spaces, 7, spaces, DEFAULT_PLATFORM_ID, DEFAULT_ENCODING_ID);
+     ncmaps = face->num_charmaps;
+-    for (lasteid = -1, i = 0; i < ncmaps; i++) {
++    for (i = 0; i < ncmaps; i++) {
+         pid = face->charmaps[i]->platform_id;
+         eid = face->charmaps[i]->encoding_id;
+         platform = platform_name(pid);
+@@ -1587,7 +1587,11 @@
+      */
+     FT_Done_FreeType(library);
+ 
+-    exit(res);
++    if (res > 0) {
++      exit(0);
++    } else {
++      exit(res);
++    }
+ 
+     return 0;
+ }

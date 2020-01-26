@@ -23,9 +23,22 @@ let
       (import ./pkg/background-images { inherit pkgs; })
     ];
 
-    misc = [ youtube-dl graphviz hyperfine ];
+    misc = [ youtube-dl graphviz hyperfine units ];
 
-    fonts = [ stix-two ];
+    fonts = [
+      stix-two # times-like
+      hack-font  # coding font
+      gyre-fonts
+      noto-fonts
+      dejavu_fonts
+      google-fonts
+      terminus_font
+      noto-fonts-cjk
+      cantarell-fonts
+      xorg.fontsunmisc
+      wineWowPackages.fonts
+      twitter-color-emoji
+    ];
 
     git = [
       gitAndTools.gitFull # GPL v2

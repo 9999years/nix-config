@@ -1,8 +1,8 @@
 { config, pkgs, lib, ... }:
 let
-  background = "${
-      import ./pkg/background-images
-    }/share/artwork/backgrounds/night-stars.jpg";
+  backgroundPkg = import ./pkg/background-images {inherit pkgs;};
+  background = "${backgroundPkg}/share/wallpapers/night-stars.jpg";
+  sddmBreezeTheme = import ./pkg/sddm-breeze-rbt-theme {inherit pkgs background;};
 in {
   services.xserver = {
     enable = lib.mkDefault true;
@@ -13,7 +13,12 @@ in {
       naturalScrolling = true; # Windows-style, baby!
     };
 
-    displayManager = { lightdm.background = background; };
+    displayManager = {
+      sddm = {
+        enable = true;
+        theme = "${sddmBreezeTheme}/share/sddm/themes/breeze-rbt";
+      };
+    };
 
     desktopManager = rec {
       default = "plasma5";
@@ -24,4 +29,10 @@ in {
       plasma5.enable = true;
     };
   };
+
+  environment.systemPackages = [
+    (import ./pkg/background-images {inherit pkgs;})
+    (import ./pkg/sddm-faces {inherit (pkgs) stdenv;})
+    sddmBreezeTheme
+  ];
 }

@@ -20,6 +20,7 @@ let
       shotwell # photo viewer
       qalculate-gtk # calculator
       evince # pdf viewer
+      (import ./pkg/background-images { inherit pkgs; })
     ];
 
     misc = [ youtube-dl graphviz hyperfine ];

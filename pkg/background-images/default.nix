@@ -1,4 +1,5 @@
-with import <nixpkgs> { };
+{ pkgs ? import <nixpkgs> { }, }:
+with pkgs;
 stdenv.mkDerivation {
   name = "rbt-background-image";
   version = "1.0.0";
@@ -11,7 +12,7 @@ stdenv.mkDerivation {
 
   dontUnpack = true;
   dontConfigure = true;
-  buildInputs = [ imagemagick7 ];
+  nativeBuildInputs = [ imagemagick7 ];
   buildPhase = ''
     ${imagemagick7}/bin/magick convert "$src" \
                                -resize 3840 \
@@ -19,7 +20,7 @@ stdenv.mkDerivation {
                                night-stars.jpg
   '';
   installPhase = ''
-    install -D -m 644 night-stars.jpg "$out/share/artwork/backgrounds/night-stars.jpg"
+    install -D -m 644 night-stars.jpg "$out/share/wallpapers/night-stars.jpg"
   '';
   dontFixup = true;
 }

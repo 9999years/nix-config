@@ -144,45 +144,41 @@ with pkgs;
 
     perl = [ perl ];  # If nothing else, latexmk needs it.
 
-    python = ([
-      python38
-      zlib  # For pip Pillow
-    ] ++ (with python38Packages; [
-      # Linters, etc.
-      # pip
-      # setuptools
-      # virtualenv
-      # pytest
-      # black
-      # grip
-      # mypy
-      # flake8
-      # ptpython
-      # pycodestyle
-      # pylint
-      # # Utilities
-      # pillow
-      # pyyaml
-      # pygments
-      # arrow
-      # atomicwrites
-      # attrs
-      # beautifulsoup4
-      # cached-property
-      # cachetools
-      # colorama
-      # more-itertools
-      # numpy
-      # pynvim
-      # dateutil
-      # python-decouple
-      # requests
-      # termcolor
-      # toml
-      # unidecode
-      # urllib3
-      # wcwidth
-    ]));
+    python = [
+      (python37.withPackages (pyPkgs: with pyPkgs; [
+        # Linters, etc.
+        black
+        mypy
+        flake8
+        pycodestyle
+        pylint
+        ptpython
+        pytest
+        # Utilities
+        grip
+        pillow
+        pyyaml
+        pygments
+        arrow
+        atomicwrites
+        attrs
+        beautifulsoup4
+        cached-property
+        cachetools
+        colorama
+        more-itertools
+        numpy
+        pynvim
+        dateutil
+        # python-decouple
+        requests
+        termcolor
+        toml
+        unidecode
+        urllib3
+        wcwidth
+      ]))
+    ];
 
     ruby = [
       ruby  # BDS 2-clause

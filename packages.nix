@@ -132,14 +132,19 @@ with pkgs; rec {
       stack
       stylish-haskell
       hlint
-      haskellPackages.happy
-      haskellPackages.pointfree
-      haskellPackages.apply-refact
-      # haskellPackages.hie-core  # broken 2019-12-21
-      haskellPackages.hspec
-      haskellPackages.hindent
-      haskellPackages.hdevtools
-    ];
+    ] ++ (with haskellPackages; [
+      happy
+      pointfree
+      apply-refact
+      hspec
+      hindent
+      hdevtools
+    ]) ++ (
+      let all-hies = import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master") {};
+      in [
+          (all-hies.selection { selector = p: { inherit (p) ghc865; }; })
+      ]
+    );
 
     java = [ openjdk ];
 

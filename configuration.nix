@@ -81,9 +81,6 @@ in {
 
   programs.fish.enable = true;
 
-  nixpkgs.config = { allowUnfree = true; };
-  environment.systemPackages = packages.all;
-
   nix = {
     trustedBinaryCaches =
       [ "https://cache.nixos.org" "https://all-hies.cachix.org" ];
@@ -101,6 +98,14 @@ in {
       monospace = [ "PragmataPro Mono Liga" ];
     };
   };
+
+  documentation = {
+    dev.enable = true;
+    nixos.includeAllModules = true;
+  };
+
+  nixpkgs.config.allowUnfree = true;
+  environment.systemPackages = packages.all;
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database

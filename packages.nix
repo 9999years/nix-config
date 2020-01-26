@@ -101,6 +101,7 @@ let
       dos2unix
       unzip
       wget
+      rsync
       binutils-unwrapped
     ];
 

@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 {
   packages = with import ./packages.nix { inherit pkgs; }; lib.concatLists [
-    gui git emacs hardware misc vim
+    gui git hardware misc emacs vim
 
     devtools.terminals devtools.files devtools.text devtools.manipulation
     devtools.misc

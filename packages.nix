@@ -30,9 +30,34 @@ with pkgs; rec {
   ];
 
   emacs = [
+    nixfmt  # for nix-mode formatting
     ispell
-    # TODO: tern from npm
-  ];
+    rustc
+    cargo
+    # rls
+    unstable.rnix-lsp
+    unstable.texlab
+    ruby
+    solargraph
+    (python37.withPackages (pyPkgs: with pyPkgs; [
+      python-language-server
+      black
+      grip
+      mypy
+      flake8
+      pycodestyle
+      pylint
+    ]))
+  ] ++ langs.clang
+  ++ (with nodePackages; [
+    vscode-css-languageserver-bin
+    vscode-html-languageserver-bin
+    # vscode-json-languageserver
+    bash-language-server
+    tern
+    typescript
+    typescript-language-server
+  ]);
 
   vim = [
     neovim

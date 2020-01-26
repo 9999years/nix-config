@@ -73,6 +73,9 @@ in {
   services.emacs = {
     enable = true;
     defaultEditor = true;
+    package = import ./pkg/emacs {
+      inherit (pkgs) emacs;
+    };
   };
 
   programs.fish.enable = true;

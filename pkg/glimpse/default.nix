@@ -1,10 +1,6 @@
-{
-  pkgs ? import <nixpkgs> {},
-  ...
-}:
+{ pkgs ? import <nixpkgs> { }, ... }:
 with pkgs;
-let
-  inherit (python2Packages) pygtk wrapPython python;
+let inherit (python2Packages) pygtk wrapPython python;
 in stdenv.mkDerivation rec {
   name = "Glimpse";
   version = "0.1.0";
@@ -13,22 +9,21 @@ in stdenv.mkDerivation rec {
     owner = "glimpse-editor";
     repo = "Glimpse";
     rev = "v${version}";
-    url = "https://github.com/glimpse-editor/Glimpse/archive/v${version}.tar.gz";
-    sha512 = "1lmm8c7q95rmywrdxjxfx0q4lchymlsk2dqiw7av1zscxm4g1yl0ccw96ic0gpffh98ak3g4317mkffb3nidbc9n4v6g54xj42w7jpc";
+    url =
+      "https://github.com/glimpse-editor/Glimpse/archive/v${version}.tar.gz";
+    sha512 =
+      "1lmm8c7q95rmywrdxjxfx0q4lchymlsk2dqiw7av1zscxm4g1yl0ccw96ic0gpffh98ak3g4317mkffb3nidbc9n4v6g54xj42w7jpc";
   };
 
   meta = {
-    description =
-      ''
-        Glimpse is an open source image editor based on the GNU Image
-        Manipulation Program. The goal is to experiment with new ideas and
-        expand the use of free software.
-      '';
+    description = ''
+      Glimpse is an open source image editor based on the GNU Image
+      Manipulation Program. The goal is to experiment with new ideas and
+      expand the use of free software.
+    '';
   };
 
-  debsBuildBuild = [
-    stdenv.cc
-  ];
+  debsBuildBuild = [ stdenv.cc ];
 
   nativeBuildInputs = with pkgs; [
     autoconf
@@ -92,19 +87,17 @@ in stdenv.mkDerivation rec {
     zlib
   ];
 
-  propagatedBuildInputs = [
-    gegl
-  ];
+  propagatedBuildInputs = [ gegl ];
 
   pythonPath = [ pygtk ];
 
   # Check if librsvg was built with --disable-pixbuf-loader.
-  PKG_CONFIG_GDK_PIXBUF_2_0_GDK_PIXBUF_MODULEDIR = "${librsvg}/${gdk-pixbuf.moduleDir}";
+  PKG_CONFIG_GDK_PIXBUF_2_0_GDK_PIXBUF_MODULEDIR =
+    "${librsvg}/${gdk-pixbuf.moduleDir}";
 
-  preAutoreconf =
-    ''
-      ${gtk_doc}/bin/gtkdocize
-    '';
+  preAutoreconf = ''
+    ${gtk_doc}/bin/gtkdocize
+  '';
 
   GIO_MODULE_DIR = "${glib-networking}/${glib.passthru.gioModuleDir}";
 
@@ -116,11 +109,11 @@ in stdenv.mkDerivation rec {
     "--libdir=\${exec_prefix}/lib"
   ];
 
-#   postFixup =
-#     ''
-#       wrapPythonProgramsIn $out/lib/gimp/${passthru.majorVersion}/plug-ins/
-#       wrapProgram $out/bin/gimp-${lib.versions.majorMinor version} \
-#         --prefix PYTHONPATH : "$PYTHONPATH" \
-#         --set GDK_PIXBUF_MODULE_FILE "$GDK_PIXBUF_MODULE_FILE"
-#     '';
+  #   postFixup =
+  #     ''
+  #       wrapPythonProgramsIn $out/lib/gimp/${passthru.majorVersion}/plug-ins/
+  #       wrapProgram $out/bin/gimp-${lib.versions.majorMinor version} \
+  #         --prefix PYTHONPATH : "$PYTHONPATH" \
+  #         --set GDK_PIXBUF_MODULE_FILE "$GDK_PIXBUF_MODULE_FILE"
+  #     '';
 }

@@ -1,8 +1,5 @@
-{ config, pkgs, lib, ... }:
-{
-  imports = [
-      <nixos-hardware/dell/xps/15-9550>
-  ];
+{ config, pkgs, lib, ... }: {
+  imports = [ <nixos-hardware/dell/xps/15-9550> ];
 
   networking.hostName = "cervina";
 
@@ -13,15 +10,14 @@
   networking.interfaces.wlp59s0.useDHCP = true;
 
   i18n.consoleFont = "latarcyrheb-sun32";
-  i18n.consolePackages = with pkgs; [
-    terminus_font
-  ];
+  i18n.consolePackages = with pkgs; [ terminus_font ];
 
   services.xserver.dpi = 175;
 
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs;
+    [
       light # backlight control
-  ];
+    ];
 
   hardware.bumblebee.enable = true;
 }

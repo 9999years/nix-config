@@ -1,5 +1,8 @@
 { config, pkgs, lib, ... }:
-let background = "${import ./pkg/background-images}/share/artwork/backgrounds/night-stars.jpg";
+let
+  background = "${
+      import ./pkg/background-images
+    }/share/artwork/backgrounds/night-stars.jpg";
 in {
   services.xserver = {
     enable = lib.mkDefault true;
@@ -10,9 +13,7 @@ in {
       naturalScrolling = true; # Windows-style, baby!
     };
 
-    displayManager = {
-      lightdm.background = background;
-    };
+    displayManager = { lightdm.background = background; };
 
     desktopManager = rec {
       default = "plasma5";

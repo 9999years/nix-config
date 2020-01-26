@@ -1,5 +1,8 @@
 { config, pkgs, lib, ... }:
-let background = "${import ./pkg/background-images}/share/artwork/backgrounds/night-stars.jpg";
+let
+  background = "${
+      import ./pkg/background-images
+    }/share/artwork/backgrounds/night-stars.jpg";
 in {
   services.xserver = {
     enable = lib.mkDefault true;
@@ -35,7 +38,10 @@ in {
         extraSessionCommands = ''
           if [ -e $HOME/.background-image ]; then
             ${pkgs.feh}/bin/feh --bg-${wallpaper.mode} \
-                                ${lib.optionalString wallpaper.combineScreens "--no-xinerama"} \
+                                ${
+                                  lib.optionalString wallpaper.combineScreens
+                                  "--no-xinerama"
+                                } \
                                 ${background}
           fi
         '';

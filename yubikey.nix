@@ -1,11 +1,8 @@
-{ config, pkgs, lib, ... }:
-{
+{ config, pkgs, lib, ... }: {
   # Yubikey support
   services.pcscd.enable = lib.mkDefault true;
-  services.udev.packages = with pkgs; lib.mkDefault [
-    libu2f-host
-    yubikey-personalization
-  ];
+  services.udev.packages = with pkgs;
+    lib.mkDefault [ libu2f-host yubikey-personalization ];
   environment.shellInit = lib.mkDefault ''
     export GPG_TTY=$(tty)
     gpg-connect-agent /bye

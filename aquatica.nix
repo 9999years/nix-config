@@ -11,9 +11,9 @@ in {
   networking.interfaces.enp5s0.useDHCP = true;
   networking.interfaces.wlp4s0.useDHCP = true;
 
-  environment.systemPackages = base.packages ++ (with pkgs; [
+  environment.systemPackages = with pkgs; [
     mdadm  # RAID drives
-  ]);
+  ];
 
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia.modesetting.enable = true;

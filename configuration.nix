@@ -74,8 +74,30 @@ in {
 
   programs.fish.enable = true;
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+  };
   environment.systemPackages = base.packages;
+
+  nix = {
+    trustedBinaryCaches = [
+      https://cache.nixos.org
+      https://all-hies.cachix.org
+    ];
+    binaryCachePublicKeys = [
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      "all-hies.cachix.org-1:JjrzAOEUsD9ZMt8fdFbzo3jNAyEWlPAwdVuHw4RD43k="
+    ];
+    trustedUsers = [ "root" "becca" ];
+  };
+
+  fonts = {
+    enableDefaultFonts = true;
+    fontconfig.defaultFonts = {
+      emoji = [ "Twitter Color Emoji" ];
+      monospace = [ "PragmataPro Mono Liga" ];
+    };
+  };
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database

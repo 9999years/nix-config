@@ -19,11 +19,9 @@
 
   services.xserver.dpi = 175;
 
-  environment.systemPackages =
-    let base = import ./base.nix { inherit pkgs lib; };
-    in base.packages ++ (with pkgs; [
+  environment.systemPackages = with pkgs; [
       light # backlight control
-    ]);
+  ];
 
   hardware.bumblebee.enable = true;
 }

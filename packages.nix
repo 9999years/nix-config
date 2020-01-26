@@ -1,90 +1,102 @@
-{
-  pkgs,
-  unstable ? import (fetchTarball https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz) {},
-  ...
-}:
-with pkgs; rec {
-  gui = [
-    alacritty
-    firefox-bin
-    lastpass-cli
-    spotify  # unfree
-    discord  # unfree
-    feh
-    typora
-    (import ./pkg/fontbase { inherit pkgs; })
-    (import ./pkg/glimpse { inherit pkgs; })
-    franz
-    kdeApplications.spectacle
-    gparted
-  ];
+{ pkgs, unstable ? import (fetchTarball
+  "https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz") { }
+, ... }:
+with pkgs;
+let
+  sets = rec {
+    gui = [
+      alacritty # terminal
+      firefox-bin
+      lastpass-cli # maybe unfree?
+      spotify # unfree
+      discord # unfree
+      typora # md editor
+      (import ./pkg/fontbase { inherit pkgs; })
+      (import ./pkg/glimpse { inherit pkgs; })
+      franz # chat tool
+      gparted
+      kdeApplications.spectacle # screenshot tool
+      feh # photo viewer
+      shotwell # photo viewer
+      qalculate-gtk # calculator
+      evince # pdf viewer
+    ];
 
-  git = [
-    gitAndTools.gitFull  # GPL v2
-    git-lfs  # MIT
-    gitAndTools.hub  # github hub, MIT
-    gitAndTools.diff-so-fancy
-    bfg-repo-cleaner
-    tig  # git text-gui
-    # qtkeychain
-  ];
+    misc = [ youtube-dl graphviz hyperfine ];
 
-  emacs = [
-    nixfmt  # for nix-mode formatting
-    ispell
-    rustc
-    cargo
-    # rls
-    unstable.rnix-lsp
-    unstable.texlab
-    ruby
-    solargraph
-    (python37.withPackages (pyPkgs: with pyPkgs; [
-      python-language-server
-      black
-      grip
-      mypy
-      flake8
-      pycodestyle
-      pylint
-    ]))
-  ] ++ langs.clang
-  ++ (with nodePackages; [
-    vscode-css-languageserver-bin
-    vscode-html-languageserver-bin
-    # vscode-json-languageserver
-    bash-language-server
-    tern
-    typescript
-    typescript-language-server
-  ]);
+    fonts = [ stix-two ];
 
-  vim = [
-    neovim
-    vim-vint  # vimscript lint: https://github.com/Kuniwak/vint
-  ];
+    git = [
+      gitAndTools.gitFull # GPL v2
+      git-lfs # MIT
+      gitAndTools.hub # github hub, MIT
+      gitAndTools.diff-so-fancy
+      bfg-repo-cleaner
+      tig # git text-gui
+      # qtkeychain
+    ];
 
-  devtools = {
+    emacs = [
+      nixfmt # for nix-mode formatting
+      ispell
+      rustc
+      cargo
+      # rls
+      unstable.rnix-lsp
+      unstable.texlab
+      ruby
+      solargraph
+      (python37.withPackages (pyPkgs:
+        with pyPkgs; [
+          python-language-server
+          black
+          grip
+          mypy
+          flake8
+          pycodestyle
+          pylint
+        ]))
+    ] ++ langs.clang ++ (with nodePackages; [
+      vscode-css-languageserver-bin
+      vscode-html-languageserver-bin
+      # vscode-json-languageserver
+      bash-language-server
+      tern
+      typescript
+      typescript-language-server
+    ]);
+
+    vim = [
+      neovim
+      vim-vint # vimscript lint: https://github.com/Kuniwak/vint
+    ];
+
+    hardware = [
+      drm_info # display info
+      pciutils # lspci
+      lsof
+    ];
+
     # Terminals, shells, and tty-related tools.
     terminals = [
-      fish  # GPL v2 & LGPL v2, OpenBSD License, ISC, NetBSD
-      tmux  # ISC License
+      fish # GPL v2 & LGPL v2, OpenBSD License, ISC, NetBSD
+      tmux # ISC License
       reptyr
     ];
 
     network = [
-      bind  # nslookup
+      bind # nslookup
       ncat
     ];
 
     files = [
       fd
-      fzf  # MIT
+      fzf # MIT
       # fselect # "Find files with SQL-like queries" https://github.com/jhspetersson/fselect
       tree
-      sshfs-fuse  # GPL v2
-      lftp  # GPL v3+
-      ncdu  # ncurses disk usage
+      sshfs-fuse # GPL v2
+      lftp # GPL v3+
+      ncdu # ncurses disk usage
       file
       dos2unix
       unzip
@@ -95,45 +107,38 @@ with pkgs; rec {
     text = [
       silver-searcher
       exa
-      just  # github.com/casey/just
+      just # github.com/casey/just
       # topgrade
-      bat  # https://github.com/sharkdp/bat
+      bat # https://github.com/sharkdp/bat
       # ruplacer
-      ripgrep  # rg, https://github.com/BurntSushi/ripgrep
-      ripgrep-all  # rga
-      sd  # Find-and-replacer, https://github.com/chmln/sd
-      skim  # Fuzzy finder, https://github.com/lotabout/skim
-      toilet  # command-line ascii art generator
-      colordiff  # GPL v3
+      ripgrep # rg, https://github.com/BurntSushi/ripgrep
+      ripgrep-all # rga
+      sd # Find-and-replacer, https://github.com/chmln/sd
+      skim # Fuzzy finder, https://github.com/lotabout/skim
+      toilet # command-line ascii art generator
+      colordiff # GPL v3
 
       tokei # Cloc, https://github.com/XAMPPRocky/tokei
-      sourceHighlight  # GPL v3
-    ];
-
-    misc = [
-      shellcheck
-      graphviz
-      hyperfine
+      sourceHighlight # GPL v3
     ];
 
     manipulation = [
-      pandoc  # GLP v2+
+      pandoc # GLP v2+
       pdftk
       ghostscript
-      imagemagick7Big  # Derived Apache 2.0
+      imagemagick7Big # Derived Apache 2.0
       # bingrep # Binary introspection, https://github.com/m4b/bingrep
-      xsv  # CSV data manipulation and analysis tool, https://github.com/BurntSushi/xsv
-      jq   # MIT
+      xsv # CSV data manipulation and analysis tool, https://github.com/BurntSushi/xsv
+      jq # MIT
     ];
   };
 
-  hardware = [
-    drm_info  # display info
-    pciutils  # lspci
-    lsof
-  ];
-
   langs = {
+    bash = [
+      shellcheck
+      nodePackages.bash-language-server # whyyyy do people keep writing infra in js
+    ];
+
     clang = [
       clang
       # llvmPackages.libclang
@@ -143,85 +148,76 @@ with pkgs; rec {
       automake
     ];
 
-    dhall = [
-      dhall
-      dhall-bash
-      dhall-json
-    ];
+    dhall = [ dhall dhall-bash dhall-json ];
 
     go = [ go ];
 
-    haskell = [
-      ghc
-      cabal-install
-      stack
-      stylish-haskell
-      hlint
-    ] ++ (with haskellPackages; [
-      happy
-      pointfree
-      apply-refact
-      hspec
-      hindent
-      hdevtools
-    ]) ++ (
-      let all-hies = import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master") {};
-      in [
-          (all-hies.selection { selector = p: { inherit (p) ghc865; }; })
-      ]
-    );
+    haskell = [ ghc cabal-install stack stylish-haskell hlint ]
+      ++ (with haskellPackages; [
+        happy
+        pointfree
+        apply-refact
+        hspec
+        hindent
+        hdevtools
+      ]) ++ (let
+        all-hies = import
+          (fetchTarball "https://github.com/infinisil/all-hies/tarball/master")
+          { };
+      in [ (all-hies.selection { selector = p: { inherit (p) ghc865; }; }) ]);
 
     java = [ openjdk ];
 
     nix = [
       nixfmt
-      nix-index  # nix-index and nix-locate
+      nix-index # nix-index and nix-locate
       cachix
     ];
 
     node = [ nodejs-12_x ];
 
-    perl = [ perl ];  # If nothing else, latexmk needs it.
+    perl = [ perl ]; # If nothing else, latexmk needs it.
 
     python = [
-      (python37.withPackages (pyPkgs: with pyPkgs; [
-        # Linters, etc.
-        black
-        mypy
-        flake8
-        pycodestyle
-        pylint
-        ptpython
-        pytest
-        # Utilities
-        grip
-        pillow
-        pyyaml
-        pygments
-        arrow
-        atomicwrites
-        attrs
-        beautifulsoup4
-        cached-property
-        cachetools
-        colorama
-        more-itertools
-        numpy
-        pynvim
-        dateutil
-        # python-decouple
-        requests
-        termcolor
-        toml
-        unidecode
-        urllib3
-        wcwidth
-      ]))
+      (python37.withPackages (pyPkgs:
+        with pyPkgs; [
+          # Linters, etc.
+          black
+          mypy
+          flake8
+          pycodestyle
+          pylint
+          ptpython
+          pytest
+          # Utilities
+          grip
+          pillow
+          pyyaml
+          pygments
+          arrow
+          atomicwrites
+          attrs
+          beautifulsoup4
+          cached-property
+          cachetools
+          colorama
+          more-itertools
+          numpy
+          pynvim
+          dateutil
+          # python-decouple
+          requests
+          termcolor
+          toml
+          unidecode
+          urllib3
+          wcwidth
+        ]))
     ];
 
     ruby = [
-      ruby  # BDS 2-clause
-      solargraph  # ruby LSP
+      ruby # BDS 2-clause
+      solargraph # ruby LSP
     ];
 
     rust = [
@@ -236,16 +232,23 @@ with pkgs; rec {
       cargo-make # https://github.com/sagiegurari/cargo-make
     ];
 
-    tex = [
-      (texlive.combined {inherit (texlive) scheme-medium latexmk;})
-    ];
+    tex = [ (texlive.combine { inherit (texlive) scheme-medium latexmk; }) ];
   };
 
-  misc = [
-    youtube-dl
-  ];
+  concatAttrLists = attrset: lib.concatLists (lib.attrValues attrset);
+  removeAttrs = attrsToRemove: attrset:
+    lib.filterAttrs (name: val: !(lib.elem name headAttrNames)) attrset;
+  keepAttrs = attrsToKeep: attrset:
+    lib.filterAttrs (name: val: lib.elem name headAttrNames) attrset;
 
-  fonts = [
-    stix-two
-  ];
+  headAttrNames = [ "gui" ];
+
+in rec {
+  inherit sets;
+  inherit langs;
+
+  allLangs = concatAttrLists langs;
+
+  headless = allLangs ++ (concatAttrLists (removeAttrs headAttrNames sets));
+  all = headless ++ (concatAttrLists (keepAttrs headAttrNames sets));
 }

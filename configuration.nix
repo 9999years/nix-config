@@ -1,18 +1,20 @@
 # man 5 configuration.nix
 # nixos-help
 { config, pkgs, lib, ... }:
-let base = import ./base.nix { inherit pkgs lib; };
-    unstableTarball = fetchTarball
-      https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz;
-    unstable = import unstableTarball { config = config.nixpkgs.config; };
+let
+  unstableTarball = fetchTarball
+    "https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz";
+  unstable = import unstableTarball { config = config.nixpkgs.config; };
+  packages = import ./packages.nix { inherit pkgs unstable; };
 in {
-  imports = [ ./hardware-configuration.nix
+  imports = [
+    ./hardware-configuration.nix
 
-              ./git.nix
-              ./plasma5.nix
-              ./yubikey.nix
-              ./this.nix
-            ];
+    ./git.nix
+    ./plasma5.nix
+    ./yubikey.nix
+    ./this.nix
+  ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -21,7 +23,7 @@ in {
   boot.kernelPackages = pkgs.linuxPackages_latest;
   # Set the font earlier in the boot process.
   boot.earlyVconsoleSetup = true;
-  boot.tmpOnTmpfs = true;  # Keep /tmp in RAM
+  boot.tmpOnTmpfs = true; # Keep /tmp in RAM
 
   hardware.enableRedistributableFirmware = true;
 
@@ -59,9 +61,10 @@ in {
   users.users.becca = {
     isNormalUser = true;
     extraGroups = [
-      "wheel"  # Enable ‘sudo’ for the user.
-      "audio" "sound"  # Not sure if these are necessary.
-      "video"  # Not sure if this is necessary.
+      "wheel" # Enable ‘sudo’ for the user.
+      "audio"
+      "sound" # Not sure if these are necessary.
+      "video" # Not sure if this is necessary.
       "networkmanager"
     ];
     shell = "/run/current-system/sw/bin/fish";
@@ -73,23 +76,17 @@ in {
   services.emacs = {
     enable = true;
     defaultEditor = true;
-    package = import ./pkg/emacs {
-      inherit (pkgs) emacs;
-    };
+    package = import ./pkg/emacs { inherit (pkgs) emacs; };
   };
 
   programs.fish.enable = true;
 
-  nixpkgs.config = {
-    allowUnfree = true;
-  };
-  environment.systemPackages = base.packages;
+  nixpkgs.config = { allowUnfree = true; };
+  environment.systemPackages = packages.all;
 
   nix = {
-    trustedBinaryCaches = [
-      https://cache.nixos.org
-      https://all-hies.cachix.org
-    ];
+    trustedBinaryCaches =
+      [ "https://cache.nixos.org" "https://all-hies.cachix.org" ];
     binaryCachePublicKeys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "all-hies.cachix.org-1:JjrzAOEUsD9ZMt8fdFbzo3jNAyEWlPAwdVuHw4RD43k="

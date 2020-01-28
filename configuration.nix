@@ -30,7 +30,7 @@ in {
   boot.kernelPackages = pkgs.linuxPackages_latest;
   # Set the font earlier in the boot process.
   boot.earlyVconsoleSetup = true;
-  boot.tmpOnTmpfs = true; # Keep /tmp in RAM
+  boot.tmpOnTmpfs = lib.mkDefault true; # Keep /tmp in RAM
 
   hardware.enableRedistributableFirmware = true;
 

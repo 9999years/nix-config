@@ -21,6 +21,7 @@ let
       qalculate-gtk # calculator
       evince # pdf viewer
       (import ./pkg/background-images { inherit pkgs; })
+      psensor # view CPU usage / temps, etc.
     ];
 
     misc = [ youtube-dl graphviz hyperfine units ];
@@ -83,6 +84,10 @@ let
     vim = [
       neovim
       vim-vint # vimscript lint: https://github.com/Kuniwak/vint
+    ];
+
+    vscode = [
+      pkgs.vscode
     ];
 
     hardware = [

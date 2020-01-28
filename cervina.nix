@@ -9,6 +9,9 @@
   # Why is the WiFi card called that!!
   networking.interfaces.wlp59s0.useDHCP = true;
 
+  # Do NOT keep /tmp in RAM because /tmp can get big and this is but a laptop.
+  boot.tmpOnTmpfs = false;
+
   boot.loader.grub.fontSize = 32;
 
   i18n = {

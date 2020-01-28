@@ -12,7 +12,10 @@
   boot.loader.grub.fontSize = 32;
 
   i18n = {
-    consoleFont = "latarcyrheb-sun32";
+    consoleFont = "ter-c32n";
+    consolePackages = with pkgs; [
+      terminus_font
+    ];
   };
 
   services.xserver.dpi = 175;

@@ -15,12 +15,33 @@ in stdenv.mkDerivation rec {
       "1lmm8c7q95rmywrdxjxfx0q4lchymlsk2dqiw7av1zscxm4g1yl0ccw96ic0gpffh98ak3g4317mkffb3nidbc9n4v6g54xj42w7jpc";
   };
 
-  meta = {
-    description = ''
+  meta = with stdenv.lib; {
+    description = "A Photo Editor For Everyone";
+    longDescription = ''
       Glimpse is an open source image editor based on the GNU Image
       Manipulation Program. The goal is to experiment with new ideas and
       expand the use of free software.
     '';
+    license = licenses.gpl;
+    homepage = https://glimpse-editor.org/;
+    platforms = platforms.all;
+    maintainers = [
+      {
+        name = "Chris";
+        github = "BrainBlasted";
+        githubId = 29347290;
+      }
+      {
+        name = "Clipsey (Luna)";
+        github = "Member1221";
+        githubId = 7032834;
+      }
+      {
+        name = "Bobby Moss";
+        github = "TrechNex";
+        githubId = 45732696;
+      }
+    ];
   };
 
   debsBuildBuild = [ stdenv.cc ];
@@ -108,12 +129,4 @@ in stdenv.mkDerivation rec {
     # fix libdir in pc files (${exec_prefix} needs to be passed verbatim)
     "--libdir=\${exec_prefix}/lib"
   ];
-
-  #   postFixup =
-  #     ''
-  #       wrapPythonProgramsIn $out/lib/gimp/${passthru.majorVersion}/plug-ins/
-  #       wrapProgram $out/bin/gimp-${lib.versions.majorMinor version} \
-  #         --prefix PYTHONPATH : "$PYTHONPATH" \
-  #         --set GDK_PIXBUF_MODULE_FILE "$GDK_PIXBUF_MODULE_FILE"
-  #     '';
 }

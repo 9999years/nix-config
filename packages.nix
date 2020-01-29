@@ -52,6 +52,7 @@ let
     ];
 
     emacs = [
+      (import ./pkg/emacs { inherit (pkgs) emacs; })
       nixfmt # for nix-mode formatting
       ispell
       rustc

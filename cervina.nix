@@ -12,6 +12,14 @@
   # Do NOT keep /tmp in RAM because /tmp can get big and this is but a laptop.
   boot.tmpOnTmpfs = false;
 
+  hardware.cpu.intel.updateMicrocode = true;
+  hardware.enableAllFirmware = true;
+
+  # Save our fans / CPU temps.
+  boot.kernelModules = [ "coretemp" ];
+  powerManagement.cpuFreqGovernor = "powersave";
+  powerManagement.powertop.enable = true;
+
   boot.loader.grub.fontSize = 32;
 
   i18n = {

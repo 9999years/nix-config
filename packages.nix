@@ -193,6 +193,7 @@ let
       nixfmt
       nix-index # nix-index and nix-locate
       cachix
+      (import ./pkg/nix-query pkgs)
     ];
 
     node = [ nodejs-12_x ];

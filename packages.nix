@@ -13,6 +13,7 @@ let
       typora # md editor
       (import ./pkg/fontbase { inherit pkgs; })
       (import ./pkg/glimpse { inherit pkgs; })
+      (import ./pkg/amazing-marvin { inherit pkgs; })
       franz # chat tool
       gparted
       kdeApplications.spectacle # screenshot tool
@@ -28,7 +29,7 @@ let
 
     fonts = [
       stix-two # times-like
-      hack-font  # coding font
+      hack-font # coding font
       gyre-fonts
       noto-fonts
       dejavu_fonts
@@ -87,9 +88,7 @@ let
       vim-vint # vimscript lint: https://github.com/Kuniwak/vint
     ];
 
-    vscode = [
-      pkgs.vscode
-    ];
+    vscode = [ pkgs.vscode ];
 
     hardware = [
       drm_info # display info

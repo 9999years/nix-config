@@ -13,6 +13,7 @@ in {
     ./git.nix
     ./plasma5.nix
     ./yubikey.nix
+    ./syncthing.nix
     ./this.nix
   ];
 
@@ -96,16 +97,9 @@ in {
     enableDefaultFonts = true;
     fonts = packages.sets.fonts;
     fontconfig.defaultFonts = {
-      emoji = [
-        "Twitter Color Emoji"
-        "Noto Color Emoji"
-      ];
-      monospace = [
-        "PragmataPro Mono Liga"
-        "Hack"
-        "IBM Plex Mono"
-        "Fira Mono"
-      ];
+      emoji = [ "Twitter Color Emoji" "Noto Color Emoji" ];
+      monospace =
+        [ "PragmataPro Mono Liga" "Hack" "IBM Plex Mono" "Fira Mono" ];
     };
   };
 

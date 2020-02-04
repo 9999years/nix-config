@@ -14,6 +14,7 @@ in {
     ./plasma5.nix
     ./yubikey.nix
     ./syncthing.nix
+    ./printing.nix
     ./this.nix
   ];
 
@@ -39,9 +40,6 @@ in {
   networking.nameservers = [ "8.8.8.8" "8.8.4.4" ];
   networking.firewall.allowedTCPPorts = [ 80 443 ];
   networking.firewall.enable = false;
-
-  services.printing.enable = true;
-  services.printing.drivers = [ pkgs.hplip ];
 
   services.thermald.enable = true;
 

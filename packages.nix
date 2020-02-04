@@ -137,7 +137,7 @@ let
       skim # Fuzzy finder, https://github.com/lotabout/skim
       toilet # command-line ascii art generator
       colordiff # GPL v3
-
+      hexd
       tokei # Cloc, https://github.com/XAMPPRocky/tokei
       sourceHighlight # GPL v3
     ];

@@ -253,7 +253,10 @@ let
       cargo-make # https://github.com/sagiegurari/cargo-make
     ];
 
-    tex = [ (texlive.combine { inherit (texlive) scheme-medium latexmk; }) ];
+    tex = [
+      (import ./pkg/latexdef pkgs)
+      (texlive.combine { inherit (texlive) scheme-medium latexmk; })
+    ];
   };
 
   concatAttrLists = attrset: lib.concatLists (lib.attrValues attrset);

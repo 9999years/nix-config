@@ -7,10 +7,10 @@ let
     gui = [
       alacritty # terminal
       firefox-bin
-      lastpass-cli # maybe unfree?
+      lastpass-cli
       spotify # unfree
       discord # unfree
-      typora # md editor
+      typora # md editor (unfree)
       (import ./pkg/fontbase { inherit pkgs; })
       (import ./pkg/glimpse { inherit pkgs; })
       (import ./pkg/amazing-marvin { inherit pkgs; })
@@ -23,6 +23,7 @@ let
       evince # pdf viewer
       (import ./pkg/background-images { inherit pkgs; })
       psensor # view CPU usage / temps, etc.
+      standardnotes
     ];
 
     misc = [ youtube-dl graphviz hyperfine units ];

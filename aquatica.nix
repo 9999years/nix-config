@@ -20,13 +20,14 @@
 
   # Sound
   # sound.enableOSSEmulation = false;
-  # hardware.pulseaudio = {
-    # enable = true;
-    # systemWide = false;
-  # };
+  hardware.cpu.intel.updateMicrocode = true;
+  hardware.pulseaudio = {
+    enable = true;
+    systemWide = false;
+  };
   hardware.enableAllFirmware = true;
-  # boot.extraModprobeConfig = ''
-    # options snd_hda_intel index=1
+  boot.extraModprobeConfig = ''
+    options snd_hda_intel index=1
+  '';
     # options snd slots=snd_hda_intel
-  # '';
 }

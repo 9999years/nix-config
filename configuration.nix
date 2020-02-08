@@ -44,7 +44,6 @@ in {
   services.thermald.enable = true;
 
   sound.enable = true;
-  hardware.pulseaudio.enable = true;
 
   i18n = {
     # Note: We don't set a font because sometimes the generated

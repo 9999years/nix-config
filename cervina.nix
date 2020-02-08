@@ -37,4 +37,5 @@
     ];
 
   hardware.bumblebee.enable = true;
+  hardware.pulseaudio.enable = true;
 }

@@ -1,5 +1,6 @@
 { config, pkgs, lib, ... }: {
   boot.loader.grub.fontSize = 24;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "aquatica";
 
@@ -18,11 +19,14 @@
   services.xserver.dpi = 150;
 
   # Sound
-  sound.enableOSSEmulation = false;
-  hardware.pulseaudio = { systemWide = false; };
+  # sound.enableOSSEmulation = false;
+  # hardware.pulseaudio = {
+    # enable = true;
+    # systemWide = false;
+  # };
   hardware.enableAllFirmware = true;
-  boot.extraModprobeConfig = ''
-    options snd_hda_intel index=1
-    options snd slots=snd_hda_intel
-  '';
+  # boot.extraModprobeConfig = ''
+    # options snd_hda_intel index=1
+    # options snd slots=snd_hda_intel
+  # '';
 }

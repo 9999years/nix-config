@@ -1,7 +1,4 @@
 { config, pkgs, lib, ... }: {
-  boot.extraModprobeConfig = ''
-    options snd_hda_intel index=1
-  '';
   boot.loader.grub.fontSize = 24;
 
   networking.hostName = "aquatica";
@@ -23,4 +20,9 @@
   # Sound
   sound.enableOSSEmulation = false;
   hardware.pulseaudio = { systemWide = false; };
+  hardware.enableAllFirmware = true;
+  boot.extraModprobeConfig = ''
+    options snd_hda_intel index=1
+    options snd slots=snd_hda_intel
+  '';
 }

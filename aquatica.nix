@@ -19,4 +19,8 @@
   hardware.nvidia.modesetting.enable = true;
 
   services.xserver.dpi = 150;
+
+  # Sound
+  sound.enableOSSEmulation = false;
+  hardware.pulseaudio = { systemWide = false; };
 }

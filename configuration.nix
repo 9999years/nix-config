@@ -110,6 +110,7 @@ in {
   environment.systemPackages = packages.all;
   nixpkgs.overlays = [
     (import ./overlays/standardnotes.nix)
+    (import ./overlays/nvim.nix)
   ];
 
   # This value determines the NixOS release with which your system is to be

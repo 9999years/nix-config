@@ -123,6 +123,8 @@ let
       wget
       rsync
       binutils-unwrapped
+      nnn # File browser
+      ranger # File browser
     ];
 
     text = [
@@ -146,7 +148,9 @@ let
     manipulation = [
       pandoc # GLP v2+
       pdftk
-      ghostscript
+      (lib.overrideDerivation ghostscript (old: {
+        priority = -1;
+      }))
       imagemagick7Big # Derived Apache 2.0
       # bingrep # Binary introspection, https://github.com/m4b/bingrep
       xsv # CSV data manipulation and analysis tool, https://github.com/BurntSushi/xsv

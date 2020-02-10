@@ -3,6 +3,7 @@
 , ... }:
 with pkgs;
 let
+  withPriority = p: drv: drv.overrideAttrs (old: { meta.priority = p; });
   sets = rec {
     gui = [
       alacritty # terminal
@@ -57,7 +58,7 @@ let
       (import ./pkg/emacs { inherit (pkgs) emacs; })
       nixfmt # for nix-mode formatting
       ispell
-      rustc
+      # rustc
       cargo
       # rls
       unstable.rnix-lsp
@@ -123,7 +124,7 @@ let
       unzip
       wget
       rsync
-      binutils-unwrapped
+      (withPriority "15" binutils-unwrapped)
       nnn # File browser
       ranger # File browser
     ];
@@ -149,9 +150,7 @@ let
     manipulation = [
       pandoc # GLP v2+
       pdftk
-      (lib.overrideDerivation ghostscript (old: {
-        priority = -1;
-      }))
+      (withPriority "-1" ghostscript)
       imagemagick7Big # Derived Apache 2.0
       # bingrep # Binary introspection, https://github.com/m4b/bingrep
       xsv # CSV data manipulation and analysis tool, https://github.com/BurntSushi/xsv
@@ -206,7 +205,7 @@ let
     perl = [ perl ]; # If nothing else, latexmk needs it.
 
     python = [
-      (python37.withPackages (pyPkgs:
+      (withPriority "-1" (python37.withPackages (pyPkgs:
         with pyPkgs; [
           # Linters, etc.
           black
@@ -239,7 +238,7 @@ let
           unidecode
           urllib3
           wcwidth
-        ]))
+        ])))
     ];
 
     ruby = [

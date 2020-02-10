@@ -107,6 +107,7 @@ let
     network = [
       bind # nslookup
       ncat
+      inetutils # whois
     ];
 
     files = [

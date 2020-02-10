@@ -81,6 +81,8 @@ in {
 
   programs.fish.enable = true;
 
+  services.emacs.enable = false;
+
   nix = {
     trustedBinaryCaches =
       [ "https://cache.nixos.org" "https://all-hies.cachix.org" ];

@@ -26,6 +26,7 @@ let
       (import ./pkg/background-images { inherit pkgs; })
       psensor # view CPU usage / temps, etc.
       standardnotes
+      calibre # ebook mgmt
     ];
 
     misc = [ youtube-dl graphviz hyperfine units ];
@@ -166,6 +167,7 @@ let
     ];
 
     clang = [
+      gnumake
       clang
       # llvmPackages.libclang
       clang-tools

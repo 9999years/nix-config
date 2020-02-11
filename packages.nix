@@ -22,6 +22,7 @@ let
       shotwell # photo viewer
       qalculate-gtk # calculator
       evince # pdf viewer
+      qpdfview # pdf viewer with tabs
       (import ./pkg/background-images { inherit pkgs; })
       psensor # view CPU usage / temps, etc.
       standardnotes

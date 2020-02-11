@@ -60,7 +60,7 @@ let
       nixfmt # for nix-mode formatting
       ispell
       # rustc
-      cargo
+      (withPriority cargo "15")
       # rls
       unstable.rnix-lsp
       unstable.texlab
@@ -109,7 +109,7 @@ let
     network = [
       bind # nslookup
       ncat
-      inetutils # whois
+      (withPriority inetutils "15") # whois
     ];
 
     files = [

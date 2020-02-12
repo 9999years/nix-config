@@ -32,7 +32,15 @@ let
       # libreoffice-fresh
     ];
 
-    misc = [ youtube-dl graphviz hyperfine units htop lynx ];
+    misc = [
+      youtube-dl
+      graphviz
+      hyperfine
+      units
+      htop
+      lynx
+      (import ./pkg/colortest { inherit pkgs; })
+    ];
 
     fonts = [
       stix-two # times-like

@@ -132,8 +132,8 @@ let
       (lowPriority binutils-unwrapped)
       nnn # File browser
       ranger # File browser
-      mdv # markdown viewer
       up # Ultimate Plumber
+      (import ./pkg/mdv { inherit pkgs; }) # markdown viewer
     ];
 
     text = [

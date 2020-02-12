@@ -126,7 +126,6 @@ let
       ncdu # ncurses disk usage
       file
       dos2unix
-      unzip
       wget
       rsync
       (lowPriority binutils-unwrapped)
@@ -134,6 +133,14 @@ let
       ranger # File browser
       up # Ultimate Plumber
       (import ./pkg/mdv { inherit pkgs; }) # markdown viewer
+      mediainfo
+      exiftool
+      odt2txt
+      # archives
+      zip
+      unzip
+      atool
+      p7zip
     ];
 
     text = [
@@ -157,6 +164,8 @@ let
     manipulation = [
       pandoc # GLP v2+
       pdftk
+      poppler_utils # pdftotext
+      mupdf # mutool
       (highPriority ghostscript)
       imagemagick7Big # Derived Apache 2.0
       # bingrep # Binary introspection, https://github.com/m4b/bingrep

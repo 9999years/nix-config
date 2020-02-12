@@ -29,9 +29,10 @@ let
       psensor # view CPU usage / temps, etc.
       standardnotes
       calibre # ebook mgmt
+      # libreoffice-fresh
     ];
 
-    misc = [ youtube-dl graphviz hyperfine units ];
+    misc = [ youtube-dl graphviz hyperfine units htop lynx ];
 
     fonts = [
       stix-two # times-like
@@ -131,6 +132,8 @@ let
       (lowPriority binutils-unwrapped)
       nnn # File browser
       ranger # File browser
+      mdv # markdown viewer
+      up # Ultimate Plumber
     ];
 
     text = [

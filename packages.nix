@@ -180,9 +180,21 @@ let
       xsv # CSV data manipulation and analysis tool, https://github.com/BurntSushi/xsv
       jq # MIT
     ];
+
+    math = [
+      lean  # theorem prover
+    ];
   };
 
   langs = {
+    agda = [
+      agdaIowaStdlib
+      agdaPrelude
+      # AgdaStdlib
+      # haskellPackages.Agda
+      # haskellPackages.Agda-executable
+    ];
+
     bash = [
       shellcheck
       nodePackages.bash-language-server # whyyyy do people keep writing infra in js
@@ -197,6 +209,15 @@ let
       autoconf
       automake
     ];
+
+    coq = [
+      coq
+    ] ++ (with coqPackages; [
+      mathcomp
+      interval
+      equations
+      corn
+    ]);
 
     dhall = [ dhall dhall-bash dhall-json ];
 

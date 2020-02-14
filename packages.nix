@@ -40,6 +40,7 @@ let
       htop
       lynx
       (import ./pkg/colortest { inherit pkgs; })
+      pastel
     ];
 
     fonts = [
@@ -144,6 +145,8 @@ let
       mediainfo
       exiftool
       odt2txt
+      watchman
+      watchexec
       # archives
       zip
       unzip
@@ -167,6 +170,10 @@ let
       hexd
       tokei # Cloc, https://github.com/XAMPPRocky/tokei
       sourceHighlight # GPL v3
+      fpp # Facebook PathPicker
+      yank
+      python37Packages.howdoi
+      tldr
     ];
 
     manipulation = [
@@ -182,7 +189,7 @@ let
     ];
 
     math = [
-      lean  # theorem prover
+      lean # theorem prover
     ];
   };
 

@@ -6,7 +6,8 @@ let
     "https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz";
   unstable = import unstableTarball { config = config.nixpkgs.config; };
   packages = import ./packages.nix { inherit pkgs unstable; };
-in {
+in
+{
   imports = [
     ./hardware-configuration.nix
 
@@ -65,6 +66,7 @@ in {
   # Don't forget to set a password with ‘passwd’.
   users.users.becca = {
     isNormalUser = true;
+    description = "Rebecca Turner";
     extraGroups = [
       "wheel" # Enable ‘sudo’ for the user.
       "audio"
@@ -72,7 +74,8 @@ in {
       "video" # Not sure if this is necessary.
       "networkmanager"
     ];
-    shell = "/run/current-system/sw/bin/fish";
+    shell = pkgs.fish;
+    uid = 1000;
   };
 
   # Passwordless sudo

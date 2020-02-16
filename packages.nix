@@ -174,6 +174,7 @@ let
       yank
       python37Packages.howdoi
       tldr
+      (import ./pkg/navi { inherit pkgs; })
     ];
 
     manipulation = [

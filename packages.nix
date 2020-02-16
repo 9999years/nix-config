@@ -40,7 +40,7 @@ let
       htop
       lynx
       (import ./pkg/colortest { inherit pkgs; })
-      pastel
+      unstable.pastel
     ];
 
     fonts = [
@@ -217,14 +217,7 @@ let
       automake
     ];
 
-    coq = [
-      coq
-    ] ++ (with coqPackages; [
-      mathcomp
-      interval
-      equations
-      corn
-    ]);
+    coq = [ coq ] ++ (with coqPackages; [ mathcomp interval equations corn ]);
 
     dhall = [ dhall dhall-bash dhall-json ];
 

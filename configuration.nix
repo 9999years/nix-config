@@ -115,6 +115,7 @@ in
   nixpkgs.overlays = [
     (import ./overlays/standardnotes.nix)
     (import ./overlays/nvim.nix)
+    (import ./overlays/cargo.nix)
   ];
 
   # This value determines the NixOS release with which your system is to be

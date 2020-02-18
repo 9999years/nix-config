@@ -222,6 +222,8 @@ let
 
     dhall = [ dhall dhall-bash dhall-json ];
 
+    # gluon = [ (import ./pkg/gluon { inherit pkgs; }) ];
+
     go = [ go ];
 
     haskell = [ ghc cabal-install stack stylish-haskell hlint ]

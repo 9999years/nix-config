@@ -1,12 +1,17 @@
-{ pkgs, unstable ? import (fetchTarball
+{ pkgs ? import <nixpkgs> { }
+  # nixos-unstable
+, unstable ? import (fetchTarball
   "https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz") { }
 , ... }:
-with pkgs;
 let
+  lib = pkgs.lib;
+
   withPriority = p: drv: drv.overrideAttrs (old: { meta.priority = p; });
   lowPriority = withPriority "15";
   highPriority = withPriority "-1";
-  sets = rec {
+  becca = import ./rebeccapkgs { inherit pkgs; };
+
+  sets = with pkgs; {
     gui = [
       alacritty # terminal
       firefox-bin
@@ -14,9 +19,9 @@ let
       spotify # unfree
       discord # unfree
       typora # md editor (unfree)
-      (import ./pkg/fontbase { inherit pkgs; })
-      (import ./pkg/glimpse { inherit pkgs; })
-      (import ./pkg/amazing-marvin { inherit pkgs; })
+      becca.fontbase
+      becca.glimpse
+      becca.amazing-marvin
       franz # chat tool
       gparted
       kdeApplications.spectacle # screenshot tool
@@ -25,7 +30,7 @@ let
       qalculate-gtk # calculator
       evince # pdf viewer
       qpdfview # pdf viewer with tabs
-      (import ./pkg/background-images { inherit pkgs; })
+      becca.background-images
       psensor # view CPU usage / temps, etc.
       standardnotes
       calibre # ebook mgmt
@@ -39,7 +44,7 @@ let
       units
       htop
       lynx
-      (import ./pkg/colortest { inherit pkgs; })
+      becca.colortest
       unstable.pastel
     ];
 
@@ -69,7 +74,7 @@ let
     ];
 
     emacs = [
-      (import ./pkg/emacs { inherit (pkgs) emacs; })
+      emacs
       nixfmt # for nix-mode formatting
       ispell
       # rustc
@@ -104,7 +109,7 @@ let
       vim-vint # vimscript lint: https://github.com/Kuniwak/vint
     ];
 
-    vscode = [ pkgs.vscode ];
+    vscode = [ vscode ];
 
     hardware = [
       drm_info # display info
@@ -141,7 +146,7 @@ let
       nnn # File browser
       ranger # File browser
       up # Ultimate Plumber
-      (import ./pkg/mdv { inherit pkgs; }) # markdown viewer
+      becca.mdv # markdown viewer
       mediainfo
       exiftool
       odt2txt
@@ -174,7 +179,7 @@ let
       yank
       python37Packages.howdoi
       tldr
-      (import ./pkg/navi { inherit pkgs; })
+      becca.navi
     ];
 
     manipulation = [
@@ -194,7 +199,7 @@ let
     ];
   };
 
-  langs = {
+  langs = with pkgs; {
     agda = [
       agdaIowaStdlib
       agdaPrelude
@@ -222,7 +227,7 @@ let
 
     dhall = [ dhall dhall-bash dhall-json ];
 
-    # gluon = [ (import ./pkg/gluon { inherit pkgs; }) ];
+    # gluon = [ becca.gluon ];
 
     go = [ go ];
 
@@ -246,7 +251,7 @@ let
       nixfmt
       nix-index # nix-index and nix-locate
       cachix
-      (import ./pkg/nix-query pkgs)
+      becca.nix-query
     ];
 
     node = [ nodejs-12_x ];
@@ -308,16 +313,16 @@ let
     ];
 
     tex = [
-      (import ./pkg/latexdef pkgs)
+      becca.latexdef
       (texlive.combine { inherit (texlive) scheme-medium latexmk; })
     ];
   };
 
   concatAttrLists = attrset: lib.concatLists (lib.attrValues attrset);
   removeAttrs = attrsToRemove: attrset:
-    lib.filterAttrs (name: val: !(lib.elem name headAttrNames)) attrset;
+    lib.filterAttrs (name: val: !(lib.elem name attrsToRemove)) attrset;
   keepAttrs = attrsToKeep: attrset:
-    lib.filterAttrs (name: val: lib.elem name headAttrNames) attrset;
+    lib.filterAttrs (name: val: lib.elem name attrsToKeep) attrset;
 
   headAttrNames = [ "gui" ];
 

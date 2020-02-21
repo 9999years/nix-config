@@ -1,5 +1,4 @@
-{ pkgs ? import <nixpkgs> { }, }:
-with pkgs;
+{ stdenv, fetchFromGitHub, makeWrapper, fzf, perl, ncurses, bash, ... }:
 stdenv.mkDerivation rec {
   name = "navi";
   version = "0.18.3";

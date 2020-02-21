@@ -6,8 +6,8 @@ let
     "https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz";
   unstable = import unstableTarball { config = config.nixpkgs.config; };
   packages = import ./packages.nix { inherit pkgs unstable; };
-in
-{
+  overlays = import ./overlays;
+in {
   imports = [
     ./hardware-configuration.nix
 
@@ -86,11 +86,15 @@ in
   services.emacs.enable = false;
 
   nix = {
-    trustedBinaryCaches =
-      [ "https://cache.nixos.org" "https://all-hies.cachix.org" ];
+    trustedBinaryCaches = [
+      "https://cache.nixos.org"
+      "https://all-hies.cachix.org"
+      "https://rebecca.cachix.org/"
+    ];
     binaryCachePublicKeys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "all-hies.cachix.org-1:JjrzAOEUsD9ZMt8fdFbzo3jNAyEWlPAwdVuHw4RD43k="
+      "rebecca.cachix.org-1:ez7qsiSFZq1mqxY1LmRuGnLS5yD2kmKbsF31qHD/D3U="
     ];
     trustedUsers = [ "root" "becca" ];
   };
@@ -112,11 +116,7 @@ in
 
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = packages.all;
-  nixpkgs.overlays = [
-    (import ./overlays/standardnotes.nix)
-    (import ./overlays/nvim.nix)
-    (import ./overlays/cargo.nix)
-  ];
+  nixpkgs.overlays = lib.attrValues overlays;
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database

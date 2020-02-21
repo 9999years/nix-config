@@ -1,5 +1,10 @@
-{ pkgs ? import <nixpkgs> { }, ... }:
-with pkgs;
+{ stdenv, fetchFromGitHub, python2Packages, autoconf, autoreconfHook, automake
+, pkg-config, gcc, gettext, intltool, libtool, aalib, babl, cairo, fontconfig
+, freetype, gdk-pixbuf, gegl_0_4, gexiv2, ghostscript, glib, glib-networking
+, gnome3, gtk2, gtk2-x11, gtk_doc, harfbuzz, isocodes, lcms, lcms2, libexif
+, libheif, libjpeg, libmng, libmypaint, libpng, librsvg, libtiff, libwebp
+, libwmf, libxslt, libzip, mypaint-brushes, openexr, openjpeg, pango, poppler
+, poppler_data, shared-mime-info, webkit, xorg, zlib, ... }:
 let inherit (python2Packages) pygtk wrapPython python;
 in stdenv.mkDerivation rec {
   name = "Glimpse";
@@ -22,8 +27,8 @@ in stdenv.mkDerivation rec {
       Manipulation Program. The goal is to experiment with new ideas and
       expand the use of free software.
     '';
-    license = licenses.gpl;
-    homepage = https://glimpse-editor.org/;
+    license = licenses.gpl3;
+    homepage = "https://glimpse-editor.org/";
     platforms = platforms.all;
     maintainers = [
       {
@@ -46,7 +51,7 @@ in stdenv.mkDerivation rec {
 
   debsBuildBuild = [ stdenv.cc ];
 
-  nativeBuildInputs = with pkgs; [
+  nativeBuildInputs = [
     autoconf
     autoreconfHook
     automake
@@ -57,7 +62,7 @@ in stdenv.mkDerivation rec {
     wrapPython
   ];
 
-  buildInputs = with pkgs; [
+  buildInputs = [
     libtool # 2020-01-21: "Major version might be too new (2.4.6)"
     aalib
     babl
@@ -65,7 +70,6 @@ in stdenv.mkDerivation rec {
     fontconfig
     freetype
     gdk-pixbuf
-    gegl
     gegl_0_4
     gexiv2
     ghostscript
@@ -108,7 +112,7 @@ in stdenv.mkDerivation rec {
     zlib
   ];
 
-  propagatedBuildInputs = [ gegl ];
+  propagatedBuildInputs = [ gegl_0_4 ];
 
   pythonPath = [ pygtk ];
 

@@ -1,8 +1,10 @@
 { config, pkgs, lib, ... }:
 let
-  backgroundPkg = import ./pkg/background-images {inherit pkgs;};
-  background = "${backgroundPkg}/share/wallpapers/night-stars.jpg";
-  sddmBreezeTheme = import ./pkg/sddm-breeze-rbt-theme {inherit pkgs background;};
+  rebeccapkgs = import ./rebeccapkgs { inherit pkgs; };
+  sddmBreezeTheme = rebeccapkgs.sddm-breeze-rbt-theme.override {
+    background =
+      "${rebeccapkgs.background-images}/share/wallpapers/night-stars.jpg";
+  };
 in {
   services.xserver = {
     enable = lib.mkDefault true;
@@ -30,9 +32,6 @@ in {
     };
   };
 
-  environment.systemPackages = [
-    (import ./pkg/background-images {inherit pkgs;})
-    (import ./pkg/sddm-faces {inherit (pkgs) stdenv;})
-    sddmBreezeTheme
-  ];
+  environment.systemPackages =
+    [ rebeccapkgs.background-images rebeccapkgs.sddm-faces sddmBreezeTheme ];
 }

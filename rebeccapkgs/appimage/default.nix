@@ -1,7 +1,6 @@
-{ pkgs ? import <nixpkgs> { }, ... }:
-with pkgs; {
-  installAppImage = { name, version, src, bin ? name, desktopFile ? "${bin}.desktop"
-    , buildInputs ? [ ], }:
+{ stdenv, appimageTools, ... }: {
+  installAppImage = { name, version, src, bin ? name
+    , desktopFile ? "${bin}.desktop", buildInputs ? [ ], }:
     stdenv.mkDerivation rec {
       inherit name version src buildInputs;
 

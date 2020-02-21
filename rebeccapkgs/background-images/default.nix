@@ -1,5 +1,4 @@
-{ pkgs ? import <nixpkgs> { }, }:
-with pkgs;
+{ stdenv, fetchurl, imagemagick7, ... }:
 stdenv.mkDerivation {
   name = "rbt-background-image";
   version = "1.0.0";

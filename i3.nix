@@ -1,8 +1,8 @@
 { config, pkgs, lib, ... }:
 let
-  background = "${
-      import ./pkg/background-images
-    }/share/artwork/backgrounds/night-stars.jpg";
+  rebeccapkgs = import ./rebeccapkgs { inherit pkgs; };
+  background =
+    "${rebeccapkgs.background-images}/share/wallpapers/night-stars.jpg";
 in {
   services.xserver = {
     enable = lib.mkDefault true;

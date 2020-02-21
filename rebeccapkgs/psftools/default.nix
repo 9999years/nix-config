@@ -1,7 +1,5 @@
-{
-  pkgs ? import <nixpkgs> {},
-}:
-with pkgs; stdenv.mkDerivation rec {
+{ stdenv, fetchurl, ... }:
+stdenv.mkDerivation rec {
   name = "psftools";
   version = "0.5.1";
 
@@ -12,9 +10,9 @@ with pkgs; stdenv.mkDerivation rec {
   };
 
   preInstall = ''
-      BINDIR="$out/bin"
-      CONSOLEFONTDIR="$out/share/consolefonts"
-      mkdir -p $BINDIR $CONSOLEFONTDIR
-      export MAKEFLAGS="BINDIR=$BINDIR CONSOLEFONTDIR=$CONSOLEFONTDIR"
-    '';
+    BINDIR="$out/bin"
+    CONSOLEFONTDIR="$out/share/consolefonts"
+    mkdir -p $BINDIR $CONSOLEFONTDIR
+    export MAKEFLAGS="BINDIR=$BINDIR CONSOLEFONTDIR=$CONSOLEFONTDIR"
+  '';
 }

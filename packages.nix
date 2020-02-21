@@ -183,7 +183,7 @@ let
       poppler_utils # pdftotext
       mupdf # mutool
       (highPriority ghostscript)
-      imagemagick7Big # Derived Apache 2.0
+      imagemagick7 # Derived Apache 2.0
       # bingrep # Binary introspection, https://github.com/m4b/bingrep
       xsv # CSV data manipulation and analysis tool, https://github.com/BurntSushi/xsv
       jq # MIT

@@ -200,13 +200,7 @@ let
   };
 
   langs = with pkgs; {
-    agda = [
-      agdaIowaStdlib
-      agdaPrelude
-      # AgdaStdlib
-      # haskellPackages.Agda
-      # haskellPackages.Agda-executable
-    ];
+    agda = [ haskellPackages.Agda AgdaStdlib ];
 
     bash = [
       shellcheck

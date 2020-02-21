@@ -1,5 +1,4 @@
-{ pkgs ? import <nixpkgs> {}, }:
-with pkgs;
+{ stdenv, fetchFromGitHub, fetchzip, ncurses, ruby, ... }:
 stdenv.mkDerivation rec {
   name = "colortest";
   version = "1.0.0";
@@ -28,7 +27,8 @@ stdenv.mkDerivation rec {
     (
       fetchzip {
         name = "color-tables";
-        url = "https://gist.github.com/vivkin/567896630dbc588ad470b8196c601ad1/archive/f0fea2586ed3f2aa4785f48c09fdaa13ba4c06e1.zip";
+        url =
+          "https://gist.github.com/vivkin/567896630dbc588ad470b8196c601ad1/archive/f0fea2586ed3f2aa4785f48c09fdaa13ba4c06e1.zip";
         sha512 =
           "306g1z1gan17c00w1y1ha37ck58vbwdn29ry099297lxsmbk5kfha0pm932102y5369mwbycdai32qm27lj9ky4lvnxmh90w6k0y3ba";
       }

@@ -1,5 +1,5 @@
-{ stdenv, fetchFromGitHub, fetchzip, ncurses, ruby, ... }:
-stdenv.mkDerivation rec {
+{ stdenvNoCC, fetchFromGitHub, fetchzip, ncurses, ruby, ... }:
+stdenvNoCC.mkDerivation rec {
   name = "colortest";
   version = "1.0.0";
 

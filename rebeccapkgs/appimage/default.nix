@@ -1,7 +1,7 @@
-{ stdenv, appimageTools, ... }: {
+{ stdenvNoCC, appimageTools, ... }: {
   installAppImage = { name, version, src, bin ? name
     , desktopFile ? "${bin}.desktop", buildInputs ? [ ], }:
-    stdenv.mkDerivation rec {
+    stdenvNoCC.mkDerivation rec {
       inherit name version src buildInputs;
 
       appImageName = "${name}-AppImage";

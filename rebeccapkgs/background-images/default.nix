@@ -1,5 +1,5 @@
-{ stdenv, fetchurl, imagemagick7, ... }:
-stdenv.mkDerivation {
+{ stdenvNoCC, fetchurl, imagemagick7, ... }:
+stdenvNoCC.mkDerivation {
   name = "rbt-background-image";
   version = "1.0.0";
   src = fetchurl {

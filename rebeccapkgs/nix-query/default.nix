@@ -1,4 +1,4 @@
-{ stdenv, lib, rustPlatform, fetchFromGitHub, ... }:
+{ lib, rustPlatform, fetchFromGitHub, ... }:
 rustPlatform.buildRustPackage rec {
   pname = "nix-query";
   version = "1.1.0";

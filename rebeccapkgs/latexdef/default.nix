@@ -1,4 +1,4 @@
-{ stdenv, lib, rustPlatform, fetchFromGitHub, ... }:
+{ lib, rustPlatform, fetchFromGitHub, ... }:
 rustPlatform.buildRustPackage rec {
   pname = "latexdef";
   version = "0.4.2";

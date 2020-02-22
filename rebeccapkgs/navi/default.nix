@@ -1,5 +1,5 @@
-{ stdenv, fetchFromGitHub, makeWrapper, fzf, perl, ncurses, bash, ... }:
-stdenv.mkDerivation rec {
+{ stdenvNoCC, fetchFromGitHub, makeWrapper, fzf, perl, ncurses, bash, ... }:
+stdenvNoCC.mkDerivation rec {
   name = "navi";
   version = "0.18.3";
 

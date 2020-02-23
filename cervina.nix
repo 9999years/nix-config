@@ -17,16 +17,17 @@
 
   # Save our fans / CPU temps.
   boot.kernelModules = [ "coretemp" ];
-  powerManagement.cpuFreqGovernor = "powersave";
-  powerManagement.powertop.enable = true;
+  powerManagement = {
+    enable = true;
+    cpuFreqGovernor = "powersave";
+    powertop.enable = true;
+  };
 
   boot.loader.grub.fontSize = 32;
 
   i18n = {
     consoleFont = "ter-c32n";
-    consolePackages = with pkgs; [
-      terminus_font
-    ];
+    consolePackages = with pkgs; [ terminus_font ];
   };
 
   services.xserver.dpi = 175;

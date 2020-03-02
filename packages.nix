@@ -35,6 +35,7 @@ let
       standardnotes
       calibre # ebook mgmt
       # libreoffice-fresh
+      signal-desktop
     ];
 
     misc = [

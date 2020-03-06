@@ -24,6 +24,7 @@ let
       becca.amazing-marvin
       franz # chat tool
       gparted
+      hfsprogs # macos file system support for gparted, etc.
       kdeApplications.spectacle # screenshot tool
       feh # photo viewer
       shotwell # photo viewer
@@ -47,6 +48,7 @@ let
       lynx
       becca.colortest
       unstable.pastel
+      calc
     ];
 
     fonts = [

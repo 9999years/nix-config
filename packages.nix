@@ -195,6 +195,7 @@ let
       # bingrep # Binary introspection, https://github.com/m4b/bingrep
       xsv # CSV data manipulation and analysis tool, https://github.com/BurntSushi/xsv
       jq # MIT
+      k2pdfopt
     ];
 
     math = [

@@ -299,6 +299,7 @@ let
 
     rust = [
       rustup
+      becca.rust-analyzer
       # cargo-deps # Generates a dep graph, https://github.com/m-cat/cargo-deps
       cargo-edit # https://github.com/killercup/cargo-edit
       cargo-update # https://github.com/nabijaczleweli/cargo-update

@@ -18,6 +18,6 @@ stdenv.mkDerivation rec {
     mkdir -p $out/bin
 
     chmod +x rust-analyzer-linux
-    cp rust-analyzer-linux $out/bin/rust-analyzer
+    cp rust-analyzer-linux $out/bin/
   '';
 }

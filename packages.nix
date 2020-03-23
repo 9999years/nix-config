@@ -112,7 +112,11 @@ let
       vim-vint # vimscript lint: https://github.com/Kuniwak/vint
     ];
 
-    vscode = [ vscode ];
+    vscode = [
+      (vscode-with-extensions.override {
+        vscodeExtensions = [ vscode-extensions.matklad.rust-analyzer ];
+      })
+    ];
 
     hardware = [
       drm_info # display info
@@ -300,7 +304,8 @@ let
 
     rust = [
       rustup
-      becca.rust-analyzer
+      # becca.rust-analyzer
+      rust-analyzer
       # cargo-deps # Generates a dep graph, https://github.com/m-cat/cargo-deps
       cargo-edit # https://github.com/killercup/cargo-edit
       cargo-update # https://github.com/nabijaczleweli/cargo-update

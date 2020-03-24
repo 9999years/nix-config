@@ -6,7 +6,7 @@ stdenv.mkDerivation rec {
     url =
       "https://github.com/rust-analyzer/rust-analyzer/releases/download/2020-03-23/rust-analyzer-linux";
     sha512 =
-      "1iwh0203979295nbc9mrhiha0gvm45vrb94v04njf3r2iaflazgl92jwp11kw53m5cjsh2206q5rrhl90xhw9xb1qph9idknz2qkxah";
+      "0shm6wznwm0flriw5p5l62yjh05pz4ncb9dlxv523pk4xagk3airdhkmrvmwdi2s8vhj30pl1rrfv39pwpgiy5wnkllr0fmdmh76dlx";
   };
   unpackPhase = ''
     cp $src $(stripHash $src)

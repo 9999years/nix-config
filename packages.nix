@@ -113,10 +113,10 @@ let
     ];
 
     vscode = [
-      # (vscode-with-extensions.override {
-      # vscodeExtensions = [ vscode-extensions.matklad.rust-analyzer ];
-      # })
-      vscode
+      (vscode-with-extensions.override {
+        vscodeExtensions = [ becca.vscode-cpptools ];
+      })
+      # vscode
     ];
 
     hardware = [

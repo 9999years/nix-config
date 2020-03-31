@@ -114,7 +114,10 @@ let
 
     vscode = [
       # (vscode-with-extensions.override {
-      # vscodeExtensions = [ vscode-extensions.matklad.rust-analyzer ];
+      # vscodeExtensions = with vscode-extensions; [
+      # ms-vscode.cpptools
+      # llvm-org.lldb-vscode
+      # ];
       # })
       vscode
     ];

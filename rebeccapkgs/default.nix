@@ -22,6 +22,7 @@ let
     rust-analyzer = callPackage ./rust-analyzer { };
     sddm-breeze-rbt-theme = callPackage ./sddm-breeze-rbt-theme { };
     sddm-faces = callPackage ./sddm-faces { };
+    vscode-cpptools = callPackage ./vscode-cpptools { };
   };
 
 in rebeccapkgs

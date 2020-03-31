@@ -114,7 +114,10 @@ let
 
     vscode = [
       (vscode-with-extensions.override {
-        vscodeExtensions = [ becca.vscode-cpptools ];
+        vscodeExtensions = with vscode-extensions; [
+          ms-vscode.cpptools
+          llvm-org.lldb-vscode
+        ];
       })
       # vscode
     ];

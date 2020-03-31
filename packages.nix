@@ -113,13 +113,13 @@ let
     ];
 
     vscode = [
-      (vscode-with-extensions.override {
-        vscodeExtensions = with vscode-extensions; [
-          ms-vscode.cpptools
-          llvm-org.lldb-vscode
-        ];
-      })
-      # vscode
+      # (vscode-with-extensions.override {
+      # vscodeExtensions = with vscode-extensions; [
+      # ms-vscode.cpptools
+      # llvm-org.lldb-vscode
+      # ];
+      # })
+      vscode
     ];
 
     hardware = [

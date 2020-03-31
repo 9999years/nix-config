@@ -10,6 +10,15 @@ vscode-utils.buildVscodeExtension rec {
     sha512 =
       "3kr0n96fph0hz4x2hyid38rj50lm16w8br75ihkrzrw0qps8pvz19hxslj97ljrc93hm7kz7kacqmpk87gjsc2q9d2cbf4yby3jywdj";
   };
+  buildPhase = ''
+    chmod +x bin/Microsoft.VSCode.CPP.Extension.linux \
+      || chmod +x bin/cpptools
+    chmod +x bin/Microsoft.VSCode.CPP.IntelliSense.Msvc.linux \
+      || chmod +x bin/cpptools-srv
+    chmod +x debugAdapters/mono.linux-x86_64
+    chmod +x debugAdapters/OpenDebugAD7
+    chmod +x LLVM/bin/clang-format
+  '';
   dontPatchElf = false;
   dontStrip = false;
 }

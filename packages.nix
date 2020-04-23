@@ -40,6 +40,7 @@ let
     ];
 
     misc = [
+      patchelf
       youtube-dl
       graphviz
       hyperfine
@@ -154,7 +155,6 @@ let
       wget
       rsync
       (lowPriority binutils-unwrapped)
-      nnn # File browser
       ranger # File browser
       up # Ultimate Plumber
       becca.mdv # markdown viewer

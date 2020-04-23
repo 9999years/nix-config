@@ -212,7 +212,7 @@ let
   };
 
   langs = with pkgs; {
-    agda = [ haskellPackages.Agda AgdaStdlib ];
+    # agda = [ haskellPackages.Agda AgdaStdlib ];
 
     bash = [
       shellcheck
@@ -229,7 +229,7 @@ let
       automake
     ];
 
-    coq = [ coq ] ++ (with coqPackages; [ mathcomp interval equations corn ]);
+    # coq = [ coq ] ++ (with coqPackages; [ mathcomp interval equations corn ]);
 
     dhall = [ dhall dhall-bash dhall-json ];
 
@@ -262,7 +262,7 @@ let
 
     node = [ nodejs-12_x ];
 
-    perl = [ perl ]; # If nothing else, latexmk needs it.
+    perl = [ perl ];
 
     python = [
       (highPriority (python37.withPackages (pyPkgs:

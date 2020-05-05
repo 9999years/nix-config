@@ -231,25 +231,11 @@ let
 
     # coq = [ coq ] ++ (with coqPackages; [ mathcomp interval equations corn ]);
 
-    dhall = [ dhall dhall-bash dhall-json ];
+    # dhall = [ dhall dhall-bash dhall-json ];
 
     # gluon = [ becca.gluon ];
 
     go = [ go ];
-
-    haskell = [ ghc cabal-install stack stylish-haskell hlint ]
-      ++ (with haskellPackages; [
-        happy
-        pointfree
-        apply-refact
-        hspec
-        hindent
-        hdevtools
-      ]) ++ (let
-        all-hies = import
-          (fetchTarball "https://github.com/infinisil/all-hies/tarball/master")
-          { };
-      in [ (all-hies.selection { selector = p: { inherit (p) ghc865; }; }) ]);
 
     java = [ openjdk ];
 

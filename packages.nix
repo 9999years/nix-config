@@ -4,12 +4,11 @@
   "https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz") { }
 , ... }:
 let
-  lib = pkgs.lib;
+  inherit (pkgs) lib rebecca;
 
   withPriority = p: drv: drv.overrideAttrs (old: { meta.priority = p; });
   lowPriority = withPriority "15";
   highPriority = withPriority "-1";
-  becca = import ./rebeccapkgs { inherit pkgs; };
 
   sets = with pkgs; {
     gui = [
@@ -19,19 +18,15 @@ let
       spotify # unfree
       discord # unfree
       typora # md editor (unfree)
-      becca.fontbase
-      becca.glimpse
-      becca.amazing-marvin
-      franz # chat tool
+      rebecca.glimpse
       gparted
       hfsprogs # macos file system support for gparted, etc.
       kdeApplications.spectacle # screenshot tool
       feh # photo viewer
-      shotwell # photo viewer
       qalculate-gtk # calculator
       evince # pdf viewer
       qpdfview # pdf viewer with tabs
-      becca.background-images
+      rebecca.background-images
       psensor # view CPU usage / temps, etc.
       standardnotes
       calibre # ebook mgmt
@@ -46,9 +41,7 @@ let
       hyperfine
       units
       htop
-      lynx
-      becca.colortest
-      unstable.pastel
+      rebecca.colortest
       calc
     ];
 
@@ -77,41 +70,18 @@ let
       # qtkeychain
     ];
 
-    emacs = [
-      emacs
-      nixfmt # for nix-mode formatting
-      ispell
-      # rustc
-      (lowPriority cargo)
-      # rls
-      unstable.rnix-lsp
-      unstable.texlab
-      ruby
-      solargraph
-      (python37.withPackages (pyPkgs:
-        with pyPkgs; [
-          python-language-server
-          black
-          grip
-          mypy
-          flake8
-          pycodestyle
-          pylint
-        ]))
-    ] ++ langs.clang ++ (with nodePackages; [
+    vim = [
+      neovim
+      vim-vint # vimscript lint: https://github.com/Kuniwak/vint
+    ] ++ (with nodePackages; [
       vscode-css-languageserver-bin
       vscode-html-languageserver-bin
       # vscode-json-languageserver
       bash-language-server
-      tern
-      typescript
-      typescript-language-server
+      # tern
+      # typescript
+      # typescript-language-server
     ]);
-
-    vim = [
-      neovim
-      vim-vint # vimscript lint: https://github.com/Kuniwak/vint
-    ];
 
     vscode = [
       # (vscode-with-extensions.override {
@@ -157,7 +127,6 @@ let
       (lowPriority binutils-unwrapped)
       ranger # File browser
       up # Ultimate Plumber
-      becca.mdv # markdown viewer
       mediainfo
       exiftool
       odt2txt
@@ -178,19 +147,19 @@ let
       bat # https://github.com/sharkdp/bat
       # ruplacer
       ripgrep # rg, https://github.com/BurntSushi/ripgrep
-      ripgrep-all # rga
-      sd # Find-and-replacer, https://github.com/chmln/sd
+      # ripgrep-all # rga
+      # sd # Find-and-replacer, https://github.com/chmln/sd
       skim # Fuzzy finder, https://github.com/lotabout/skim
-      toilet # command-line ascii art generator
+      # toilet # command-line ascii art generator
       colordiff # GPL v3
       hexd
       tokei # Cloc, https://github.com/XAMPPRocky/tokei
       sourceHighlight # GPL v3
       fpp # Facebook PathPicker
       yank
-      python37Packages.howdoi
-      tldr
-      becca.navi
+      # python37Packages.howdoi
+      # tldr
+      # rebecca.navi
     ];
 
     manipulation = [
@@ -198,16 +167,17 @@ let
       pdftk
       poppler_utils # pdftotext
       mupdf # mutool
+      k2pdfopt
       (highPriority ghostscript)
       imagemagick7 # Derived Apache 2.0
       # bingrep # Binary introspection, https://github.com/m4b/bingrep
-      xsv # CSV data manipulation and analysis tool, https://github.com/BurntSushi/xsv
+      # xsv # CSV data manipulation and analysis tool, https://github.com/BurntSushi/xsv
       jq # MIT
-      k2pdfopt
     ];
 
     math = [
-      lean # theorem prover
+      # lean # theorem prover
+      # mathematica
     ];
   };
 
@@ -233,22 +203,23 @@ let
 
     # dhall = [ dhall dhall-bash dhall-json ];
 
-    # gluon = [ becca.gluon ];
+    # gluon = [ rebecca.gluon ];
 
-    go = [ go ];
+    # go = [ go ];
 
     java = [ openjdk ];
 
     nix = [
+      unstable.rnix-lsp
       nixfmt
       nix-index # nix-index and nix-locate
       cachix
-      becca.nix-query
+      rebecca.nix-query
     ];
 
     node = [ nodejs-12_x ];
 
-    perl = [ perl ];
+    # perl = [ perl ];
 
     python = [
       (highPriority (python37.withPackages (pyPkgs:
@@ -265,14 +236,9 @@ let
           grip
           pillow
           pyyaml
-          pygments
-          arrow
-          atomicwrites
           attrs
           beautifulsoup4
           cached-property
-          cachetools
-          colorama
           more-itertools
           numpy
           pynvim
@@ -287,14 +253,9 @@ let
         ])))
     ];
 
-    ruby = [
-      ruby # BDS 2-clause
-      solargraph # ruby LSP
-    ];
-
     rust = [
       rustup
-      becca.rust-analyzer
+      # rebecca.rust-analyzer
       # rust-analyzer
       # cargo-deps # Generates a dep graph, https://github.com/m-cat/cargo-deps
       cargo-edit # https://github.com/killercup/cargo-edit
@@ -307,8 +268,9 @@ let
     ];
 
     tex = [
-      becca.latexdef
-      (texlive.combine { inherit (texlive) scheme-medium latexmk; })
+      rebecca.latexdef
+      unstable.texlab
+      (texlive.combine { inherit (texlive) scheme-small latexmk; })
     ];
   };
 

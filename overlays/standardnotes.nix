@@ -1,6 +1,5 @@
 self: super: {
-  standardnotes = (let rebeccapkgs = import ../rebeccapkgs { pkgs = super; };
-  in rebeccapkgs.appimage.installAppImage {
+  standardnotes = (self.rebecca.appimage.installAppImage {
     inherit (super.standardnotes) name version src;
     bin = "standard-notes";
   }) // {

@@ -19,6 +19,7 @@ let
       discord # unfree
       typora # md editor (unfree)
       rebecca.glimpse
+      inkscape
       gparted
       hfsprogs # macos file system support for gparted, etc.
       kdeApplications.spectacle # screenshot tool

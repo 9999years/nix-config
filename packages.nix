@@ -33,6 +33,7 @@ let
       calibre # ebook mgmt
       # libreoffice-fresh
       signal-desktop
+      unstable.todoist-electron
     ];
 
     misc = [

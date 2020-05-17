@@ -97,7 +97,6 @@ in {
       "rebecca.cachix.org-1:ez7qsiSFZq1mqxY1LmRuGnLS5yD2kmKbsF31qHD/D3U="
     ];
     trustedUsers = [ "root" "becca" ];
-    useSandbox = true;
   };
 
   fonts = {

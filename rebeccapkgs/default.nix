@@ -1,5 +1,6 @@
-{ pkgs ? import <nixpkgs> { }, }:
+{ pkgs ? import <nixpkgs> { } }:
 let
+  unstable = if pkgs ? unstable then pkgs.unstable else pkgs;
   allPkgs = pkgs // rebeccapkgs;
   callPackage = path: overrides:
     let f = import path;
@@ -15,7 +16,7 @@ let
     glimpse = callPackage ./glimpse { };
     latexdef = callPackage ./latexdef { };
     fontbase = callPackage ./fontbase { };
-    mdv = import ./mdv { inherit pkgs; };
+    mdcat = callPackage ./mdcat { inherit (unstable) rustPlatform; };
     navi = callPackage ./navi { };
     nix-query = callPackage ./nix-query { };
     psftools = callPackage ./psftools { };

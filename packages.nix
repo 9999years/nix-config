@@ -1,10 +1,6 @@
-{ pkgs ? import <nixpkgs> { }
-  # nixos-unstable
-, unstable ? import (fetchTarball
-  "https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz") { }
-, ... }:
+{ pkgs ? import <nixpkgs> { }, ... }:
 let
-  inherit (pkgs) lib rebecca;
+  inherit (pkgs) lib rebecca unstable;
 
   withPriority = p: drv: drv.overrideAttrs (old: { meta.priority = p; });
   lowPriority = withPriority "15";
@@ -162,6 +158,7 @@ let
       # python37Packages.howdoi
       # tldr
       # rebecca.navi
+      rebecca.mdcat
     ];
 
     manipulation = [

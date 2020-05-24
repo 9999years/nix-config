@@ -1,2 +1,2 @@
-self: super: { rebecca = import ../rebeccapkgs { pkgs = super; }; }
+self: super: { rebecca = import ../rebeccapkgs { pkgs = self; }; }
 

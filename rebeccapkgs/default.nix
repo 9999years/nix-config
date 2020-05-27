@@ -1,7 +1,7 @@
 { pkgs ? import <nixpkgs> { } }:
 let
   unstable = if pkgs ? unstable then pkgs.unstable else pkgs;
-  allPkgs = pkgs // rebeccapkgs;
+  allPkgs = pkgs // { inherit (unstable) rustPlatform; } // rebeccapkgs;
   callPackage = path: overrides:
     let f = import path;
     in f
@@ -12,11 +12,12 @@ let
     amazing-marvin = callPackage ./amazing-marvin { };
     appimage = callPackage ./appimage { };
     background-images = callPackage ./background-images { };
+    broot = callPackage ./broot { };
     colortest = callPackage ./colortest { };
     glimpse = callPackage ./glimpse { };
     latexdef = callPackage ./latexdef { };
     fontbase = callPackage ./fontbase { };
-    mdcat = callPackage ./mdcat { inherit (unstable) rustPlatform; };
+    mdcat = callPackage ./mdcat { };
     navi = callPackage ./navi { };
     nix-query = callPackage ./nix-query { };
     psftools = callPackage ./psftools { };

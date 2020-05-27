@@ -135,6 +135,7 @@ let
       unzip
       atool
       p7zip
+      rebecca.broot
     ];
 
     text = [

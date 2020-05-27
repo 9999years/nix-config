@@ -12,7 +12,7 @@ rustPlatform.buildRustPackage rec {
   cargoSha256 = "1cxvx51zkmhszmgwsi0aj469xz98v5nk79zvqfyma27gsnh8jczr";
 
   postInstall = ''
-    fish_completions="$out/share/fish/completions/"
+    fish_completions="$out/share/fish/vendor_completions.d/"
     mkdir -p $fish_completions
     find $releaseDir -name br.fish -o -name broot.fish -exec cp {} $fish_completions \;
 
@@ -30,7 +30,7 @@ rustPlatform.buildRustPackage rec {
     sed -i "s/#date/$(date +'%Y\/%m\/%d')/g" man/page
     cp man/page $out/share/man/man1/broot.1
 
-    fish_functions="$out/share/fish/functions/"
+    fish_functions="$out/share/fish/vendor_functions.d/"
     mkdir -p $fish_functions
     $out/bin/broot --print-shell-function fish > $fish_functions/br.fish
   '';

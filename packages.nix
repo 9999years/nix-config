@@ -82,13 +82,14 @@ let
     ]);
 
     vscode = [
-      # (vscode-with-extensions.override {
-      # vscodeExtensions = with vscode-extensions; [
-      # ms-vscode.cpptools
-      # llvm-org.lldb-vscode
-      # ];
-      # })
-      vscode
+      (unstable.vscode-with-extensions.override {
+        vscodeExtensions = with unstable.vscode-extensions;
+          [
+            # ms-vscode.cpptools
+            # llvm-org.lldb-vscode
+            matklad.rust-analyzer
+          ];
+      })
     ];
 
     hardware = [

@@ -21,7 +21,6 @@ let
     navi = callPackage ./navi { };
     nix-query = callPackage ./nix-query { };
     psftools = callPackage ./psftools { };
-    rust-analyzer = callPackage ./rust-analyzer { };
     sddm-breeze-rbt-theme = callPackage ./sddm-breeze-rbt-theme { };
     sddm-faces = callPackage ./sddm-faces { };
     todoist-gui = callPackage ./todoist-gui { };

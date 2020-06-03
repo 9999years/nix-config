@@ -25,7 +25,7 @@ let
       qpdfview # pdf viewer with tabs
       rebecca.background-images
       psensor # view CPU usage / temps, etc.
-      standardnotes
+      unstable.standardnotes
       calibre # ebook mgmt
       # libreoffice-fresh
       signal-desktop

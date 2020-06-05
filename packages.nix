@@ -136,7 +136,6 @@ let
       zip
       unzip
       atool
-      p7zip
       rebecca.broot
     ];
 

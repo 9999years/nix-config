@@ -1,7 +1,11 @@
-{ rustPlatform, fetchCrate }:
+{ stdenv, lib, rustPlatform, fetchCrate, libgit2, libiconv, darwin ? null }:
 rustPlatform.buildRustPackage rec {
   pname = "broot";
   version = "0.13.6";
+
+  buildInputs = [ libgit2 libiconv ]
+    ++ (lib.optional stdenv.targetPlatform.isDarwin
+      darwin.apple_sdk.frameworks.Security);
 
   src = fetchCrate {
     inherit version;

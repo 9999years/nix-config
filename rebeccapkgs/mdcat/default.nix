@@ -1,4 +1,4 @@
-{ rustPlatform, fetchCrate, openssl, pkg-config }:
+{ stdenv, lib, rustPlatform, fetchCrate, openssl, pkg-config, darwin ? null }:
 rustPlatform.buildRustPackage rec {
   pname = "mdcat";
   version = "0.17.1";
@@ -12,7 +12,8 @@ rustPlatform.buildRustPackage rec {
   cargoSha256 = "1pljgnckardy3j81im6k5dssz794c7vjx1dfr7950ndhrzwv7p22";
 
   nativeBuildInputs = [ pkg-config ];
-  buildInputs = [ openssl ];
+  buildInputs = [ openssl ] ++ (lib.optional stdenv.targetPlatform.isDarwin
+    darwin.apple_sdk.frameworks.Security);
 
   # DNS resolution failure in tests.
   doCheck = false;

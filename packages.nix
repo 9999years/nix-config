@@ -13,7 +13,7 @@ let
       lastpass-cli
       spotify # unfree
       discord # unfree
-      typora # md editor (unfree)
+      unstable.typora # md editor (unfree)
       rebecca.glimpse
       inkscape
       gparted

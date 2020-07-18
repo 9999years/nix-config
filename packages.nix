@@ -191,6 +191,7 @@ let
     ];
 
     clang = [
+      gcc
       gnumake
       clang
       # llvmPackages.libclang

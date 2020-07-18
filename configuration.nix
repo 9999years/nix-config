@@ -20,19 +20,21 @@ in {
   ];
 
   boot.loader = {
-    systemd-boot.enable = true;
-    efi.canTouchEfiVariables = true;
-    grub = {
-      useOSProber = true;
-      configurationLimit = 10;
-      font = "${pkgs.hack-font}/share/fonts/hack/Hack-Regular.ttf";
-      fontSize = 24;
+    systemd-boot = {
+	    enable = true;
+	    configurationLimit = 10;
+	    editor = false;
     };
+    efi.canTouchEfiVariables = true;
+    grub.useOSProber = true;
   };
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
   # Set the font earlier in the boot process.
-  boot.earlyVconsoleSetup = true;
+  console = {
+  	earlySetup = true;
+	keyMap = "us";
+  };
   boot.tmpOnTmpfs = lib.mkDefault true; # Keep /tmp in RAM
 
   hardware.enableRedistributableFirmware = true;
@@ -49,7 +51,6 @@ in {
   i18n = {
     # Note: We don't set a font because sometimes the generated
     # hardware-configuration.nix picks a better (larger) one for high-DPI displays.
-    consoleKeyMap = "us";
     defaultLocale = "en_US.UTF-8";
     inputMethod = {
       enabled = "ibus";
@@ -122,5 +123,5 @@ in {
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
 
-  system.stateVersion = "19.09"; # Did you read the comment?
+  system.stateVersion = "20.03"; # Did you read the comment?
 }

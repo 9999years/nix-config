@@ -20,10 +20,10 @@ in {
         enable = true;
         theme = "${sddmBreezeTheme}/share/sddm/themes/breeze-rbt";
       };
+      defaultSession = "plasma5";
     };
 
     desktopManager = rec {
-      default = "plasma5";
       wallpaper = {
         mode = "fill";
         combineScreens = false;

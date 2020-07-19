@@ -17,6 +17,8 @@ let
       rebecca.glimpse
       inkscape
       gparted
+      dosfstools # for fat/fat32 filesystems
+      mtools # for fat/fat32 filesystems
       hfsprogs # macos file system support for gparted, etc.
       kdeApplications.spectacle # screenshot tool
       feh # photo viewer

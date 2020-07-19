@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }: {
   services.printing.enable = true;
-  services.printing.drivers = [ pkgs.hplip ];
+  services.printing.drivers = [ pkgs.hplip pkgs.rebecca.star-tsp100 ];
 
   hardware.printers.ensurePrinters = [{
     description = "Noah’s Printer (Trouse)";

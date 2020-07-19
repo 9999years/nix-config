@@ -23,6 +23,7 @@ let
     psftools = callPackage ./psftools { };
     sddm-breeze-rbt-theme = callPackage ./sddm-breeze-rbt-theme { };
     sddm-faces = callPackage ./sddm-faces { };
+    star-tsp100 = callPackage ./star-tsp100 { };
     todoist-gui = callPackage ./todoist-gui { };
     vscode-cpptools = callPackage ./vscode-cpptools { };
   };

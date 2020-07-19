@@ -19,16 +19,13 @@
   boot.kernelModules = [ "coretemp" ];
   powerManagement = {
     enable = true;
-    cpuFreqGovernor = "powersave";
     powertop.enable = true;
   };
 
   boot.loader.grub.fontSize = 32;
 
-  i18n = {
-    consoleFont = "ter-c32n";
-    consolePackages = with pkgs; [ terminus_font ];
-  };
+  console.packages = with pkgs; [ terminus_font ];
+  console.font = "ter-c32n";
 
   services.xserver.dpi = 175;
 

@@ -226,10 +226,10 @@ let
     # perl = [ perl ];
 
     python = [
-      (highPriority (python37.withPackages (pyPkgs:
+      (highPriority (unstable.python38.withPackages (pyPkgs:
         with pyPkgs; [
           # Linters, etc.
-          black
+          (black.overridePythonAttrs { doCheck = false; })
           mypy
           flake8
           pycodestyle

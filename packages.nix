@@ -60,12 +60,13 @@ let
       twitter-color-emoji
     ];
 
-    git = [
-      gitAndTools.gitFull # GPL v2
-      git-lfs # MIT
-      gitAndTools.hub # github hub, MIT
-      gitAndTools.diff-so-fancy
-      nixpkgs.gitAndTools.delta
+    git = (with unstable.gitAndTools; [
+      gitFull # GPL v2
+      hub # github hub, MIT
+      diff-so-fancy
+      delta
+    ]) ++ [
+      unstable.git-lfs # MIT
       bfg-repo-cleaner
       tig # git text-gui
       # qtkeychain

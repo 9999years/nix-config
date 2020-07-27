@@ -65,6 +65,7 @@ let
       git-lfs # MIT
       gitAndTools.hub # github hub, MIT
       gitAndTools.diff-so-fancy
+      nixpkgs.gitAndTools.delta
       bfg-repo-cleaner
       tig # git text-gui
       # qtkeychain

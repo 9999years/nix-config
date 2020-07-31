@@ -21,9 +21,9 @@ in {
 
   boot.loader = {
     systemd-boot = {
-	    enable = true;
-	    configurationLimit = 10;
-	    editor = false;
+      enable = true;
+      configurationLimit = 10;
+      editor = false;
     };
     efi.canTouchEfiVariables = true;
     grub.useOSProber = true;
@@ -32,8 +32,8 @@ in {
   boot.kernelPackages = pkgs.linuxPackages_latest;
   # Set the font earlier in the boot process.
   console = {
-  	earlySetup = true;
-	keyMap = "us";
+    earlySetup = true;
+    keyMap = "us";
   };
   boot.tmpOnTmpfs = lib.mkDefault true; # Keep /tmp in RAM
 

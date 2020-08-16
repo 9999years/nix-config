@@ -29,10 +29,10 @@
 
   services.xserver.dpi = 175;
 
-  environment.systemPackages = with pkgs;
-    [
-      light # backlight control
-    ];
+  environment.systemPackages = with pkgs; [
+    light # backlight control
+    mathematica
+  ];
 
   hardware.bumblebee.enable = true;
   hardware.pulseaudio.enable = true;

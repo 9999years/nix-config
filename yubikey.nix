@@ -8,7 +8,6 @@
     gpg-connect-agent /bye
     export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"
   '';
-  hardware.u2f.enable = lib.mkDefault true;
   programs = {
     ssh.startAgent = lib.mkDefault false;
     gnupg.agent = {

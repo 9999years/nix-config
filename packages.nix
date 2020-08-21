@@ -15,7 +15,7 @@ let
       discord # unfree
       # typora # md editor (unfree)
       rebecca.glimpse
-      inkscape
+      # inkscape
       gparted
       dosfstools # for fat/fat32 filesystems
       mtools # for fat/fat32 filesystems

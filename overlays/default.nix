@@ -1,5 +1,4 @@
 {
-  unstable = import ./unstable.nix;
   cargo = import ./cargo.nix;
   emacs = import ./emacs.nix;
   nvim = import ./nvim.nix;

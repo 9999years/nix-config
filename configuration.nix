@@ -2,10 +2,7 @@
 # nixos-help
 { config, pkgs, lib, ... }:
 let
-  unstableTarball = fetchTarball
-    "https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz";
-  unstable = import unstableTarball { config = config.nixpkgs.config; };
-  packages = import ./packages.nix { inherit pkgs unstable; };
+  packages = import ./packages.nix { inherit pkgs; };
   overlays = import ./overlays;
 in {
   imports = [

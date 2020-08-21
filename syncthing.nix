@@ -26,5 +26,5 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [ unstable.syncthingtray ];
+  environment.systemPackages = with pkgs; [ syncthingtray ];
 }

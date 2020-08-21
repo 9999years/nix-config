@@ -1,7 +1,6 @@
 { pkgs ? import <nixpkgs> { } }:
 let
-  unstable = if pkgs ? unstable then pkgs.unstable else pkgs;
-  allPkgs = pkgs // { inherit (unstable) rustPlatform; } // rebeccapkgs;
+  allPkgs = pkgs // rebeccapkgs;
   callPackage = path: overrides:
     let f = import path;
     in f

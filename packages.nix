@@ -264,6 +264,7 @@ let
       # rebecca.rust-analyzer
       # rust-analyzer
       # cargo-deps # Generates a dep graph, https://github.com/m-cat/cargo-deps
+      cargo-generate # https://github.com/ashleygwilliams/cargo-generate
       cargo-edit # https://github.com/killercup/cargo-edit
       cargo-update # https://github.com/nabijaczleweli/cargo-update
       cargo-watch # Watches source files, https://github.com/passcod/cargo-watch

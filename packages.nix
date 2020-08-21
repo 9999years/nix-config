@@ -267,7 +267,6 @@ let
       cargo-edit # https://github.com/killercup/cargo-edit
       cargo-update # https://github.com/nabijaczleweli/cargo-update
       cargo-watch # Watches source files, https://github.com/passcod/cargo-watch
-      cargo-tree # Dep tree. https://github.com/sfackler/cargo-tree
       cargo-release # https://github.com/sunng87/cargo-release
       cargo-outdated # https://github.com/kbknapp/cargo-outdated
       cargo-make # https://github.com/sagiegurari/cargo-make

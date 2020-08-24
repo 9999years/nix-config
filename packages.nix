@@ -34,6 +34,7 @@ let
       todoist-electron
       slack
       ripcord
+      jetbrains.idea-community
     ];
 
     misc = [
@@ -60,6 +61,7 @@ let
       xorg.fontsunmisc
       wineWowPackages.fonts
       twitter-color-emoji
+      jetbrains.mono # https://www.jetbrains.com/lp/mono/
     ];
 
     git = (with gitAndTools; [

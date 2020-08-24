@@ -13,6 +13,7 @@ let
     background-images = callPackage ./background-images { };
     broot = callPackage ./broot { };
     colortest = callPackage ./colortest { };
+    gitflow = callPackage ./gitflow { };
     glimpse = callPackage ./glimpse { };
     latexdef = callPackage ./latexdef { };
     fontbase = callPackage ./fontbase { };

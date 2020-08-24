@@ -32,6 +32,8 @@ let
       # libreoffice-fresh
       signal-desktop
       todoist-electron
+      slack
+      ripcord
     ];
 
     misc = [

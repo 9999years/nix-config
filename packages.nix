@@ -61,7 +61,7 @@ let
       xorg.fontsunmisc
       wineWowPackages.fonts
       twitter-color-emoji
-      jetbrains.mono # https://www.jetbrains.com/lp/mono/
+      jetbrains-mono # https://www.jetbrains.com/lp/mono/
     ];
 
     git = (with gitAndTools; [

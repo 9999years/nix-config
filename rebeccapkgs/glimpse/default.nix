@@ -3,7 +3,7 @@
 , freetype, gdk-pixbuf, gegl_0_4, gexiv2, ghostscript, glib, glib-networking
 , gnome3, gtk2, gtk2-x11, gtk_doc, harfbuzz, isocodes, lcms, lcms2, libexif
 , libheif, libjpeg, libmng, libmypaint, libpng, librsvg, libtiff, libwebp
-, libwmf, libxslt, libzip, mypaint-brushes, openexr, openjpeg, pango, poppler
+, libwmf, libxslt, libzip, mypaint-brushes1, openexr, openjpeg, pango, poppler
 , poppler_data, shared-mime-info, webkit, xorg, zlib, ... }:
 let inherit (python2Packages) pygtk wrapPython python;
 in stdenv.mkDerivation rec {
@@ -97,7 +97,7 @@ in stdenv.mkDerivation rec {
     libwmf
     libxslt
     libzip
-    mypaint-brushes
+    mypaint-brushes1
     openexr
     openjpeg
     pango

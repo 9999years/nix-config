@@ -1,9 +1,7 @@
-{
-  stdenv ? (import <nixpkgs> {}).stdenv,
-}:
+{ stdenv ? (import <nixpkgs> { }).stdenv, }:
 stdenv.mkDerivation {
-  name = "sddm-my-face";
-  version = "1.0.0";
+  name = "sddm-faces";
+  version = "1.1.0";
   src = ./becca.face.icon;
 
   dontUnpack = true;

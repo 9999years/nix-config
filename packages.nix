@@ -1,6 +1,6 @@
 { pkgs ? import <nixpkgs> { }, ... }:
 let
-  inherit (pkgs) lib rebecca unstable;
+  inherit (pkgs) lib rebecca;
 
   withPriority = p: drv: drv.overrideAttrs (old: { meta.priority = p; });
   lowPriority = withPriority "15";
@@ -13,9 +13,9 @@ let
       lastpass-cli
       spotify # unfree
       discord # unfree
-      # unstable.typora # md editor (unfree)
+      # typora # md editor (unfree)
       rebecca.glimpse
-      inkscape
+      # inkscape
       gparted
       dosfstools # for fat/fat32 filesystems
       mtools # for fat/fat32 filesystems
@@ -27,11 +27,11 @@ let
       qpdfview # pdf viewer with tabs
       rebecca.background-images
       psensor # view CPU usage / temps, etc.
-      # standardnotes # may need to be from unstable
+      # standardnotes
       calibre # ebook mgmt
       # libreoffice-fresh
       signal-desktop
-      unstable.todoist-electron
+      todoist-electron
     ];
 
     misc = [
@@ -60,13 +60,13 @@ let
       twitter-color-emoji
     ];
 
-    git = (with unstable.gitAndTools; [
+    git = (with gitAndTools; [
       gitFull # GPL v2
       hub # github hub, MIT
       diff-so-fancy
       delta
     ]) ++ [
-      unstable.git-lfs # MIT
+      git-lfs # MIT
       bfg-repo-cleaner
       tig # git text-gui
       # qtkeychain
@@ -86,15 +86,15 @@ let
     ]);
 
     vscode = [
-      # (unstable.vscode-with-extensions.override {
-      # vscodeExtensions = with unstable.vscode-extensions;
+      # (vscode-with-extensions.override {
+      # vscodeExtensions = with vscode-extensions;
       # [
       # # ms-vscode.cpptools
       # # llvm-org.lldb-vscode
       # matklad.rust-analyzer
       # ];
       # })
-      unstable.vscode
+      vscode
     ];
 
     hardware = [
@@ -216,7 +216,7 @@ let
     java = [ openjdk ];
 
     nix = [
-      unstable.rnix-lsp
+      rnix-lsp
       nixfmt
       nix-index # nix-index and nix-locate
       cachix
@@ -228,7 +228,7 @@ let
     # perl = [ perl ];
 
     python = [
-      (highPriority (unstable.python38.withPackages (pyPkgs:
+      (highPriority (python38.withPackages (pyPkgs:
         with pyPkgs; [
           # Linters, etc.
           (black.overridePythonAttrs { doCheck = false; })
@@ -264,10 +264,10 @@ let
       # rebecca.rust-analyzer
       # rust-analyzer
       # cargo-deps # Generates a dep graph, https://github.com/m-cat/cargo-deps
+      cargo-generate # https://github.com/ashleygwilliams/cargo-generate
       cargo-edit # https://github.com/killercup/cargo-edit
       cargo-update # https://github.com/nabijaczleweli/cargo-update
       cargo-watch # Watches source files, https://github.com/passcod/cargo-watch
-      cargo-tree # Dep tree. https://github.com/sfackler/cargo-tree
       cargo-release # https://github.com/sunng87/cargo-release
       cargo-outdated # https://github.com/kbknapp/cargo-outdated
       cargo-make # https://github.com/sagiegurari/cargo-make
@@ -275,7 +275,7 @@ let
 
     tex = [
       rebecca.latexdef
-      unstable.texlab
+      texlab
       (texlive.combine { inherit (texlive) scheme-small latexmk; })
     ];
   };

@@ -13,7 +13,7 @@
     ripcord
     jetbrains.idea-community
     rebecca.gitflow # https://github.com/hatchcredit/gitflow
-    openjdk14-bootstrap
+    openjdk14_headless
   ];
 
   powerManagement.enable = true;

@@ -226,7 +226,7 @@ let
 
     node = [ nodejs-12_x ];
 
-    # perl = [ perl ];
+    perl = [ perl ]; # needed for fish fzf plugin!
 
     python = [
       (highPriority (python38.withPackages (pyPkgs:

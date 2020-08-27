@@ -10,6 +10,8 @@
           "76RKFLL-KE56JKM-DA4VUWT-TTDF76A-RSTZ5GR-XLMCJMY-EQR7J6J-G54V7AG";
         aquatica-nixos.id =
           "TA5A7NS-UVQZMCT-7KHNRQQ-N2CRLYT-NAXP77O-R4WGJEK-RZV3OZX-D265ZQ3";
+        aquatica-windows.id =
+          "XLLGTC6-DL7BHO2-G3IUJ3T-TNEB63K-2LLKEJJ-YXUADON-GVD2I2M-S73TUQH";
       };
       folders = let allDevices = lib.attrNames devices;
       in {

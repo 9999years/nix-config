@@ -214,7 +214,7 @@ let
 
     # go = [ go ];
 
-    java = [ openjdk ];
+    # java = [ openjdk ];
 
     nix = [
       rnix-lsp

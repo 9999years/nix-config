@@ -13,6 +13,7 @@
     ripcord
     jetbrains.idea-community
     rebecca.gitflow # https://github.com/hatchcredit/gitflow
+    jdk14
   ];
 
   powerManagement.enable = true;

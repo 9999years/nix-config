@@ -1,5 +1,4 @@
 { config, pkgs, lib, ... }: {
-  boot.loader.grub.fontSize = 24;
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "aquatica";
@@ -8,17 +7,20 @@
   networking.interfaces.enp5s0.useDHCP = true;
   networking.interfaces.wlp4s0.useDHCP = true;
 
-  environment.systemPackages = with pkgs;
-    [
-      mdadm # RAID drives
-    ];
+  environment.systemPackages = with pkgs; [
+    mdadm # RAID drives
+    slack
+    ripcord
+    jetbrains.idea-community
+    rebecca.gitflow # https://github.com/hatchcredit/gitflow
+  ];
 
   powerManagement.enable = true;
 
-  boot.loader.grub.fontSize = 32;
+  boot.loader.grub.fontSize = 24;
 
   console.packages = with pkgs; [ terminus_font ];
-  console.font = "ter-c32n";
+  console.font = "ter-c24n";
 
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia.modesetting.enable = true;

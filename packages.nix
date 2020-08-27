@@ -32,9 +32,6 @@ let
       # libreoffice-fresh
       signal-desktop
       todoist-electron
-      slack
-      ripcord
-      jetbrains.idea-community
     ];
 
     misc = [
@@ -74,7 +71,6 @@ let
       bfg-repo-cleaner
       tig # git text-gui
       # qtkeychain
-      rebecca.gitflow # https://github.com/hatchcredit/gitflow
     ];
 
     vim = [

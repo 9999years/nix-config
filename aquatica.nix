@@ -13,6 +13,13 @@
       mdadm # RAID drives
     ];
 
+  powerManagement.enable = true;
+
+  boot.loader.grub.fontSize = 32;
+
+  console.packages = with pkgs; [ terminus_font ];
+  console.font = "ter-c32n";
+
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia.modesetting.enable = true;
 

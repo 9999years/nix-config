@@ -8,6 +8,8 @@
       devices = {
         cervina-windows.id =
           "76RKFLL-KE56JKM-DA4VUWT-TTDF76A-RSTZ5GR-XLMCJMY-EQR7J6J-G54V7AG";
+        cervina-nixos.id =
+          "4RLOXAM-OKS4A3V-WEC3QXL-SGZOVRX-WWGOOCA-RTWDLXW-DRMWTKK-MEXSNAZ";
         aquatica-nixos.id =
           "TA5A7NS-UVQZMCT-7KHNRQQ-N2CRLYT-NAXP77O-R4WGJEK-RZV3OZX-D265ZQ3";
         aquatica-windows.id =

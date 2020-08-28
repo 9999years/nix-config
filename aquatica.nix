@@ -29,11 +29,9 @@
   services.xserver.dpi = 150;
 
   # Sound
+  sound.enableOSSEmulation = false;
   hardware.cpu.intel.updateMicrocode = true;
-  hardware.pulseaudio = {
-    enable = true;
-    systemWide = false;
-  };
+  hardware.pulseaudio.enable = true;
   hardware.enableAllFirmware = true;
   boot.extraModprobeConfig = ''
     options snd_hda_intel index=1

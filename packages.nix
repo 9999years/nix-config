@@ -41,6 +41,7 @@ let
       hyperfine
       units
       htop
+      ytop
       rebecca.colortest
       calc
     ];

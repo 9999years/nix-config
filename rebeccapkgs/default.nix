@@ -21,6 +21,7 @@ let
     navi = callPackage ./navi { };
     nix-query = callPackage ./nix-query { };
     psftools = callPackage ./psftools { };
+    puppy = callPackage ./puppy { };
     sddm-breeze-rbt-theme = callPackage ./sddm-breeze-rbt-theme { };
     sddm-faces = callPackage ./sddm-faces { };
     star-tsp100 = callPackage ./star-tsp100 { };

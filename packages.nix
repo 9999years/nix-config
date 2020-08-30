@@ -44,6 +44,7 @@ let
       ytop
       rebecca.colortest
       calc
+      rebecca.puppy
     ];
 
     fonts = [

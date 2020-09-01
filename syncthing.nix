@@ -15,7 +15,9 @@
         aquatica-windows.id =
           "XLLGTC6-DL7BHO2-G3IUJ3T-TNEB63K-2LLKEJJ-YXUADON-GVD2I2M-S73TUQH";
       };
-      folders = let allDevices = lib.attrNames devices;
+      folders = let
+        allDevices = lib.attrNames devices;
+        pictures = "/home/${user}/Pictures";
       in {
         "${dataDir}/pdf" = {
           id = "pdf";
@@ -25,6 +27,11 @@
         "${dataDir}/Fonts" = {
           id = "fonts";
           label = "fonts";
+          devices = allDevices;
+        };
+        "${pictures}/reaction" = {
+          id = "reaction";
+          label = "reaction";
           devices = allDevices;
         };
       };

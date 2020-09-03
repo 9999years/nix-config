@@ -34,6 +34,7 @@
   hardware.pulseaudio.enable = true;
   hardware.enableAllFirmware = true;
   boot.extraModprobeConfig = ''
-    options snd_hda_intel index=1
+    options snd_hda_intel index=1,0
+    options snd_usb_audio
   '';
 }

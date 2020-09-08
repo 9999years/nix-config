@@ -103,6 +103,7 @@ let
     hardware = [
       drm_info # display info
       pciutils # lspci
+      hwinfo
       lsof
     ];
 

@@ -55,7 +55,7 @@ do
 		-h|--help)
 			echo "$USAGE"
 			cat <<-'EOF'
-				1. If this.nix doesn't exist, creates it pointing to `hostname`
+				1. If hosts/this.nix doesn't exist, creates it pointing to `hostname`
 				2. If hardware-configuration.nix doesn't exist, links it to /etc/nixos/hardware-configuration.nix
 				   on NixOS or runs `sudo nixos-generate-config` if running in /etc/nixos
 			EOF
@@ -65,15 +65,15 @@ do
 	shift
 done
 
-if [[ -h this.nix ]]; then
-	dbg "$(UL this.nix) is already a symlink pointing to $(UL "$(readlink this.nix)")"
-elif [[ -e this.nix ]]; then
-	error "$(UL this.nix) exists, but it's not a symlink."
+if [[ -h hosts/this.nix ]]; then
+	dbg "$(UL hosts/this.nix) is already a symlink pointing to $(UL "$(readlink hosts/this.nix)")"
+elif [[ -e hosts/this.nix ]]; then
+	error "$(UL hosts/this.nix) exists, but it's not a symlink."
 	error "This seems incorrect, and will likely cause problems when running $(UL nixos-rebuild)"
 else
 	HOSTNAME="$(hostname)"
-	info "creating a symlink at $(UL this.nix) pointing to $(UL "$HOSTNAME")"
-	ln -s "$(hostname)" this.nix
+	info "creating a symlink at $(UL hosts/this.nix) pointing to $(UL "$HOSTNAME")"
+	ln -s "$(hostname)" hosts/this.nix
 fi
 
 if [[ -h hardware-configuration.nix ]]; then

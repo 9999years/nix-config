@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 let
-  rebeccapkgs = import ./rebeccapkgs { inherit pkgs; };
+  rebeccapkgs = import ../rebeccapkgs { inherit pkgs; };
   sddmBreezeTheme = rebeccapkgs.sddm-breeze-rbt-theme.override {
     background =
       "${rebeccapkgs.background-images}/share/wallpapers/night-stars.jpg";

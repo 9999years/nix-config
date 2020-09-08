@@ -2,18 +2,18 @@
 # nixos-help
 { config, pkgs, lib, ... }:
 let
-  packages = import ./packages.nix { inherit pkgs; };
+  packages = import ./imports/packages.nix { inherit pkgs; };
   overlays = import ./overlays;
 in {
   imports = [
     ./hardware-configuration.nix
 
-    ./git.nix
-    ./plasma5.nix
-    ./yubikey.nix
-    ./syncthing.nix
-    ./printing.nix
-    ./this.nix
+    ./imports/git.nix
+    ./imports/plasma5.nix
+    ./imports/yubikey.nix
+    ./imports/syncthing.nix
+    ./imports/printing.nix
+    ./hosts/this.nix
   ];
 
   boot.loader = {

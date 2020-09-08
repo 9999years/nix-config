@@ -66,7 +66,7 @@ do
 done
 
 if [[ -h hosts/this.nix ]]; then
-	dbg "$(UL hosts/this.nix) is already a symlink pointing to $(UL "$(readlink hosts/this.nix)")"
+	dbg "$(UL hosts/this.nix) is already a symlink pointing to $(UL "hosts/$(readlink hosts/this.nix)")"
 elif [[ -e hosts/this.nix ]]; then
 	error "$(UL hosts/this.nix) exists, but it's not a symlink."
 	error "This seems incorrect, and will likely cause problems when running $(UL nixos-rebuild)"

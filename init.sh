@@ -73,9 +73,9 @@ elif [[ -e hosts/this.nix ]]; then
 else
 	HOSTNAME="$(hostname)"
 	info "creating a symlink at $(UL hosts/this.nix) pointing to $(UL "hosts/$HOSTNAME.nix")"
-	pushd hosts || fatal "failed to cd to hosts"
+	pushd hosts > /dev/null || fatal "failed to cd to hosts"
 	ln -s "$(hostname).nix" this.nix
-	popd || fatal "failed to popd from hosts"
+	popd > /dev/null || fatal "failed to popd from hosts"
 fi
 
 if [[ -h hardware-configuration.nix ]]; then

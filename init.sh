@@ -72,8 +72,10 @@ elif [[ -e hosts/this.nix ]]; then
 	error "This seems incorrect, and will likely cause problems when running $(UL nixos-rebuild)"
 else
 	HOSTNAME="$(hostname)"
-	info "creating a symlink at $(UL hosts/this.nix) pointing to $(UL "$HOSTNAME")"
-	ln -s "$(hostname)" hosts/this.nix
+	info "creating a symlink at $(UL hosts/this.nix) pointing to $(UL "hosts/$HOSTNAME.nix")"
+	pushd hosts || fatal "failed to cd to hosts"
+	ln -s "$(hostname).nix" this.nix
+	popd || fatal "failed to popd from hosts"
 fi
 
 if [[ -h hardware-configuration.nix ]]; then

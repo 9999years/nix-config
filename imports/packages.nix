@@ -45,6 +45,7 @@ let
       rebecca.colortest
       calc
       rebecca.puppy
+      rebecca.spdx-tool
     ];
 
     fonts = [

@@ -24,6 +24,7 @@ let
     puppy = callPackage ./puppy { };
     sddm-breeze-rbt-theme = callPackage ./sddm-breeze-rbt-theme { };
     sddm-faces = callPackage ./sddm-faces { };
+    spdx-tool = callPackage ./spdx-tool { };
     star-tsp100 = callPackage ./star-tsp100 { };
     todoist-gui = callPackage ./todoist-gui { };
     vscode-cpptools = callPackage ./vscode-cpptools { };

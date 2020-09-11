@@ -13,10 +13,10 @@ let
     background-images = callPackage ./background-images { };
     broot = callPackage ./broot { };
     colortest = callPackage ./colortest { };
+    fontbase = callPackage ./fontbase { };
     gitflow = callPackage ./gitflow { };
     glimpse = callPackage ./glimpse { };
     latexdef = callPackage ./latexdef { };
-    fontbase = callPackage ./fontbase { };
     mdcat = callPackage ./mdcat { };
     navi = callPackage ./navi { };
     nix-query = callPackage ./nix-query { };

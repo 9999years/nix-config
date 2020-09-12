@@ -2,12 +2,14 @@
 stdenv.mkDerivation {
   name = "sddm-faces";
   version = "1.1.0";
-  src = ./becca.face.icon;
+  srcs = [ ./becca.face.icon ./requienii.face.icon ];
 
   dontUnpack = true;
   dontConfigure = true;
   dontBuild = true;
   installPhase = ''
-    install -D "$src" "$out/share/sddm/faces/$(stripHash $src)"
+    for src in $srcs; do
+      install -D "$src" "$out/share/sddm/faces/$(stripHash $src)"
+    done
   '';
 }

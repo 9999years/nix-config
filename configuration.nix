@@ -62,18 +62,33 @@ in {
   };
 
   # Don't forget to set a password with ‘passwd’.
-  users.users.becca = {
-    isNormalUser = true;
-    description = "Rebecca Turner";
-    extraGroups = [
-      "wheel" # Enable ‘sudo’ for the user.
-      "audio"
-      "sound" # Not sure if these are necessary.
-      "video" # Not sure if this is necessary.
-      "networkmanager"
-    ];
-    shell = pkgs.fish;
-    uid = 1000;
+  users.users = {
+    becca = {
+      isNormalUser = true;
+      description = "Rebecca Turner";
+      extraGroups = [
+        "wheel" # Enable ‘sudo’ for the user.
+        "audio"
+        "sound" # Not sure if these are necessary.
+        "video" # Not sure if this is necessary.
+        "networkmanager"
+      ];
+      shell = pkgs.fish;
+      uid = 1000;
+    };
+    requienii = {
+      isNormalUser = true;
+      description = "Kat Spiers";
+      extraGroups = [
+        "wheel" # Enable ‘sudo’ for the user.
+        "audio"
+        "sound" # Not sure if these are necessary.
+        "video" # Not sure if this is necessary.
+        "networkmanager"
+      ];
+      shell = pkgs.fish;
+      uid = 1337;
+    };
   };
 
   # Passwordless sudo

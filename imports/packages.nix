@@ -48,6 +48,7 @@ let
       rebecca.puppy
       rebecca.spdx-tool
       (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
+      hunspellDicts.en-us-large
     ];
 
     fonts = [

@@ -14,6 +14,7 @@ let
       spotify # unfree
       discord # unfree
       # typora # md editor (unfree)
+      ghostwriter # md editor
       rebecca.glimpse
       # inkscape
       gparted

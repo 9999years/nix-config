@@ -203,10 +203,10 @@ let
     clang = [
       gcc
       gnumake
-      clang
+      (lowPriority clang)
       # llvmPackages.libclang
-      clang-tools
-      clang-analyzer
+      (lowPriority clang-tools)
+      (lowPriority clang-analyzer)
       autoconf
       automake
     ];

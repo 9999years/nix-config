@@ -1,11 +1,11 @@
 { rustPlatform, fetchCrate }:
 rustPlatform.buildRustPackage rec {
   pname = "puppy";
-  version = "0.0.5";
+  version = "0.0.7";
   src = fetchCrate {
     inherit version;
     crateName = pname;
-    sha256 = "0kxkp40386c13f461mdlm0kkdqnbnw0ik28yww5m8k2axry1lfix";
+    sha256 = "0zxksg3ywnddm5i7ipcp2v103j64yrh3vd0z9isxv9caa6adlb1b";
   };
-  cargoSha256 = "05zgappvkflskq02l2w8wncrvj7r8bq0nmp7yl9l0dcrigw29s5b";
+  cargoSha256 = "1qr6ng9hh2jz5qmqcp2l002djq9kqxxr42wsl827pj3vpgx3bp92";
 }

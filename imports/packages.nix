@@ -47,6 +47,7 @@ let
       calc
       rebecca.puppy
       rebecca.spdx-tool
+      (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
     ];
 
     fonts = [

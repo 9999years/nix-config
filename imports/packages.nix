@@ -22,7 +22,7 @@ let
       mtools # for fat/fat32 filesystems
       hfsprogs # macos file system support for gparted, etc.
       kdeApplications.spectacle # screenshot tool
-      feh # photo viewer
+      gnome3.eog # photo viewer
       qalculate-gtk # calculator
       evince # pdf viewer
       qpdfview # pdf viewer with tabs
@@ -122,6 +122,7 @@ let
       bind # nslookup
       ncat
       (lowPriority inetutils) # whois
+      devd # static file server
     ];
 
     files = [

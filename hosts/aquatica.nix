@@ -16,7 +16,10 @@
     openjdk14_headless
   ];
 
-  powerManagement.enable = true;
+  powerManagement = {
+    enable = true;
+    cpuFreqGovernor = "performance";
+  };
 
   boot.loader.grub.fontSize = 24;
 

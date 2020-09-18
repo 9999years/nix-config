@@ -70,6 +70,7 @@ let
     git = (with gitAndTools; [
       gitFull # GPL v2
       hub # github hub, MIT
+      gh # github cli https://cli.github.com/
       diff-so-fancy
       delta
     ]) ++ [

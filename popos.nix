@@ -14,7 +14,12 @@ let
     (name: lib.hasInfix name (lib.attrByPath [ "name" ] p.pname p))
     manual-exclusions);
 
-  extra = with pkgs; [ man-pages cacert ];
+  extra = with pkgs; [
+    man-pages
+    cacert
+    rebecca.gitflow # https://github.com/hatchcredit/gitflow
+    openjdk14_headless
+  ];
 
 in filter-supported (extra ++ filter-manual-exclusions ((with packages.sets;
   git ++ vim ++ terminals ++ network ++ files ++ text ++ manipulation)

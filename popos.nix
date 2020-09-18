@@ -3,7 +3,7 @@ let
   inherit (pkgs) lib;
   packages = import ./imports/packages.nix { inherit pkgs; };
 
-  manual-exclusions = [ "git" ];
+  manual-exclusions = [ ];
 
   filter-supported = lib.filter (p:
     builtins.elem builtins.currentSystem (lib.attrByPath [ "meta" "platforms" ]
@@ -22,5 +22,6 @@ let
   ];
 
 in filter-supported (extra ++ filter-manual-exclusions ((with packages.sets;
-  git ++ vim ++ terminals ++ network ++ files ++ text ++ manipulation)
-  ++ (with packages.langs; bash ++ nix ++ python) ++ (with pkgs; [ nix ruby ])))
+  misc ++ git ++ vim ++ hardware ++ terminals ++ network ++ files ++ text
+  ++ manipulation) ++ (with packages.langs; bash ++ nix ++ python ++ rust)
+  ++ (with pkgs; [ nix ruby ])))

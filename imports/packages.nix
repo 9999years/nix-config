@@ -229,6 +229,7 @@ let
       rnix-lsp
       nixfmt
       nix-index # nix-index and nix-locate
+      nix-top # what's building?
       cachix
       rebecca.nix-query
     ];

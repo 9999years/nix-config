@@ -6,4 +6,5 @@
   mathematica = import ./mathematica;
   nvim = import ./nvim.nix;
   rebecca = import ./rebeccapkgs.nix;
+  spotify = import ./spotify.nix;
 }

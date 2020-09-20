@@ -29,7 +29,7 @@
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia.modesetting.enable = true;
 
-  services.xserver.dpi = 150;
+  services.xserver.dpi = 144;
 
   # Sound
   sound.enableOSSEmulation = false;

@@ -230,6 +230,9 @@ let
       nixfmt
       nix-index # nix-index and nix-locate
       nix-top # what's building?
+      nix-diff # why do derivations differ?
+      nix-du # which gc roots take up space?
+      nix-tree
       cachix
       rebecca.nix-query
     ];

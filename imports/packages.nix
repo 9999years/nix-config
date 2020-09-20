@@ -16,7 +16,7 @@ let
       # typora # md editor (unfree)
       ghostwriter # md editor
       rebecca.glimpse
-      # inkscape
+      inkscape
       gparted
       dosfstools # for fat/fat32 filesystems
       mtools # for fat/fat32 filesystems

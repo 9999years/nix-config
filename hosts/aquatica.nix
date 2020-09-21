@@ -9,6 +9,7 @@
 
   environment.systemPackages = with pkgs; [
     mdadm # RAID drives
+    ntfs3g # ntfs mounting support
     slack
     ripcord
     jetbrains.idea-community

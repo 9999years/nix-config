@@ -48,7 +48,9 @@ function fatal { _log "$(BOLD)$(BRRED)" "[FATAL]" "$@"; exit 1; }
 function cmd   { _log "$(CYAN)"         "[run]  " "\$ $(BOLD)$(UNDERLINED)$*"; }
 # }}}
 
-readonly USAGE="Usage: ./init.sh [-h|--help]"
+declare diff_hw_config update_hw_config force_hw_config
+
+readonly USAGE="Usage: ./init.sh [-h|--help] [--diff] [--update] [--force]"
 while (( "$#" ))
 do
 	case "$1" in
@@ -56,10 +58,31 @@ do
 			echo "$USAGE"
 			cat <<-'EOF'
 				1. If hosts/this.nix doesn't exist, creates it pointing to `hostname`
-				2. If hardware-configuration.nix doesn't exist, links it to /etc/nixos/hardware-configuration.nix
-				   on NixOS or runs `sudo nixos-generate-config` if running in /etc/nixos
+				2. If hardware-configuration.nix doesn't exist, links it to
+				   hosts/$(hostname)-hardware-configuration.nix on NixOS or runs
+				   `sudo nixos-generate-config` if running in /etc/nixos
+
+				Options:
+
+				    --diff      Show what would change if ./init.sh was run with --update
+				    --update    Update hardware-configuration.nix with `nixos-generate-config`
+				    --force     With --update, overwrite changes to
+				                hosts/$(hostname)-hardware-configuration.nix even if
+				                uncommitted changes exist in the repo
 			EOF
 			exit
+			;;
+
+		--diff|--dry-run)
+			diff_hw_config=1
+			;;
+
+		--update)
+			update_hw_config=1
+			;;
+
+		--force)
+			force_hw_config=1
 			;;
 	esac
 	shift
@@ -71,22 +94,89 @@ elif [[ -e hosts/this.nix ]]; then
 	error "$(UL hosts/this.nix) exists, but it's not a symlink."
 	error "This seems incorrect, and will likely cause problems when running $(UL nixos-rebuild)"
 else
-	HOSTNAME="$(hostname)"
+	HOSTNAME=$(hostname)
 	info "creating a symlink at $(UL hosts/this.nix) pointing to $(UL "hosts/$HOSTNAME.nix")"
 	pushd hosts > /dev/null || fatal "failed to cd to hosts"
 	ln -s "$(hostname).nix" this.nix
 	popd > /dev/null || fatal "failed to popd from hosts"
 fi
 
+local_hw="hosts/$HOSTNAME-hardware-configuration.nix"
+if [[ -n "$diff_hw_config" ]]; then
+	hw_config="$local_hw"
+	if [[ ! -e "$hw_config" ]] && [[ -e hardware-configuration.nix ]]; then
+		hw_config="hardware-configuration.nix"
+	fi
+	info "Diff if \`nixos-generate-config\` was run:"
+	if command -v delta > /dev/null; then
+		nixos-generate-config --show-hardware-config \
+			| diff --report-identical-files --new-file --unified \
+				"$hw_config" - \
+			| delta
+	else
+		nixos-generate-config --show-hardware-config \
+			| diff --report-identical-files --new-file --unified \
+				"$hw_config" -
+	fi
+fi
+
+declare hw_modified
+# grep's --line-regexp flag is misleading here; it means "the pattern must
+# match the entire line" and applies even in --fixed-strings mode.
+if git status --porcelain --untracked-files \
+	| grep -E '^\?\?|^A |^ M' \
+	| cut -c 4- \
+	| grep --fixed-strings --line-regexp "$local_hw"; then
+	hw_modified=1
+fi
+
+if [[ -n "$update_hw_config" ]]; then
+	if [[ -n "$hw_modified" ]]; then
+		if [[ -z "$force_hw_config" ]]; then
+			error "there are uncommitted changes to $(UL "$local_hw"); refusing to overwrite with \`nixos-generate-config\`"
+			error "either commit your changes or pass --force to overwrite local files"
+			unset update_hw_config
+		else
+			info "there are uncommitted changes to $(UL "$local_hw") but --force was given; overwriting"
+		fi
+	fi
+
+	# Check $update_hw_config again because we may have unset it above
+	if [[ -n "$update_hw_config" ]]; then
+		info "updating hardware-configuration.nix"
+		cmd "nixos-generate-config --show-hardware-config > $(UL "\"$local_hw\"")"
+	fi
+fi
+
 if [[ -h hardware-configuration.nix ]]; then
 	dbg "$(UL hardware-configuration.nix) is already a symlink pointing to to $(UL "$(readlink hardware-configuration.nix)")"
 elif [[ -f hardware-configuration.nix ]]; then
-	dbg "$(UL hardware-configuration.nix) already exists"
-elif [[ "$(pwd)" == /etc/nixos && ! -e hardware-configuration.nix ]]; then
-	info "$(UL "$(pwd)/hardware-configuration.nix") doesn't exist in /etc/nixos; generating now"
-	cmd "sudo nixos-generate-config"
-	sudo nixos-generate-config
-elif [[ "$(uname -v)" = *NixOS* ]]; then
-	info "creating a symlink at $(UL hardware-configuration.nix) pointing to $(UL /etc/nixos/hardware-configuration.nix)"
-	ln -s /etc/nixos/hardware-configuration.nix hardware-configuration.nix
+	if [[ -n "$hw_modified" ]] && [[ -z "$force_hw_config" ]] \
+		&& ! diff --brief --new-file hardware-configuration.nix "$local_hw"; then
+		warn "$(UL hardware-configuration.nix) already exists but there are uncommitted changes to $(UL "$local_hw") and the two files differ; refusing to overwrite without --force"
+	else
+		dbg "$(UL hardware-configuration.nix) already exists -- converting it to a symlink"
+		cmd mv "$(UL hardware-configuration.nix)" "$(UL "$local_hw")"
+		mv hardware-configuration.nix "$local_hw"
+		info "creating a symlink at $(UL hardware-configuration.nix) pointing to $(UL "$local_hw")"
+		ln -s "$local_hw" hardware-configuration.nix
+	fi
+elif [[ ! -e hardware-configuration.nix ]]; then
+	if [[ "$(pwd)" == /etc/nixos ]]; then
+		if [[ -e "$local_hw" ]]; then
+			info "$(UL "$(pwd)/hardware-configuration.nix") doesn't exist in /etc/nixos"
+			info "make sure to commit $(UL "$local_hw") to the repository"
+		else
+			info "$(UL "$(pwd)/hardware-configuration.nix") doesn't exist in /etc/nixos; generating now"
+			cmd "sudo nixos-generate-config"
+			sudo nixos-generate-config
+			cmd mv "$(UL hardware-configuration.nix)" "$(UL "$local_hw")"
+			mv hardware-configuration.nix "$local_hw"
+		fi
+		info "creating a symlink at $(UL hardware-configuration.nix) pointing to $(UL "$local_hw")"
+		ln -s "$local_hw" hardware-configuration.nix
+	elif [[ "$(uname -v)" = *NixOS* ]]; then
+		info "creating a symlink at $(UL hardware-configuration.nix) pointing to $(UL "$local_hw")"
+		ln -s "$local_hw" hardware-configuration.nix
+	fi
 fi

@@ -110,12 +110,12 @@ if [[ -n "$diff_hw_config" ]]; then
 	info "Diff if \`nixos-generate-config\` was run:"
 	if command -v delta > /dev/null; then
 		nixos-generate-config --show-hardware-config \
-			| diff --report-identical-files --new-file --unified \
+			| diff --report-identical-files --new-file --unified --ignore-all-space \
 				"$hw_config" - \
 			| delta
 	else
 		nixos-generate-config --show-hardware-config \
-			| diff --report-identical-files --new-file --unified \
+			| diff --report-identical-files --new-file --unified --ignore-all-space \
 				"$hw_config" -
 	fi
 fi
@@ -145,6 +145,7 @@ if [[ -n "$update_hw_config" ]]; then
 	if [[ -n "$update_hw_config" ]]; then
 		info "updating hardware-configuration.nix"
 		cmd "nixos-generate-config --show-hardware-config > $(UL "\"$local_hw\"")"
+		nixos-generate-config --show-hardware-config > "$local_hw"
 	fi
 fi
 

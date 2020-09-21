@@ -17,6 +17,7 @@
     openjdk14_headless
   ];
 
+  nix.maxJobs = 8;
   powerManagement = {
     enable = true;
     cpuFreqGovernor = "performance";
@@ -41,4 +42,32 @@
     options snd_hda_intel index=1,0
     options snd_usb_audio
   '';
+
+  # Drives
+  boot.supportedFilesystems = [ "ntfs" ];
+
+  fileSystems."/mnt/c" = {
+    device = "/dev/disk/by-uuid/D854297E5429610C";
+    fsType = "ntfs";
+    options = [ "rw" "uid=${builtins.toString config.users.users.becca.uid}" ];
+  };
+
+  fileSystems."/mnt/d" = {
+    device = "/dev/disk/by-partuuid/25324fe6-c414-11e2-bb89-c85593649ce7";
+    fsType = "ntfs";
+    options = [ "rw" "uid=${builtins.toString config.users.users.becca.uid}" ];
+  };
+
+  fileSystems."/mnt/e" = {
+    device = "/dev/disk/by-uuid/4ED6AD0AD6ACF37F";
+    fsType = "ntfs";
+    options = [ "rw" "uid=${builtins.toString config.users.users.becca.uid}" ];
+  };
+
+  # RAID 1 volume; /dev/sdb and /dev/sdc
+  fileSystems."/mnt/mirrored" = {
+    device = "/dev/disk/by-uuid/7CC46C67C46C259C";
+    fsType = "ntfs";
+    options = [ "rw" "uid=${builtins.toString config.users.users.becca.uid}" ];
+  };
 }

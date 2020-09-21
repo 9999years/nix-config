@@ -14,7 +14,8 @@ let
       spotify # unfree
       discord # unfree
       # typora # md editor (unfree)
-      rebecca.glimpse
+      # rebecca.glimpse
+      pinta # paint tool
       inkscape
       gparted
       dosfstools # for fat/fat32 filesystems

@@ -14,7 +14,6 @@ let
       spotify # unfree
       discord # unfree
       # typora # md editor (unfree)
-      ghostwriter # md editor
       rebecca.glimpse
       inkscape
       gparted
@@ -81,7 +80,10 @@ let
     ];
 
     vim = [
-      neovim
+      (neovim.override {
+        withNodeJs = true;
+        vimAlias = true;
+      })
       vim-vint # vimscript lint: https://github.com/Kuniwak/vint
     ] ++ (with nodePackages; [
       vscode-css-languageserver-bin

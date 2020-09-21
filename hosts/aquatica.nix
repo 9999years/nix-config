@@ -52,11 +52,11 @@
     options = [ "rw" "uid=${builtins.toString config.users.users.becca.uid}" ];
   };
 
-  fileSystems."/mnt/d" = {
-    device = "/dev/disk/by-partuuid/25324fe6-c414-11e2-bb89-c85593649ce7";
-    fsType = "ntfs";
-    options = [ "rw" "uid=${builtins.toString config.users.users.becca.uid}" ];
-  };
+  # fileSystems."/mnt/d" = {
+  # device = "/dev/disk/by-partuuid/25324fe6-c414-11e2-bb89-c85593649ce7";
+  # fsType = "ntfs";
+  # options = [ "rw" "uid=${builtins.toString config.users.users.becca.uid}" ];
+  # };
 
   fileSystems."/mnt/e" = {
     device = "/dev/disk/by-uuid/4ED6AD0AD6ACF37F";

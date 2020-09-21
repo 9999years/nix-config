@@ -11,7 +11,6 @@ let
     amazing-marvin = callPackage ./amazing-marvin { };
     appimage = callPackage ./appimage { };
     background-images = callPackage ./background-images { };
-    broot = callPackage ./broot { };
     colortest = callPackage ./colortest { };
     fontbase = callPackage ./fontbase { };
     gitflow = callPackage ./gitflow { };

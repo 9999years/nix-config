@@ -150,7 +150,7 @@ let
       zip
       unzip
       atool
-      rebecca.broot
+      broot
     ];
 
     text = [

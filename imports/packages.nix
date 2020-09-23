@@ -11,7 +11,7 @@ let
       alacritty # terminal
       firefox-bin
       lastpass-cli
-      spotify # unfree
+      (spotify-scaled { deviceScaleFactor = 1.66; }) # unfree
       discord # unfree
       # typora # md editor (unfree)
       # rebecca.glimpse

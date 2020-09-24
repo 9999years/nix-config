@@ -27,7 +27,7 @@
   console.packages = with pkgs; [ terminus_font ];
   console.font = "ter-c32n";
 
-  services.xserver.dpi = 175;
+  services.xserver.dpi = 216;
 
   environment.systemPackages = with pkgs;
     [

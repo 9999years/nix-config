@@ -10,7 +10,13 @@ let
 in stdenv.mkDerivation {
   pname = "spdx-tool";
   version = "1.0.4";
-  src = ./.;
+  src =   fetchFromGitHub {
+    owner = "9999years";
+    repo = "spdx-tool";
+    rev = "ca3d24e7f825c7c6cb23a1907d5d4fecc210f016";
+    sha256 = "12qw5rq7zx2w03pj1n4axlg3gc6ywyyjm1slxrl7ivw387dn76m4";
+    fetchSubmodules = true;
+  };
   buildInputs = [ python38 fzf ];
   dontConfigure = true;
   dontBuild = true;

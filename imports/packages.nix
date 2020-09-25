@@ -241,6 +241,7 @@ let
       nix-tree
       cachix
       rebecca.nix-query
+      any-nix-shell
     ];
 
     node = [ nodejs-12_x ];

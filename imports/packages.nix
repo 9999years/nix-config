@@ -15,6 +15,7 @@ let
       discord # unfree
       # typora # md editor (unfree)
       # rebecca.glimpse
+      gimp # admitting defeat
       pinta # paint tool
       inkscape
       gparted

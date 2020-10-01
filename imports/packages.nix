@@ -34,6 +34,7 @@ let
       # libreoffice-fresh
       signal-desktop
       todoist-electron
+      xclip
     ];
 
     misc = [

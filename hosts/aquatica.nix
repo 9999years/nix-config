@@ -11,10 +11,9 @@
     mdadm # RAID drives
     ntfs3g # ntfs mounting support
     slack
-    ripcord
-    jetbrains.idea-community
-    rebecca.gitflow # https://github.com/hatchcredit/gitflow
+    # ripcord
     openjdk14_headless
+    alsaTools
   ];
 
   nix.maxJobs = 8;

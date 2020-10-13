@@ -9,6 +9,7 @@ let
   sets = with pkgs; {
     gui = [
       alacritty # terminal
+      kitty # terminal
       firefox-bin
       lastpass-cli
       (spotify.override { deviceScaleFactor = 1.66; }) # unfree
@@ -159,6 +160,7 @@ let
       unzip
       atool
       broot
+      gnome3.librsvg
     ];
 
     text = [

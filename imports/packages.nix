@@ -45,7 +45,7 @@ let
       hyperfine
       units
       htop
-      ytop
+      bottom
       rebecca.colortest
       calc
       rebecca.puppy

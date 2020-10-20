@@ -50,7 +50,12 @@ let
       calc
       rebecca.puppy
       rebecca.spdx-tool
-      (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
+      (aspellWithDicts (dicts:
+        with dicts; [
+          en
+          en-computers
+          # en-science
+        ]))
       hunspellDicts.en-us-large
       manpages
       posix_man_pages

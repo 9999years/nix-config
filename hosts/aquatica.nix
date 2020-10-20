@@ -1,6 +1,4 @@
 { config, pkgs, lib, ... }: {
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
   networking.hostName = "aquatica";
 
   networking.interfaces.enp4s1.useDHCP = true;

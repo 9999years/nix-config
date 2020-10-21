@@ -60,6 +60,7 @@ let
       manpages
       posix_man_pages
       libcap_manpages
+      fontconfig.out # gives us fonts.dtd
     ];
 
     fonts = [

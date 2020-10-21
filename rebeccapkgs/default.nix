@@ -21,6 +21,7 @@ let
     nix-query = callPackage ./nix-query { };
     psftools = callPackage ./psftools { };
     puppy = callPackage ./puppy { };
+    atkinson-hyperlegible-font = callPackage ./atkinson-hyperlegible-font { };
     sddm-breeze-rbt-theme = callPackage ./sddm-breeze-rbt-theme { };
     sddm-faces = callPackage ./sddm-faces { };
     spdx-tool = callPackage ./spdx-tool { };

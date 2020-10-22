@@ -10,7 +10,6 @@ let
     inherit callPackage;
     amazing-marvin = callPackage ./amazing-marvin { };
     appimage = callPackage ./appimage { };
-    atkinson-hyperlegible-font = callPackage ./atkinson-hyperlegible-font { };
     background-images = callPackage ./background-images { };
     colortest = callPackage ./colortest { };
     fontbase = callPackage ./fontbase { };
@@ -27,7 +26,7 @@ let
     spdx-tool = callPackage ./spdx-tool { };
     star-tsp100 = callPackage ./star-tsp100 { };
     todoist-gui = callPackage ./todoist-gui { };
-    velvetyne-typefaces = callPackage ./velvetyne-typefaces { };
+    typefaces = callPackage ./typefaces { };
     vscode-cpptools = callPackage ./vscode-cpptools { };
   };
 

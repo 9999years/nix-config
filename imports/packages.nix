@@ -77,9 +77,23 @@ let
       wineWowPackages.fonts
       twitter-color-emoji
       jetbrains-mono # https://www.jetbrains.com/lp/mono/
-      rebecca.atkinson-hyperlegible-font # https://www.brailleinstitute.org/freefont
-      rebecca.velvetyne-typefaces
-    ];
+    ] ++ (with rebecca.typefaces; [
+      atkinson-hyperlegible-font # https://www.brailleinstitute.org/freefont
+      velvetyne
+      dotcolon
+      bagnard
+      cotham
+      gap-sans
+      inter
+      juniusX
+      nimbus-sans-l
+      office-code-pro
+      routed-gothic
+      dse-typewriter
+      din-1451
+      tgl-0-16
+      ms-33558
+    ]);
 
     git = (with gitAndTools; [
       gitFull # GPL v2

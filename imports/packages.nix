@@ -78,6 +78,7 @@ let
       twitter-color-emoji
       jetbrains-mono # https://www.jetbrains.com/lp/mono/
       rebecca.atkinson-hyperlegible-font # https://www.brailleinstitute.org/freefont
+      rebecca.velvetyne-typefaces
     ];
 
     git = (with gitAndTools; [

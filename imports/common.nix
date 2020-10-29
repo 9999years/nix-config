@@ -39,4 +39,6 @@ in {
     ];
     trustedUsers = [ "root" "becca" ];
   };
+  # Try resolving domain names relative to becca.ooo
+  networking.search = [ "becca.ooo" ];
 }

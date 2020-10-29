@@ -18,14 +18,18 @@ in {
   users = {
     mutableUsers = false;
     users = {
-      root = { openssh.authorizedKeys.keys = [ ssh-keys.cervina-2020-08-19 ]; };
+      root = {
+        openssh.authorizedKeys.keys =
+          [ ssh-keys.cervina-2020-08-19 ssh-keys.aquatica-2020-10-29 ];
+      };
       becca = {
         isNormalUser = true;
         description = "Rebecca Turner";
         extraGroups = [ "wheel" ];
         shell = pkgs.fish;
         uid = 1000;
-        openssh.authorizedKeys.keys = [ ssh-keys.cervina-2020-08-19 ];
+        openssh.authorizedKeys.keys =
+          [ ssh-keys.cervina-2020-08-19 ssh-keys.aquatica-2020-10-29 ];
       };
     };
   };

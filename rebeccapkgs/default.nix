@@ -12,6 +12,7 @@ let
     appimage = callPackage ./appimage { };
     background-images = callPackage ./background-images { };
     colortest = callPackage ./colortest { };
+    coc-python = callPackage ./coc-python { };
     fontbase = callPackage ./fontbase { };
     gitflow = callPackage ./gitflow { };
     glimpse = callPackage ./glimpse { };

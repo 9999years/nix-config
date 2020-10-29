@@ -9,7 +9,7 @@ from pathlib import Path
 
 def main():
     parser = argparse.ArgumentParser(
-        description="build a NixOS iso; remaining arguments are passed to nix-build"
+        description="build a NixOS qcow2 image; remaining arguments are passed to nix-build"
     )
     parser.add_argument(
         "base_file", type=Path, help="base Nix file to import; typically under ../hosts"
@@ -18,22 +18,22 @@ def main():
 
     curdir = Path(__file__).parent
 
-    with open(curdir / "iso.nix") as f:
-        iso = f.read().replace("./HOSTNAME.nix", str(args.base_file.resolve()))
+    with open(curdir / "qcow2.nix") as f:
+        qcow2 = f.read().replace("./HOSTNAME.nix", str(args.base_file.resolve()))
 
     with tempfile.TemporaryDirectory() as tmpdir:
         tmpdir = Path(tmpdir)
-        iso_path = tmpdir / "iso.nix"
-        with open(iso_path, "w") as f:
-            f.write(iso)
+        qcow2_path = tmpdir / "qcow2.nix"
+        with open(qcow2_path, "w") as f:
+            f.write(qcow2)
 
         nix_build_args = [
             "nix-build",
             "<nixpkgs/nixos>",
             "--attr",
-            "config.system.build.isoImage",
+            "config.system.build.openstackImage",
             "-I",
-            f"nixos-config={iso_path}",
+            f"nixos-config={qcow2_path}",
         ] + other_args
         print("running:", " ".join(nix_build_args))
         proc = subprocess.run(nix_build_args, check=False,)

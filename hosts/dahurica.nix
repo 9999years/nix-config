@@ -2,6 +2,7 @@
 let passwords = import ../imports/passwords.nix;
 in {
   imports = [ ../imports/server.nix ];
+
   users.users = {
     root.hashedPassword = passwords.dahurica.root;
     becca.hashedPassword = passwords.dahurica.becca;

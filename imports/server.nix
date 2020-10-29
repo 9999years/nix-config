@@ -2,13 +2,12 @@
 { config, pkgs, lib, ... }:
 let ssh-keys = import ./ssh-keys.nix;
 in {
+  imports = [ <nixpkgs/nixos/modules/virtualisation/openstack-config.nix> ];
+
   boot = {
-    initrd.network.ssh.enable = lib.mkDefault true;
     kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
     tmpOnTmpfs = lib.mkDefault true; # Keep /tmp in RAM
   };
-
-  hardware.enableRedistributableFirmware = true;
 
   console.keyMap = "us";
 
@@ -35,11 +34,6 @@ in {
   };
 
   environment.noXlibs = true;
-
-  # Enable ssh in boot.
-  systemd.services.sshd.wantedBy = lib.mkForce [ "multi-user.target" ];
-  security.pam.enableSSHAgentAuth = true;
-  services.openssh.enable = true;
 
   # networking.nameservers = [ "8.8.8.8" "8.8.4.4" ];
   networking.firewall.allowedTCPPorts = [ 22 80 443 ];

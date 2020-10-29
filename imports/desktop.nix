@@ -62,16 +62,6 @@ in {
   # Passwordless sudo
   security.sudo.wheelNeedsPassword = false;
 
-  nix = {
-    trustedBinaryCaches =
-      [ "https://cache.nixos.org" "https://all-hies.cachix.org" ];
-    binaryCachePublicKeys = [
-      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-      "all-hies.cachix.org-1:JjrzAOEUsD9ZMt8fdFbzo3jNAyEWlPAwdVuHw4RD43k="
-    ];
-    trustedUsers = [ "root" "becca" ];
-  };
-
   fonts = {
     enableDefaultFonts = true;
     fonts = packages.sets.fonts;

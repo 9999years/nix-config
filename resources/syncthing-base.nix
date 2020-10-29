@@ -1,6 +1,10 @@
 { lib, dataDir ? "/var/lib/syncthing" }:
 let
   devices = {
+    dahurica = {
+      id = "246UFRP-KOHFFXZ-RJ6SG7Q-KTOKEFL-2HQGJD7-GPZRGG5-7OTXSJJ-3CQTAAJ";
+      addresses = [ "tcp://dahurica.becca.ooo" ];
+    };
     cervina-windows.id =
       "76RKFLL-KE56JKM-DA4VUWT-TTDF76A-RSTZ5GR-XLMCJMY-EQR7J6J-G54V7AG";
     cervina-nixos.id =

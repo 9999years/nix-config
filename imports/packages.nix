@@ -99,7 +99,6 @@ let
       gitFull # GPL v2
       hub # github hub, MIT
       gh # github cli https://cli.github.com/
-      diff-so-fancy
       delta
     ]) ++ [
       git-lfs # MIT
@@ -270,9 +269,9 @@ let
       any-nix-shell
     ];
 
-    node = [ nodejs-12_x ];
+    node = [ nodejs-12_x yarn ];
 
-    perl = [ perl ]; # needed for fish fzf plugin!
+    perl = [ perl ];
 
     python = [
       (highPriority (python38.withPackages (pyPkgs:

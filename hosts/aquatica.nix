@@ -1,9 +1,13 @@
 { config, pkgs, lib, ... }: {
+  imports = [ ../imports/desktop.nix ];
+
   networking.hostName = "aquatica";
 
-  networking.interfaces.enp4s1.useDHCP = true;
-  networking.interfaces.enp5s0.useDHCP = true;
-  networking.interfaces.wlp4s0.useDHCP = true;
+  networking.interfaces = {
+    enp4s1.useDHCP = true;
+    enp5s0.useDHCP = true;
+    wlp4s0.useDHCP = true;
+  };
 
   environment.systemPackages = with pkgs; [
     mdadm # RAID drives

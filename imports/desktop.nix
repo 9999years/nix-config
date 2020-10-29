@@ -11,7 +11,6 @@ in {
     ./yubikey.nix
     ./syncthing.nix
     ./printing.nix
-    ../hosts/this.nix
   ];
 
   boot.loader = {

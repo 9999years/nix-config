@@ -1,5 +1,4 @@
-# Build with:
-# nix-build '<nixpkgs/nixos>' -A config.system.build.isoImage -I nixos-config=dahurica-iso.nix
+# See: ./build.sh
 { config, pkgs, ... }: {
   imports = [
     <nixpkgs/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix>
@@ -8,6 +7,6 @@
     # doesn't need to run "nix-channel --update" first.
     <nixpkgs/nixos/modules/installer/cd-dvd/channel.nix>
 
-    ./dahurica.nix
+    ./HOSTNAME.nix
   ];
 }

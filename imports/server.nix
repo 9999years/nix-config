@@ -2,17 +2,12 @@
 { config, pkgs, lib, ... }:
 let ssh-keys = import ./ssh-keys.nix;
 in {
-  imports = [ <nixpkgs/nixos/modules/virtualisation/openstack-config.nix> ];
+  imports = [
+    <nixpkgs/nixos/modules/virtualisation/openstack-config.nix>
+    ./common.nix
+  ];
 
-  boot = {
-    kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
-    tmpOnTmpfs = lib.mkDefault true; # Keep /tmp in RAM
-  };
-
-  console.keyMap = "us";
-
-  i18n.defaultLocale = "en_US.UTF-8";
-  time.timeZone = "America/New_York";
+  boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
 
   users = {
     mutableUsers = false;
@@ -22,25 +17,15 @@ in {
           [ ssh-keys.cervina-2020-08-19 ssh-keys.aquatica-2020-10-29 ];
       };
       becca = {
-        isNormalUser = true;
-        description = "Rebecca Turner";
-        extraGroups = [ "wheel" ];
-        shell = pkgs.fish;
-        uid = 1000;
         openssh.authorizedKeys.keys =
           [ ssh-keys.cervina-2020-08-19 ssh-keys.aquatica-2020-10-29 ];
       };
     };
   };
 
-  environment.noXlibs = true;
-
-  # networking.nameservers = [ "8.8.8.8" "8.8.4.4" ];
   networking.firewall.allowedTCPPorts = [ 22 80 443 ];
-  networking.firewall.enable = false;
 
-  programs.fish.enable = true;
-  nixpkgs.config.allowUnfree = true;
+  environment.noXlibs = true;
   environment.systemPackages = with pkgs; [
     htop
     gitAndTools.gitFull

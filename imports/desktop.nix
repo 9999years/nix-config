@@ -9,7 +9,7 @@ in {
     ./git.nix
     ./plasma5.nix
     ./yubikey.nix
-    ./syncthing.nix
+    ./syncthing-desktop.nix
     ./printing.nix
   ];
 

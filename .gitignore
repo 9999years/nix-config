@@ -2,4 +2,4 @@
 /hardware-configuration.nix
 this.nix
 result
-/imports/passwords.nix
+/resources/passwords.nix

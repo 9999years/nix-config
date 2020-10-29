@@ -1,5 +1,5 @@
 { config, pkgs, lib, ... }:
-let passwords = import ../imports/passwords.nix;
+let passwords = import ../resources/passwords.nix;
 in {
   imports = [ ../imports/server.nix ];
 

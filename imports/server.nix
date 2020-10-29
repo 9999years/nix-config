@@ -1,7 +1,5 @@
 # Configuration for desktops; graphical computers for personal use.
-{ config, pkgs, lib, ... }:
-let ssh-keys = import ./ssh-keys.nix;
-in {
+{ config, pkgs, lib, ... }: {
   imports = [
     <nixpkgs/nixos/modules/virtualisation/openstack-config.nix>
     ./common.nix
@@ -9,19 +7,7 @@ in {
 
   boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
 
-  users = {
-    mutableUsers = false;
-    users = {
-      root = {
-        openssh.authorizedKeys.keys =
-          [ ssh-keys.cervina-2020-08-19 ssh-keys.aquatica-2020-10-29 ];
-      };
-      becca = {
-        openssh.authorizedKeys.keys =
-          [ ssh-keys.cervina-2020-08-19 ssh-keys.aquatica-2020-10-29 ];
-      };
-    };
-  };
+  users.mutableUsers = false;
 
   networking.firewall.allowedTCPPorts = [ 22 80 443 ];
 

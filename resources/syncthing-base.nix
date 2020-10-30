@@ -1,7 +1,7 @@
 { lib, dataDir ? "/var/lib/syncthing" }:
 let
   devices = {
-    dahurica = {
+    "dahurica.becca.ooo" = {
       id = "246UFRP-KOHFFXZ-RJ6SG7Q-KTOKEFL-2HQGJD7-GPZRGG5-7OTXSJJ-3CQTAAJ";
       addresses = [ "tcp://dahurica.becca.ooo" ];
     };

@@ -47,5 +47,13 @@ in {
         };
       };
   };
-  extraConfig = { };
+  extraConfig = {
+    options = {
+      # Disable anonymous usage reports
+      urAccepted = -1;
+      listenAddresses = [ "tcp://0.0.0.0:22000" "quic://0.0.0.0:22000" ];
+      autoUpgradeIntervalH = 0;
+      stunServers = [ ];
+    };
+  };
 }

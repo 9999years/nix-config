@@ -16,6 +16,11 @@
 
   networking.firewall.allowedTCPPorts = [ 22 80 443 ];
 
+  nix.gc = {
+    automatic = true;
+    dates = "weekly"; # `man -s 7 systemd.time`
+  };
+
   environment.noXlibs = true;
   environment.systemPackages = with pkgs; [
     htop

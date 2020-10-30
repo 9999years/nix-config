@@ -5,6 +5,11 @@
     ./common.nix
   ];
 
+  systemd.services = {
+    amazon-init.enable = false;
+    apply-ec2-data.enable = false;
+  };
+
   boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
 
   users.mutableUsers = false;

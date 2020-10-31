@@ -35,11 +35,15 @@ in {
   programs.fish.enable = true;
   nixpkgs.config.allowUnfree = true;
   nix = {
-    trustedBinaryCaches =
-      [ "https://cache.nixos.org" "https://all-hies.cachix.org" ];
+    trustedBinaryCaches = [
+      "https://cache.nixos.org"
+      "https://all-hies.cachix.org"
+      "https://dahurica.becca.ooo:5000"
+    ];
     binaryCachePublicKeys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "all-hies.cachix.org-1:JjrzAOEUsD9ZMt8fdFbzo3jNAyEWlPAwdVuHw4RD43k="
+      "dahurica.becca.ooo-1:BRo9Ye4EDrIe17iwFxZKmHjv4Vl1+tP+Ecz4SBMzBJ2zOvEyHSIJKeSP/KqElNJzIYAaFQu7t7bg0Kf7kLbcng=="
     ];
     trustedUsers = [ "root" "becca" ];
   };

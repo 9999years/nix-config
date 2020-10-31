@@ -1,7 +1,11 @@
 { config, pkgs, lib, ... }:
 let passwords = import ../resources/passwords.nix;
 in {
-  imports = [ ../imports/server.nix ../imports/syncthing-server.nix ];
+  imports = [
+    ../imports/server.nix
+    ../imports/syncthing-server.nix
+    ../imports/nix-serve.nix
+  ];
 
   users.users = {
     root.hashedPassword = passwords.dahurica.root;

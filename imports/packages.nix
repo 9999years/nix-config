@@ -276,26 +276,37 @@ let
     python = [
       (highPriority (python38.withPackages (pyPkgs:
         with pyPkgs; [
-          # Linters, etc.
-          (black.overridePythonAttrs { doCheck = false; })
-          mypy
+          # Linters & devtools
+          bandit
+          black
+          conda # env / dep management
           flake8
+          hypothesis # property tests
+          isort
+          jedi
+          mypy
+          pep8
+          poetry # env / dep management
+          ptpython # terminal
           pycodestyle
+          pydocstyle
+          pylama
           pylint
-          ptpython
-          pytest
+          pytest # tests
+          python-ctags3
+          rope # refactoring library
+          yapf
           # Utilities
-          grip
-          pillow
-          pyyaml
           attrs
           beautifulsoup4
           cached-property
+          dateutil
+          grip
           more-itertools
           numpy
+          pillow
           pynvim
-          dateutil
-          # python-decouple
+          pyyaml
           requests
           termcolor
           toml

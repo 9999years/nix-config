@@ -20,7 +20,7 @@ in {
       debug = true;
       appId = "pam://becca.ooo";
       cue = true;
-      authFile = with keys;
+      authFile = with keys.${config.networking.hostName};
         u2fAuthFile {
           root = [ mobile cervina aquatica ];
           becca = [ mobile cervina aquatica ];

@@ -9,6 +9,8 @@ in {
     ./dahurica-hardware-configuration.nix
   ];
 
+  networking.hostName = "dahurica";
+
   users.users = {
     root.hashedPassword = passwords.dahurica.root;
     becca.hashedPassword = passwords.dahurica.becca;

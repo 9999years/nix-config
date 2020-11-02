@@ -1,5 +1,5 @@
 { config, pkgs, lib, ... }: {
-  imports = [ <nixos-hardware/dell/xps/15-9550> ../imports/desktop.nix ];
+  imports = [ <nixos-hardware/dell/xps/15-9550> ../imports/desktop.nix ./cervina-hardware-configuration.nix ];
 
   networking.hostName = "cervina";
 

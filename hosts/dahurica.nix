@@ -5,6 +5,7 @@ in {
     ../imports/server.nix
     ../imports/syncthing-server.nix
     ../imports/nix-serve.nix
+    ./dahurica-hardware-configuration.nix
   ];
 
   users.users = {

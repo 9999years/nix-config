@@ -1,5 +1,5 @@
 { config, pkgs, lib, ... }: {
-  imports = [ ../imports/desktop.nix ];
+  imports = [ ../imports/desktop.nix ./aquatica-hardware-configuration.nix ];
 
   networking.hostName = "aquatica";
 

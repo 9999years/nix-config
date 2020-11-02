@@ -4,7 +4,8 @@ in {
   imports = [
     ../imports/server.nix
     ../imports/syncthing-server.nix
-    ../imports/nix-serve.nix
+    ../imports/hydra.nix
+    ../imports/yubikey-server.nix
     ./dahurica-hardware-configuration.nix
   ];
 

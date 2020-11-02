@@ -8,7 +8,7 @@ in {
     ./common.nix
     ./git.nix
     ./plasma5.nix
-    ./yubikey.nix
+    ./yubikey-desktop.nix
     ./syncthing-desktop.nix
     ./printing.nix
   ];

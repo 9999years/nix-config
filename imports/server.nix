@@ -10,6 +10,8 @@
     apply-ec2-data.enable = false;
   };
 
+  services.sshguard = { enable = true; };
+
   boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
 
   users.mutableUsers = false;

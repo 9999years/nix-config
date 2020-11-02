@@ -1,5 +1,5 @@
-/wifi-passwords.nix
-/hardware-configuration.nix
-this.nix
 result
+/hardware-configuration.nix
 /resources/passwords.nix
+/resources/wifi-passwords.nix
+/configuration.nix

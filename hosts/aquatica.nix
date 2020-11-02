@@ -3,10 +3,13 @@
 
   networking.hostName = "aquatica";
 
-  networking.interfaces = {
-    enp4s1.useDHCP = true;
-    enp5s0.useDHCP = true;
-    wlp4s0.useDHCP = true;
+  networking = {
+    useDHCP = false;
+    interfaces = {
+      enp4s1.useDHCP = true;
+      enp5s0.useDHCP = true;
+      wlp4s0.useDHCP = true;
+    };
   };
 
   environment.systemPackages = with pkgs; [

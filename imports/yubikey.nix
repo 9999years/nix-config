@@ -1,13 +1,13 @@
 { config, pkgs, lib, ... }:
 let
-  inherit (pkgs) writeTextFile;
+  inherit (pkgs) writeText;
   inherit (lib) concatStringsSep mapAttrsToList;
   keys = import ../resources/yubikeys.nix;
   u2fAuth = keyAttrs:
     concatStringsSep "\n"
     (mapAttrsToList (user: keys: user + ":" + (concatStringsSep ":" keys))
       keyAttrs);
-  u2fAuthFile = keyAttrs: writeTextFile "u2f_mappings" (u2fAuth keyAttrs);
+  u2fAuthFile = keyAttrs: writeText "u2f_mappings" (u2fAuth keyAttrs);
 in {
   # Yubikey support
   services.pcscd.enable = lib.mkDefault true;

@@ -49,21 +49,27 @@ def link_configuration(cfg: Path, host_cfg: Path) -> None:
     :param host_cfg: path to ``hosts/$(hostname)-configuration.nix``
     """
     if cfg.is_symlink():
-        info(
-            f"{p('configuration.nix')} is already a symlink pointing to {p(cfg.parent / os.readlink(cfg))}"
-        )
+        cfg_dest = cfg.parent / os.readlink(cfg)
+        if cfg_dest.samefile(host_cfg):
+            info(f"{p(cfg)} is already a symlink pointing to {p(host_cfg)}")
+        else:
+            warn(
+                f"{p(cfg)} is a symlink pointing to {p(cfg_dest)}, not {p(host_cfg)}; updating it"
+            )
+            if not DRY_RUN:
+                cfg.unlink()
+                cfg.symlink_to(host_cfg)
+
     elif cfg.exists():
         info(
-            f"{p('configuration.nix')} already exists and is a regular file; moving it to {p(host_cfg)}"
+            f"{p(cfg)} already exists and is a regular file; moving it to {p(host_cfg)}"
         )
         if host_cfg.exists():
             fatal(f"{p(host_cfg)} already exists!")
         elif not DRY_RUN:
             cfg.rename(host_cfg)
     else:
-        info(
-            f"{p('configuration.nix')} doesn't exist; creating it as a link to {p(host_cfg)}"
-        )
+        info(f"{p(cfg)} doesn't exist; creating it as a link to {p(host_cfg)}")
         if not DRY_RUN:
             cfg.symlink_to(host_cfg)
 
@@ -225,9 +231,10 @@ def check_hw_config(host_cfg: Path, hardware_cfg: Path, old_hardware_cfg: Path):
             if not DRY_RUN:
                 host_cfg.write_text(new_cfg_text)
                 nixfmt_output = get_output(["nixfmt", str(host_cfg)])
-                dbg("nixfmt reported:")
-                for line in nixfmt_output.splitlines():
-                    dbg(line)
+                if nixfmt_output:
+                    dbg("nixfmt reported:")
+                    for line in nixfmt_output.splitlines():
+                        dbg(line)
 
 
 def main():
@@ -258,6 +265,8 @@ def main():
 
     if args.update:
         update_hw_config(args, repo_root, hardware_cfg)
+
+    info("All done! 😃")
 
 
 @dataclass

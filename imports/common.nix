@@ -43,7 +43,7 @@ in {
     binaryCachePublicKeys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "all-hies.cachix.org-1:JjrzAOEUsD9ZMt8fdFbzo3jNAyEWlPAwdVuHw4RD43k="
-      "dahurica.becca.ooo-1:BRo9Ye4EDrIe17iwFxZKmHjv4Vl1+tP+Ecz4SBMzBJ2zOvEyHSIJKeSP/KqElNJzIYAaFQu7t7bg0Kf7kLbcng=="
+      "dahurica.becca.ooo-2:SA2Ut+k37H72Rwu4MeJHe58qoodTT20FTF20Wk3KyRo="
     ];
     trustedUsers = [ "root" "becca" ];
   };

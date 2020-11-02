@@ -28,7 +28,10 @@ in {
 
   security.pam = {
     enableSSHAgentAuth = true;
-    services.sudo.sshAgentAuth = true;
+    services.sudo = {
+      u2fAuth = true;
+      sshAgentAuth = true;
+    };
     u2f = {
       enable = true;
       appId = "pam://becca.ooo";

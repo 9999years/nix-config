@@ -173,7 +173,8 @@ def check_hw_config(host_cfg: Path, hardware_cfg: Path, old_hardware_cfg: Path):
     """
     if old_hardware_cfg.is_symlink():
         warn(
-            f"{p(hardware_cfg)} is a symlink to {p(hardware_cfg.parent / os.readlink(old_hardware_cfg))}"
+            f"{p(old_hardware_cfg)} is a symlink to "
+            + p(hardware_cfg.parent / os.readlink(old_hardware_cfg))
         )
         warn("That's probably not needed; consider deleting it.")
     elif old_hardware_cfg.exists():

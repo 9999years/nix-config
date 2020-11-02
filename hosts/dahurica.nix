@@ -16,5 +16,28 @@ in {
     becca.hashedPassword = passwords.dahurica.becca;
   };
 
+  security.acme = {
+    acceptTerms = true;
+    email = "rbt@sent.as";
+  };
+
+  services.nginx = {
+    enable = true;
+    virtualHosts = {
+      "cache.dahurica.becca.ooo" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/".extraConfig = ''
+          proxy_pass http://localhost:${toString config.services.hydra.port};
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          add_header       Front-End-Https   on;
+        '';
+      };
+    };
+  };
+
   system.stateVersion = "21.03"; # Don't change this.
 }

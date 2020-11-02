@@ -23,6 +23,7 @@ in {
     };
     u2f = {
       enable = true;
+      debug = true;
       appId = "pam://becca.ooo";
       cue = true;
       authFile = with keys;

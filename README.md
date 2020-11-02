@@ -2,15 +2,24 @@
 
 `/etc/nixos` to configure my [NixOS] hosts.
 
+**Run `./init.py` after cloning to initialize the repository and/or generate
+new configuration files.**
+
 Typically, this repository will live at `~/nix-config`, and `/etc/nixos` will
 be a clone of that (`sudo git clone ~/nix-config/ /etc/nixos`).
+
+## `configuration.nix`
+
+`configuration.nix` is a symlink to `hosts/$HOSTNAME.nix`, which in turn
+imports `hosts/$HOSTNAME-hardware-configuration.nix`.
+
+`init.py` will generate that symlink and configuration file if it doesn't
+already exist.
 
 ## `hosts/`: machine-specific configuration
 
 The `hosts/` directory contains `$HOSTNAME.nix` and
-`$HOSTNAME-hardware-configuration.nix` for each host, as well as a symlink
-`this.nix` pointing to the current host's configuration. (`init.sh` will
-generate that symlink if it doesn't exist.)
+`$HOSTNAME-hardware-configuration.nix` for each host.
 
 `$HOSTNAME.nix` contains configuration for specific machines that aren't
 shared.
@@ -22,10 +31,20 @@ specific features.
 
 Most notable is `imports/packages.nix`, which lists packages to be installed.
 
+## `resources/`
+
+Resources for configuration; may include hashed passwords (hopefully
+`.gitignore`'d!), extra NixOS modules, or other miscellaneous files.
+
 ## `non-nixos/`
 
 Patterns for using [nixpkgs] on machines *without* NixOS installed, such as
 [Pop!_OS] or MacOS.
+
+## `qcow2/`
+
+Scripts / files for generating bootable [copy-on-write disk images][qcow2] for
+[QEMU].
 
 ## `overlays/`
 
@@ -43,3 +62,5 @@ contains various packages and derivations not in nixpkgs.
 [Pop!_OS]: https://system76.com/pop
 [inputs]: https://nixos.org/guides/nix-pills/inputs-design-pattern.html
 [callPackage]: https://nixos.org/guides/nix-pills/callpackage-design-pattern.html
+[qcow2]: https://en.wikipedia.org/wiki/Qcow
+[QEMU]: https://www.qemu.org/

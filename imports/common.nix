@@ -17,6 +17,7 @@ in {
       root = {
         openssh.authorizedKeys.keys = with ssh-keys; [
           cervina-2020-08-19
+          cervina-yubikey-2020-11-04
           aquatica-2020-10-29
         ];
       };
@@ -27,6 +28,7 @@ in {
         uid = 1000;
         openssh.authorizedKeys.keys = with ssh-keys; [
           cervina-2020-08-19
+          cervina-yubikey-2020-11-04
           aquatica-2020-10-29
         ];
       };

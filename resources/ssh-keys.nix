@@ -5,4 +5,7 @@
     "sk-ecdsa-sha2-nistp256@openssh.com AAAAInNrLWVjZHNhLXNoYTItbmlzdHAyNTZAb3BlbnNzaC5jb20AAAAIbmlzdHAyNTYAAABBBHDoAGKGXH74A2zFcUT+lDv8uGxpwGNYS6R5YE7vM3RTNsuCamY3gCfDkwH3L2bRlAH/+twXFibNdugykg4XxcsAAAAEc3NoOg== cervina-yubikey-2020-11-04";
   aquatica-2020-10-29 =
     "ecdsa-sha2-nistp384 AAAAE2VjZHNhLXNoYTItbmlzdHAzODQAAAAIbmlzdHAzODQAAABhBD+qyk7RBy4j/QPjDS0Q4YR7q7pEkLrCb6vH8zSMsLYzYh+FeZT4ltXH1/OB4DAO95I3h0KMljzUMOKbKhMeTZUC4kFO7KMaTUc3ZjefDwiuPW9qan/I9tQPG/qu8BNZoQ== aquatica-2020-10-29";
+  aquatica-yubikey-2020-11-05 =
+    "sk-ecdsa-sha2-nistp256@openssh.com AAAAInNrLWVjZHNhLXNoYTItbmlzdHAyNTZAb3BlbnNzaC5jb20AAAAIbmlzdHAyNTYAAABBBHdwntAQzd0oBOIFpfN6LSQpcVZhI6Y4oq+capBTXVwXvcLKsVmjVYzZutKDL0tKiCuBDK2tdyvhK6RtZR1P19cAAAAEc3NoOg== aquatica-yubikey-2020-11-05";
+
 }

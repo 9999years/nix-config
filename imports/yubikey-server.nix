@@ -19,7 +19,6 @@ in {
 
     yubico = {
       enable = true;
-      debug = true;
       # 16 is just a magic number:
       #    https://developers.yubico.com/yubico-pam/YubiKey_and_SSH_via_PAM.html
       id = "16";

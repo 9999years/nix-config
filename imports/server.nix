@@ -1,6 +1,7 @@
 # Configuration for desktops; graphical computers for personal use.
 { config, pkgs, lib, ... }: {
   imports = [
+    # See: /nix/var/nix/profiles/per-user/root/channels/nixos/nixpkgs/nixos/modules/virtualisation/openstack-config.nix
     <nixpkgs/nixos/modules/virtualisation/openstack-config.nix>
     ./common.nix
   ];

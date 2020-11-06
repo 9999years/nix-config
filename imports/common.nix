@@ -38,18 +38,20 @@ in {
   };
   programs.fish.enable = true;
   nixpkgs.config.allowUnfree = true;
-  nix = {
+  nix = rec {
+    trustedUsers = [ "root" "becca" ];
+    allowedUsers = trustedUsers;
+
     trustedBinaryCaches = [
       "https://cache.nixos.org"
       "https://all-hies.cachix.org"
-      "https://dahurica.becca.ooo:5000"
+      "https://cache.dahurica.becca.ooo"
     ];
+    binaryCaches = trustedBinaryCaches;
     binaryCachePublicKeys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "all-hies.cachix.org-1:JjrzAOEUsD9ZMt8fdFbzo3jNAyEWlPAwdVuHw4RD43k="
-      "dahurica.becca.ooo-2:SA2Ut+k37H72Rwu4MeJHe58qoodTT20FTF20Wk3KyRo="
     ];
-    trustedUsers = [ "root" "becca" ];
   };
   # Try resolving domain names relative to becca.ooo
   networking.search = [ "becca.ooo" ];

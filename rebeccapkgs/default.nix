@@ -12,10 +12,10 @@ let
     appimage = callPackage ./appimage { };
     background-images = callPackage ./background-images { };
     colortest = callPackage ./colortest { };
-    coc-python = callPackage ./coc-python { };
     fontbase = callPackage ./fontbase { };
     gitflow = callPackage ./gitflow { };
     glimpse = callPackage ./glimpse { };
+    init_coc_python = callPackage ./init_coc_python { };
     latexdef = callPackage ./latexdef { };
     mdcat = callPackage ./mdcat { };
     navi = callPackage ./navi { };

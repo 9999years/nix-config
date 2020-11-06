@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import shutil
 import subprocess
 from dataclasses import dataclass
@@ -12,7 +13,7 @@ from typing import Any, Dict, Optional
 
 
 def main():
-    args = Args.parse_args(argparser())
+    _args = Args.parse_args(argparser())
     root = try_git_root()
 
     if root is None:
@@ -35,32 +36,34 @@ def main():
     if coc_settings_path.exists():
         with open(coc_settings_path) as coc_settings_file:
             coc_settings: Dict[str, Any] = json.load(coc_settings_file)
+    else:
+        coc_settings = {}
 
     new_coc_settings = {
-        "python.formatting.autopep8Path": args.py_bin("autopep8"),
-        "python.formatting.blackPath": args.py_bin("black"),
-        "python.formatting.yapfPath": args.py_bin("yapf"),
-        "python.linting.flake8Path": args.py_bin("flake8"),
-        "python.linting.banditPath": args.py_bin("bandit"),
-        "python.linting.mypyPath": args.py_bin("mypy"),
-        "python.linting.pep8Path": args.py_bin("pep8"),
-        "python.linting.pydocstylePath": args.py_bin("pydocstyle"),
-        "python.linting.pylamaPath": args.py_bin("pylama"),
-        "python.linting.pylintPath": args.py_bin("pylint"),
-        "python.poetryPath": args.py_bin("poetry"),
-        "python.condaPath": args.py_bin("conda"),
-        "python.sortImports.path": args.py_bin("isort"),
-        "python.pythonPath": args.py_bin("python"),
+        "python.formatting.autopep8Path": which("autopep8"),
+        "python.formatting.blackPath": which("black"),
+        "python.formatting.yapfPath": which("yapf"),
+        "python.linting.flake8Path": which("flake8"),
+        "python.linting.banditPath": which("bandit"),
+        "python.linting.mypyPath": which("mypy"),
+        "python.linting.pep8Path": which("pep8"),
+        "python.linting.pydocstylePath": which("pydocstyle"),
+        "python.linting.pylamaPath": which("pylama"),
+        "python.linting.pylintPath": which("pylint"),
+        "python.poetryPath": which("poetry"),
+        "python.condaPath": which("conda"),
+        "python.sortImports.path": which("isort"),
+        "python.pythonPath": which("python"),
+        "python.pipenvPath": which("pipenv"),
+        "python.workspaceSymbols.ctagsPath": which("ctags"),
     }
-
-    if args.pipenv is not None:
-        new_coc_settings["python.pipenvPath"] = args.pipenv
-
-    if args.ctags is not None:
-        new_coc_settings["python.workspaceSymbols.ctagsPath"] = args.ctags
 
     modified = False
     for key, val in new_coc_settings.items():
+        if val is None:
+            # Skip non-existent executables.
+            continue
+
         old_val = coc_settings.get(key, None)
         if old_val != val:
             if not modified:
@@ -89,7 +92,7 @@ def main():
             coc_settings_path.rename(coc_settings_path_backup)
 
         # Write the new file.
-        with open(coc_settings_path) as coc_settings_file:
+        with open(coc_settings_path, "w") as coc_settings_file:
             json.dump(coc_settings, coc_settings_file, indent=True, sort_keys=True)
 
 
@@ -114,19 +117,27 @@ def try_git_root() -> Optional[Path]:
     return Path(out)
 
 
+def which(exe_name: str) -> Optional[str]:
+    ret = shutil.which(exe_name)
+
+    if ret is None:
+        return None
+
+    ret_p = Path(ret)
+    if ret_p.is_symlink():
+        raw_dest = os.readlink(ret_p)
+        if raw_dest.startswith(os.environ.get("NIX_STORE", "/nix/store")):
+            return raw_dest
+
+    return ret
+
+
 @dataclass
 class Args:
-    python: Path
-    pipenv: Optional[Path]
-    ctags: Optional[Path]
-
-    def py_bin(self, exe_name: str) -> Path:
-        return self.python / "bin" / exe_name
-
     @classmethod
     def parse_args(cls, parser: argparse.ArgumentParser) -> Args:
-        args = parser.parse_args()
-        return cls(python=args.python, pipenv=args.pipenv, ctags=args.ctags)
+        _args = parser.parse_args()
+        return cls()
 
 
 def argparser() -> argparse.ArgumentParser:

@@ -1,8 +1,6 @@
 # Configuration for servers; non-graphical environments that need ssh, etc.
-{ config, pkgs, lib, ... }:
-let
-  packages = import ./packages.nix { inherit pkgs; };
-  overlays = import ../overlays;
+{ config, pkgs, lib, options, ... }:
+let packages = import ./packages.nix { inherit pkgs; };
 in {
   imports = [
     ./common.nix
@@ -78,7 +76,9 @@ in {
   };
 
   environment.systemPackages = packages.all;
-  nixpkgs.overlays = lib.attrValues overlays;
+  nixpkgs.overlays = lib.attrValues (import ../overlays);
+  nix.nixPath = options.nix.nixPath.default
+    ++ [ "nixpkgs-overlays=/etc/nixos/overlays/nix-path/" ];
 
   system.stateVersion = "20.03"; # Don't change this. Check the docs first.
 }

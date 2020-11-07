@@ -13,31 +13,8 @@ from typing import Any, Dict, Optional
 
 
 def main():
-    _args = Args.parse_args(argparser())
-    root = try_git_root()
-
-    if root is None:
-        # Couldn't get the git root; try parents of the current dir.
-        cwd = Path.cwd()
-        for maybe_root in cwd.parents:
-            vim_dir = maybe_root / ".vim"
-            if vim_dir.exists():
-                root = maybe_root
-
-        # No parents of the current dir already work; just use the
-        # current dir.
-        if root is None:
-            root = cwd
-
-    vim_dir = root / ".vim"
-    vim_dir.mkdir(parents=True, exist_ok=True)
-
-    coc_settings_path = vim_dir / "coc-settings.json"
-    if coc_settings_path.exists():
-        with open(coc_settings_path) as coc_settings_file:
-            coc_settings: Dict[str, Any] = json.load(coc_settings_file)
-    else:
-        coc_settings = {}
+    args = Args.parse_args(argparser())
+    coc_settings = CocSettings.from_root(args.root)
 
     new_coc_settings = {
         "python.formatting.autopep8Path": which("autopep8"),
@@ -58,16 +35,74 @@ def main():
         "python.workspaceSymbols.ctagsPath": which("ctags"),
     }
 
-    modified = False
-    for key, val in new_coc_settings.items():
-        if val is None:
-            # Skip non-existent executables.
-            continue
+    modified = coc_settings.update(new_coc_settings)
 
-        old_val = coc_settings.get(key, None)
-        if old_val != val:
+    if modified:
+        coc_settings.maybe_backup()
+        coc_settings.write()
+
+
+@dataclass
+class CocSettings:
+    path: Path
+    settings: Dict[str, object]
+
+    @classmethod
+    def from_root(cls, root: Optional[Path] = None) -> CocSettings:
+        path = cls.find_path(root)
+        return cls.from_path(path)
+
+    @classmethod
+    def from_path(cls, path: Path) -> CocSettings:
+        if path.exists():
+            with open(path) as coc_settings_file:
+                settings = json.load(coc_settings_file)
+        else:
+            settings = {}
+
+        return cls(path=path, settings=settings)
+
+    @staticmethod
+    def find_path(root: Optional[Path] = None) -> Path:
+        if root is None:
+            root = get_root_dir()
+
+        vim_dir = root / ".vim"
+        vim_dir.mkdir(parents=True, exist_ok=True)
+        return vim_dir / "coc-settings.json"
+
+    def maybe_backup(self) -> Optional[Path]:
+        """Backup the settings if the file exists and return its new path.
+        """
+        if self.path.exists():
+            path_backup = self.path.with_suffix(".json.bak")
+            print("Saving old coc settings to", path_backup)
+            return self.path.rename(path_backup)
+        return None
+
+    def write(self):
+        with open(self.path, "w") as settings_file:
+            json.dump(self.settings, settings_file, indent=True, sort_keys=True)
+
+    def update(self, new_settings: Dict[str, Any]) -> bool:
+        """Merge settings from ``new_settings`` into ``self``.
+
+        Modifies ``self``, and returns ``True`` if any modifications were
+        made.
+        """
+        modified = False
+        for key, val in new_settings.items():
+            if val is None:
+                # Skip non-existent executables.
+                continue
+
+            old_val = self.settings.get(key, None)
+            if old_val == val:
+                continue
+
             if not modified:
-                print("Updating settings in", coc_settings_path)
+                # Only print that we're updating the settings once.
+                print("Updating settings in", self.path)
             modified = True
 
             if old_val is None:
@@ -78,22 +113,28 @@ def main():
                 print(" new:", val)
 
             if isinstance(val, Path):
-                coc_settings[key] = str(val)
+                self.settings[key] = str(val)
             else:
-                coc_settings[key] = val
+                self.settings[key] = val
 
-    if modified:
-        # We need to write the file.
+        return modified
 
-        # If we had a previous file, back it up.
-        if coc_settings_path.exists():
-            coc_settings_path_backup = coc_settings_path.with_suffix(".json.bak")
-            print("Saving old coc settings to", coc_settings_path_backup)
-            coc_settings_path.rename(coc_settings_path_backup)
 
-        # Write the new file.
-        with open(coc_settings_path, "w") as coc_settings_file:
-            json.dump(coc_settings, coc_settings_file, indent=True, sort_keys=True)
+def get_root_dir() -> Path:
+    root = try_git_root()
+    if root is not None:
+        return root
+
+    # Couldn't get the git root; try parents of the current dir.
+    cwd = Path.cwd()
+    for maybe_root in cwd.parents:
+        vim_dir = maybe_root / ".vim"
+        if vim_dir.exists():
+            return maybe_root
+
+    # No parents of the current dir already work; just use the
+    # current dir.
+    return cwd
 
 
 def try_git_root() -> Optional[Path]:
@@ -134,10 +175,12 @@ def which(exe_name: str) -> Optional[str]:
 
 @dataclass
 class Args:
+    root: Optional[Path]
+
     @classmethod
     def parse_args(cls, parser: argparse.ArgumentParser) -> Args:
-        _args = parser.parse_args()
-        return cls()
+        args = parser.parse_args()
+        return cls(root=args.root)
 
 
 def argparser() -> argparse.ArgumentParser:
@@ -146,13 +189,12 @@ def argparser() -> argparse.ArgumentParser:
     )
 
     parser.add_argument(
-        "--python",
+        "--root",
         type=Path,
-        help="Python base directory; should have a `bin/python` executable.",
+        help="""Root directory to find/update `.vim/coc-settings.json` in;
+        assumed to be git repo root, parent directory with `.vim` directory, or
+        current directory.""",
     )
-
-    parser.add_argument("--pipenv", help="pipenv executable")
-    parser.add_argument("--ctags", help="ctags executable")
 
     return parser
 

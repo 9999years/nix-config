@@ -26,7 +26,6 @@ let
     sddm-faces = callPackage ./sddm-faces { };
     spdx-tool = callPackage ./spdx-tool { };
     star-tsp100 = callPackage ./star-tsp100 { };
-    todoist-gui = callPackage ./todoist-gui { };
     typefaces = callPackage ./typefaces { };
     vscode-cpptools = callPackage ./vscode-cpptools { };
   };

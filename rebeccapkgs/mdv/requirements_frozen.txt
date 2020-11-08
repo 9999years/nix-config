@@ -1,4 +1,0 @@
-Markdown==3.2
-mdv==1.7.4
-Pygments==2.5.2
-tabulate==0.8.6

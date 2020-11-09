@@ -1,6 +1,6 @@
 self: super: {
-  # Only override if we're still at 3.1b
-  tmux = if super.tmux.version == "3.1b" then
+  # Only override if we're still at 3.1c
+  tmux = if super.tmux.version == "3.1c" then
     super.tmux.overrideAttrs (old: rec {
       version = "3.2-rc";
 
@@ -8,7 +8,7 @@ self: super: {
         owner = "tmux";
         repo = "tmux";
         rev = version;
-        sha256 = "076bn87vddcma95hh6c37155ifrhn8q138m8p8xc5nq9qzkz5cad";
+        sha256 = "0h4wpdjdspgr3c9i8l6hjyc488dqm60j3vaqzznvxqfjzzf3s7dg";
       };
     })
   else

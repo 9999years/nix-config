@@ -1,4 +1,5 @@
-# Enable extra configuration for Syncthing.
+# Enable extra configuration for Syncthing via the
+# `services.syncthing.extraConfig` option.
 { config, pkgs, lib, ... }:
 let
   inherit (lib) escapeShellArg optionalString types mkOption mkIf;

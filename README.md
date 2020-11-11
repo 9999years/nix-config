@@ -34,7 +34,11 @@ Most notable is `imports/packages.nix`, which lists packages to be installed.
 ## `resources/`
 
 Resources for configuration; may include hashed passwords (hopefully
-`.gitignore`'d!), extra NixOS modules, or other miscellaneous files.
+`.gitignore`'d!), SSH keys, that kind of thing.
+
+## `modules/`
+
+Extra NixOS modules.
 
 ## `non-nixos/`
 

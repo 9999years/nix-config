@@ -3,6 +3,7 @@
 let packages = import ./packages.nix { inherit pkgs; };
 in {
   imports = [
+    ../modules/usb-wakeup-disable.nix
     ./common.nix
     ./git.nix
     ./plasma5.nix

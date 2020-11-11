@@ -37,6 +37,20 @@
 
   services.xserver.dpi = 144;
 
+  # Don't let USB devices wake the computer from sleep.
+  hardware.usb.wakeupDisabled = [
+    {
+      # Logitech wireless mouse receiver
+      vendor = "046d";
+      product = "c52b";
+    }
+    {
+      # Pok3r keyboard
+      vendor = "04d9";
+      product = "0141";
+    }
+  ];
+
   # Sound
   sound.enableOSSEmulation = false;
   hardware.cpu.intel.updateMicrocode = true;

@@ -37,6 +37,7 @@ in {
     hardware.usb.wakeupDisabled = mkOption {
       description =
         "Prevent USB devices from waking the computer from sleep/hibernation.";
+      default = [ ];
       type = types.listOf (types.submodule {
         options = {
           vendor = mkOption {

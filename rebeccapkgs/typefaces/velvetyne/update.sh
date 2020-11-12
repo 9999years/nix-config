@@ -49,6 +49,9 @@ function error { _log "$(BRRED)"        "[error]" "$@"; }
 function fatal { _log "$(BOLD)$(BRRED)" "[FATAL]" "$@"; exit 1; }
 function cmd   { _log "$(CYAN)"         "[run]  " "\$ $(BOLD)$(UNDERLINED)$*"; }
 
+curlHeaderFile="./curl-headers.txt"
+curlOpts=("-H" "@$curlHeaderFile")
+
 echo "{ fetchzip, fetchFromGitLab, fetchFromGitHub }:" > srcs.nix.new
 echo "[" >> srcs.nix.new
 
@@ -57,9 +60,10 @@ while IFS="" read -r line
 do
     font=$(echo "$line" | sed -E 's|/fonts/([^/]+)/|\1|')
     info "Found font $font"
-    url=$(curl "http://velvetyne.fr/$line/download/" \
+    url=$(curl "${curlOpts[@]}" "http://velvetyne.fr/$line/download/" \
         | pup 'a:contains("clic here.") attr{href}')
     info "Found URL $url"
+
     case "$url" in
         https://gitlab.com/* )
             dbg "Parsing as GitLab URL"
@@ -91,18 +95,24 @@ do
 
         *.zip )
             dbg "Parsing as plain zip URL"
-            echo "(fetchzip $(nix-prefetch --quiet --output nix \
-                fetchzip \
-                --name "velvetyne-$font" \
-                --no-stripRoot \
-                --url "$url"))" >> srcs.nix.new
+            # velvetyne.fr doesn't like curl so we need a different user-agent
+            # :(
+            attrs="name = \"velvetyne-$font\"; \
+                    curlOpts = \"-H @\${./curl-headers.txt}\"; \
+                    stripRoot = false; \
+                    url = \"$url\";"
+            hash="$(nix-prefetch --quiet "fetchzip { $attrs }")"
+            echo "(fetchzip { \
+                $attrs
+                sha256 = \"$hash\";
+            })" >> srcs.nix.new
             ;;
 
         * )
             fatal "Unrecognized URL format $url"
             ;;
     esac
-done < <(curl http://velvetyne.fr/ | pup 'ul.typefaces li a attr{href}')
+done < <(curl "${curlOpts[@]}" http://velvetyne.fr/ | pup 'ul.typefaces li a attr{href}')
 
 echo "]" >> srcs.nix.new
 info "Reformatting new sources file"

@@ -20,6 +20,7 @@ let
     mdcat = callPackage ./mdcat { };
     navi = callPackage ./navi { };
     nix-query = callPackage ./nix-query { };
+    pijul = callPackage ./pijul { };
     psftools = callPackage ./psftools { };
     puppy = callPackage ./puppy { };
     sddm-breeze-rbt-theme = callPackage ./sddm-breeze-rbt-theme { };

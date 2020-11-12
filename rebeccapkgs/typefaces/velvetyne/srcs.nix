@@ -22,15 +22,17 @@
   })
   (fetchzip {
     name = "velvetyne-bizmeud";
-    sha256 = "1wnrnfm5x7f96rsl63xf5mh44q7jxjxilds7vm8scmhdmhw1rcc8";
+    curlOpts = "-H @${./curl-headers.txt}";
     stripRoot = false;
-    url = "https://velvetyne.fr/archives/fonts/bizmeud.zip";
+    url = "http://velvetyne.fr/archives/fonts/bizmeud.zip";
+    sha256 = "1wnrnfm5x7f96rsl63xf5mh44q7jxjxilds7vm8scmhdmhw1rcc8";
   })
   (fetchzip {
     name = "velvetyne-blocus";
-    sha256 = "112wrc06rdld4z81lz5gsb69nzaz6bc59f6fi7lris7pv5cmnfri";
+    curlOpts = "-H @${./curl-headers.txt}";
     stripRoot = false;
-    url = "https://velvetyne.fr/archives/fonts/blocus.zip";
+    url = "http://velvetyne.fr/archives/fonts/blocus.zip";
+    sha256 = "112wrc06rdld4z81lz5gsb69nzaz6bc59f6fi7lris7pv5cmnfri";
   })
   (fetchFromGitHub {
     name = "velvetyne-BluuNext";
@@ -41,9 +43,10 @@
   })
   (fetchzip {
     name = "velvetyne-boeticher";
-    sha256 = "1qgrjj82q9hwz5xc42a5mw0c4x8hxd0hw45pyiacmjjjyj5y8hkl";
+    curlOpts = "-H @${./curl-headers.txt}";
     stripRoot = false;
-    url = "https://velvetyne.fr/archives/fonts/boeticher.zip";
+    url = "http://velvetyne.fr/archives/fonts/boeticher.zip";
+    sha256 = "1qgrjj82q9hwz5xc42a5mw0c4x8hxd0hw45pyiacmjjjyj5y8hkl";
   })
   (fetchFromGitLab {
     name = "velvetyne-cantique";
@@ -54,9 +57,10 @@
   })
   (fetchzip {
     name = "velvetyne-chaumont";
-    sha256 = "14apd1maldlcla8dkbi6h9n99ymbmm74rqxrc01cl944bwppbxam";
+    curlOpts = "-H @${./curl-headers.txt}";
     stripRoot = false;
-    url = "https://velvetyne.fr/archives/fonts/chaumont.zip";
+    url = "http://velvetyne.fr/archives/fonts/chaumont.zip";
+    sha256 = "14apd1maldlcla8dkbi6h9n99ymbmm74rqxrc01cl944bwppbxam";
   })
   (fetchFromGitLab {
     name = "Clarasambot-cirruscumulus";
@@ -95,9 +99,10 @@
   })
   (fetchzip {
     name = "velvetyne-fengardo-neue";
-    sha256 = "1gxhwbmwswrl0yd1jxrqdsyxs059ac78a09gz7p7hh1girk3xa2s";
+    curlOpts = "-H @${./curl-headers.txt}";
     stripRoot = false;
-    url = "https://velvetyne.fr/archives/fonts/FengardoNeue.zip";
+    url = "http://velvetyne.fr/archives/fonts/FengardoNeue.zip";
+    sha256 = "1gxhwbmwswrl0yd1jxrqdsyxs059ac78a09gz7p7hh1girk3xa2s";
   })
   (fetchFromGitLab {
     name = "velvetyne-format-1452";
@@ -108,15 +113,17 @@
   })
   (fetchzip {
     name = "velvetyne-grotesk";
-    sha256 = "0f1xgiqkrdg53phbwbwfks8afpprk6x2h5nifxn2f4kkp0dzld83";
+    curlOpts = "-H @${./curl-headers.txt}";
     stripRoot = false;
-    url = "https://velvetyne.fr/archives/fonts/grotesk.zip";
+    url = "http://velvetyne.fr/archives/fonts/grotesk.zip";
+    sha256 = "0f1xgiqkrdg53phbwbwfks8afpprk6x2h5nifxn2f4kkp0dzld83";
   })
   (fetchzip {
     name = "velvetyne-gulax";
-    sha256 = "0rgxs1iq4arxf7c4q151pf18b2dcrw4f4nc8gjkvl54b33zjx5qi";
+    curlOpts = "-H @${./curl-headers.txt}";
     stripRoot = false;
-    url = "https://velvetyne.fr/archives/fonts/gulax.zip";
+    url = "http://velvetyne.fr/archives/fonts/gulax.zip";
+    sha256 = "0rgxs1iq4arxf7c4q151pf18b2dcrw4f4nc8gjkvl54b33zjx5qi";
   })
   (fetchFromGitHub {
     name = "velvetyne-Hangul";
@@ -169,9 +176,10 @@
   })
   (fetchzip {
     name = "velvetyne-lineal";
-    sha256 = "1kdf5g3jplcnz5dgvi7jcwg103kwk5gxkizyrbyzwf7nc7aippy3";
+    curlOpts = "-H @${./curl-headers.txt}";
     stripRoot = false;
-    url = "https://velvetyne.fr/archives/fonts/lineal.zip";
+    url = "http://velvetyne.fr/archives/fonts/lineal.zip";
+    sha256 = "1kdf5g3jplcnz5dgvi7jcwg103kwk5gxkizyrbyzwf7nc7aippy3";
   })
   (fetchFromGitHub {
     name = "velvetyne-Lment_";
@@ -182,9 +190,10 @@
   })
   (fetchzip {
     name = "velvetyne-mainz";
-    sha256 = "09923yvy95dhij8qz32qy8pjkb015khjxiizx5h97k4a404gndkw";
+    curlOpts = "-H @${./curl-headers.txt}";
     stripRoot = false;
-    url = "https://velvetyne.fr/archives/fonts/mainz.zip";
+    url = "http://velvetyne.fr/archives/fonts/mainz.zip";
+    sha256 = "09923yvy95dhij8qz32qy8pjkb015khjxiizx5h97k4a404gndkw";
   })
   (fetchFromGitLab {
     name = "velvetyne-Mess";
@@ -209,34 +218,38 @@
   })
   (fetchzip {
     name = "velvetyne-mr-pixel";
-    sha256 = "1ml7qb72zhdb784pvdjjd0gav921yw4kjhc80vj9pj61yjsx3668";
+    curlOpts = "-H @${./curl-headers.txt}";
     stripRoot = false;
-    url = "https://velvetyne.fr/archives/fonts/mr_pixel.zip";
+    url = "http://velvetyne.fr/archives/fonts/mr_pixel.zip";
+    sha256 = "1ml7qb72zhdb784pvdjjd0gav921yw4kjhc80vj9pj61yjsx3668";
   })
   (fetchzip {
     name = "velvetyne-mixo";
-    sha256 = "0wxz9gvp645rlgw5bv91rpi6g0nwyccx7kii0ddzj347814bsaxd";
+    curlOpts = "-H @${./curl-headers.txt}";
     stripRoot = false;
-    url = "https://velvetyne.fr/archives/fonts/mixo.zip";
+    url = "http://velvetyne.fr/archives/fonts/mixo.zip";
+    sha256 = "0wxz9gvp645rlgw5bv91rpi6g0nwyccx7kii0ddzj347814bsaxd";
   })
   (fetchzip {
     name = "velvetyne-mono";
-    sha256 = "1mmpqzh4zqvl25znr68vxljc08h878cb55xaqakd0l2fj50j7cgs";
+    curlOpts = "-H @${./curl-headers.txt}";
     stripRoot = false;
-    url = "https://velvetyne.fr/archives/fonts/mono.zip";
+    url = "http://velvetyne.fr/archives/fonts/mono.zip";
+    sha256 = "1mmpqzh4zqvl25znr68vxljc08h878cb55xaqakd0l2fj50j7cgs";
   })
   (fetchzip {
     name = "velvetyne-montchauve";
-    sha256 = "06vcy0d0qg8d1315rs4n46a3apyl5qn3pbvdb03hpcx08v2w4x7k";
+    curlOpts = "-H @${./curl-headers.txt}";
     stripRoot = false;
-    url = "https://velvetyne.fr/archives/fonts/montchauve.zip";
+    url = "http://velvetyne.fr/archives/fonts/montchauve.zip";
+    sha256 = "06vcy0d0qg8d1315rs4n46a3apyl5qn3pbvdb03hpcx08v2w4x7k";
   })
   (fetchFromGitLab {
     name = "velvetyne-mourier";
     owner = "velvetyne";
     repo = "mourier";
-    rev = "0c8594515ff53f5d894365026b7c093ad4fc0471";
-    sha256 = "1qq10q0jrxcypd5q5s3cfz7dnwc6h97w1qi0pgffnnh5nnll67na";
+    rev = "02c6e2d3aa23b3b8b625f50b7a912baa02e055f5";
+    sha256 = "19na95101ky85knkz7qv7v6225ghy714nhsq8j2vb3mgv6qdkrd4";
   })
   (fetchFromGitLab {
     name = "arielmartinperez-ouroboros";

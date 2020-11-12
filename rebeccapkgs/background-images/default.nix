@@ -119,18 +119,6 @@ in stdenvNoCC.mkDerivation {
     })
     (fetchurl {
       url =
-        "https://images.squarespace-cdn.com/content/v1/5af35f78266c07d9fd3ae075/1537919369891-R2NFHY1KKXVD42AOJOIL/ke17ZwdGBToddI8pDm48kFyZxdKIRyE58wtOUGLgFakUqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8N_N4V1vUb5AoIIIbLZhVYxCRW4BPu10St3TBAUQYVKcqrwXZrbJOEp83Yr2q6b-w4r1Z7_kK-2Hk-38Q9IbS_soJ7P8gFRtdFClMjbtLg7X/Lake-Isabella-CA-TC-5_re.jpg?format=orig";
-      sha256 = "0y9wy5n8b43fglz506zngv15q3457qadxnddcja7f1s7zg7qdx56";
-      name = "matthew-brandt-lake-isabella.jpg";
-    })
-    (fetchurl {
-      url =
-        "https://images.squarespace-cdn.com/content/v1/5af35f78266c07d9fd3ae075/1537920143931-8X6ZRPVZOTCFD4EFEYCV/ke17ZwdGBToddI8pDm48kMbbYEFgw4jm354A2z0Ndf4UqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8N_N4V1vUb5AoIIIbLZhVYxCRW4BPu10St3TBAUQYVKcy8llUarnDEzHipvAcrJX1qxj3VfHtSN6k1cnz1ezsgbIFwABDbv2KsGrErEkYtGf/Crackling-Lake-WY-5_re.jpg?format=orig";
-      sha256 = "0rqlgxl7qyhmpf7l3abqb1bc5kfchvq9144477h4m0zmfy2imr6j";
-      name = "matthew-brandt-crackling-lake.jpg";
-    })
-    (fetchurl {
-      url =
         "https://images.squarespace-cdn.com/content/v1/5af35f78266c07d9fd3ae075/1530169450650-R56CYAQ452GGD9Z783EX/ke17ZwdGBToddI8pDm48kGEdLrJdqAeMSJz41xzDvnl7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z4YTzHvnKhyp6Da-NYroOW3ZGjoBKy3azqku80C789l0iy8Rj2bPXFyaluz0PeKicNF9zhRDRVOFHrvSK2QoXbA_0gvHqAA-DZc3U0Z_zIy8g/Nymph+Lake%2C+WY+4A+by+MatthewBrandt.com?format=orig";
       sha256 = "0955025y4gqvdxd2y0shy3nnn1rvprj7c47z4rv8x511ywzzsv5k";
       name = "matthew-brandt-nymph-lake.jpg";
@@ -151,12 +139,6 @@ in stdenvNoCC.mkDerivation {
         "https://live.staticflickr.com/65535/50325570556_9b694e5834_o_d.jpg";
       sha256 = "1jrr857xbk0gyrqjgfhji3qw8zx80kvqc901sbv4k4dqq1q2iqma";
       name = "oskar-gunther-swiss-alps.jpg";
-    })
-    (fetchurl {
-      url =
-        "https://live.staticflickr.com/65535/50323466921_c3de8472b0_o_d.jpg";
-      sha256 = "111gwhpzl44k47zp3fy9znw0m8x0b8vim6mabg93ssgg236s97g0";
-      name = "maurice-van-gestel-mallorca-spain.jpg";
     })
     (fetchurl {
       url =

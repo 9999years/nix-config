@@ -1,5 +1,9 @@
 { config, pkgs, lib, ... }: {
-  imports = [ <nixos-hardware/dell/xps/15-9550> ../imports/desktop.nix ./cervina-hardware-configuration.nix ];
+  imports = [
+    <nixos-hardware/dell/xps/15-9550>
+    ../imports/desktop.nix
+    ./cervina-hardware-configuration.nix
+  ];
 
   networking.hostName = "cervina";
 
@@ -13,7 +17,11 @@
     # Do NOT keep /tmp in RAM because /tmp can get big and this is but a laptop.
     tmpOnTmpfs = false;
     kernelModules = [ "coretemp" ];
-    loader.grub.fontSize = 32;
+    loader = {
+      grub.fontSize = 32;
+      # Wait until we select something rather than booting the default.
+      timeout = null;
+    };
   };
 
   hardware = {

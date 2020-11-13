@@ -279,14 +279,12 @@ let
           # Linters & devtools
           bandit
           black
-          conda # env / dep management
           flake8
           hypothesis # property tests
           isort
           jedi
           mypy
           pep8
-          poetry # env / dep management
           ptpython # terminal
           pycodestyle
           pydocstyle

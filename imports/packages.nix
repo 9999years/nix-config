@@ -213,7 +213,7 @@ let
       pdftk
       poppler_utils # pdftotext
       # mupdf # mutool; marked insecure
-      k2pdfopt
+      # k2pdfopt # depends on insecure mupdf :(
       (highPriority ghostscript)
       imagemagick7 # Derived Apache 2.0
       # bingrep # Binary introspection, https://github.com/m4b/bingrep

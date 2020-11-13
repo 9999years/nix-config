@@ -39,5 +39,12 @@ in {
     };
   };
 
+  swapDevices = [
+    {
+      label = "swap";
+      size = 16000; # 16GB
+    }
+  ];
+
   system.stateVersion = "21.03"; # Don't change this.
 }

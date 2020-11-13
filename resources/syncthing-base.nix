@@ -23,8 +23,10 @@ in {
     inherit devices;
     folders = builtins.mapAttrs (name: attrs:
       {
+        path = "${dataDir}/${name}";
+        id = name;
         devices = allDevices;
-        label = attrs.id;
+        label = attrs.id or name;
         versioning = {
           type = "staggered";
           params = {
@@ -33,18 +35,11 @@ in {
           };
         };
       } // attrs) {
-        pdf = {
-          id = "pdf";
-          path = "${dataDir}/pdf";
-        };
-        fonts = {
-          id = "fonts";
-          path = "${dataDir}/Fonts";
-        };
-        reaction-images = {
-          id = "reaction";
-          path = "${dataDir}/reaction-images";
-        };
+        pdf.label = "PDF documents";
+        misc.label = "Misc. personal documents";
+        fonts.label = "Fonts";
+        cc.label = "Programs :)";
+        reaction.label = "Reaction images";
       };
   };
   extraConfig = {

@@ -212,7 +212,7 @@ let
       pandoc # GLP v2+
       pdftk
       poppler_utils # pdftotext
-      mupdf # mutool
+      # mupdf # mutool; marked insecure
       k2pdfopt
       (highPriority ghostscript)
       imagemagick7 # Derived Apache 2.0

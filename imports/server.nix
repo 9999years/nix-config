@@ -19,15 +19,7 @@
 
   networking.firewall.allowedTCPPorts = [ 22 80 443 ];
 
-  system.autoUpgrade = {
-    enable = true;
-    allowReboot = true;
-  };
-
-  nix.gc = {
-    automatic = true;
-    dates = "weekly"; # `man -s 7 systemd.time`
-  };
+  system.autoUpgrade.allowReboot = true;
 
   environment.noXlibs = true;
   environment.systemPackages = with pkgs; [

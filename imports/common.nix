@@ -49,6 +49,14 @@ in {
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "all-hies.cachix.org-1:JjrzAOEUsD9ZMt8fdFbzo3jNAyEWlPAwdVuHw4RD43k="
     ];
+    gc = {
+      automatic = true;
+      dates = "weekly"; # See `man systemd.time 7`
+    };
+  };
+  system.autoUpgrade = {
+    enable = true;
+    dates = "14:00"; # daily at 2 PM
   };
   # Try resolving domain names relative to becca.ooo
   networking.search = [ "becca.ooo" ];

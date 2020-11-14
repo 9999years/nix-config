@@ -41,6 +41,7 @@ in {
 
   swapDevices = [
     {
+      device = "/var/swap";
       label = "swap";
       size = 16000; # 16GB
     }

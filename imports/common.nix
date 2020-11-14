@@ -42,8 +42,10 @@ in {
     trustedBinaryCaches = [
       "https://cache.nixos.org"
       "https://all-hies.cachix.org"
-      "https://cache.dahurica.becca.ooo"
-    ];
+    ]
+    # Only include dahurica as a cache server if we're not dahurica ourselves.
+      ++ lib.optional (config.networking.hostName != "dahurica")
+      "https://cache.dahurica.becca.ooo";
     binaryCaches = trustedBinaryCaches;
     binaryCachePublicKeys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="

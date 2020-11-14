@@ -35,10 +35,11 @@ in {
           };
         };
       } // attrs) {
+        # Remember, labels will turn into paths on the Windows hosts.
         pdf.label = "PDF documents";
-        misc.label = "Misc. personal documents";
+        misc.label = "Misc personal documents";
         fonts.label = "Fonts";
-        cc.label = "Programs :)";
+        cc.label = "CC Programs";
         reaction.label = "Reaction images";
       };
   };

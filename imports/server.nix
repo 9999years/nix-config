@@ -21,7 +21,6 @@
 
   system.autoUpgrade.allowReboot = true;
 
-  environment.noXlibs = true;
   environment.systemPackages = with pkgs; [
     htop
     gitAndTools.gitFull

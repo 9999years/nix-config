@@ -37,6 +37,13 @@
 
   services.xserver.dpi = 144;
 
+  services.today_tmp = {
+    enable = true;
+    user = "becca";
+    repository = "${config.users.users.becca.home}/.config/today_tmp/repo";
+    workspace = "${config.users.users.becca.home}/Documents/tmp";
+  };
+
   # Don't let USB devices wake the computer from sleep.
   hardware.usb.wakeupDisabled = [
     {

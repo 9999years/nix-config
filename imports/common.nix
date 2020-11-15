@@ -3,7 +3,7 @@
 { config, pkgs, lib, ... }:
 let ssh-keys = import ../resources/ssh-keys.nix;
 in {
-  imports = [ ../modules/syncthing.nix ];
+  imports = [ ../modules/syncthing.nix ../modules/today_tmp ];
   boot.tmpOnTmpfs = lib.mkDefault true; # Keep /tmp in RAM
   console.keyMap = "us";
   i18n.defaultLocale = "en_US.UTF-8";

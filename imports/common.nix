@@ -39,13 +39,8 @@ in {
     trustedUsers = [ "root" "becca" ];
     allowedUsers = trustedUsers;
 
-    trustedBinaryCaches = [
-      "https://cache.nixos.org"
-      "https://all-hies.cachix.org"
-    ]
-    # Only include dahurica as a cache server if we're not dahurica ourselves.
-      ++ lib.optional (config.networking.hostName != "dahurica")
-      "https://cache.dahurica.becca.ooo";
+    trustedBinaryCaches =
+      [ "https://cache.nixos.org" "https://all-hies.cachix.org" ];
     binaryCaches = trustedBinaryCaches;
     binaryCachePublicKeys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="

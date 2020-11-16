@@ -24,16 +24,13 @@ def main(args_: Optional[Args] = None):
 
     date = datetime.now().strftime("%F")  # YYYY-mm-dd
     day_dir = args.repo_path / date
-    working_path_is_ok = (
-        day_dir.exists()
-        and args.working_path.is_symlink()
-        and (args.working_path / os.readlink(args.working_path)) == day_dir
-    )
-    if working_path_is_ok:
+    day_dir_is_ok = day_dir.exists()
+    working_path_is_ok = ensure_symlink_to(args.working_path, day_dir)
+    if day_dir_is_ok and working_path_is_ok:
         # We're good, print a message and quit
         print(f"{day_dir} already exists, nothing to do.")
 
-    if args.full or not working_path_is_ok:
+    if args.full or not day_dir_is_ok or not working_path_is_ok:
         # Commit our work to the git repo.
         # Don't worry about empty directories; git doesn't track those.
         git_commit(args.repo_path)
@@ -43,26 +40,51 @@ def main(args_: Optional[Args] = None):
         latest = latest_day_dir(args.repo_path)
 
         # Make a new day folder for today.
-        print(f"Creating {day_dir} if it doesn't exist")
-        day_dir.mkdir(exist_ok=True, parents=True)
-        if args.working_path.exists():
-            if not args.working_path.is_symlink():
-                print(f"ERROR: Working path ({args.working_path}) isn't a symlink!")
-                sys.exit(1)
+        if not day_dir_is_ok:
+            print(f"Creating {day_dir}")
+            day_dir.mkdir(exist_ok=True, parents=True)
 
-            # Remove the *link* to the previous day.
-            print(f"Unlinking symlink at {args.working_path}")
-            args.working_path.unlink()
-
-        args.working_path.parent.mkdir(exist_ok=True, parents=True)
-        print(f"Linking {args.working_path} to {day_dir}")
-        args.working_path.symlink_to(day_dir)
+        ensure_symlink_to(args.working_path, day_dir)
 
         # If we have a previous day, make a link to it.
         if latest is not None:
             prev_link = args.working_path / "prev"
-            print(f"Linking {prev_link} to {latest}")
-            prev_link.symlink_to(latest)
+            ensure_symlink_to(prev_link, latest)
+
+
+def ensure_symlink_to(path: Path, dest: Path) -> bool:
+    """Ensure ``path`` is a symlink to ``dest``.
+
+    Returns ``True`` if work was done.
+    """
+    if not path.parent.exists():
+        print("Creating {path.parent}")
+        path.parent.mkdir(parents=True)
+
+    if path.is_symlink():
+        actual_dest = path.parent / os.readlink(path)
+        if actual_dest == dest:
+            print(f"{path} is already a link to {dest}")
+            return False
+        else:
+            print(f"{path} is a link to {actual_dest} instead of {dest}")
+            path.unlink()
+    elif path.exists():
+        backup = backup_path(path)
+        print(f"Renaming {path} to {backup}")
+        path.rename(backup)
+
+    print(f"Linking {path} to {dest}")
+    path.symlink_to(dest)
+    return True
+
+
+def backup_path(path: Path) -> Path:
+    basename = path.name + datetime.now().strftime("-%FT%H_%M_%S")
+    new_path = path.with_name(basename)
+    if new_path.exists():
+        raise ValueError(f"Backup path {new_path} already exists")
+    return new_path
 
 
 def remove_empty_dirs(path: Path) -> None:

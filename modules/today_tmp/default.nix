@@ -37,9 +37,9 @@ in {
     systemd.services.today-tmp = {
       wantedBy = [ "multi-user.target" ];
       path = [ pkgs.gitAndTools.git ];
+      description = "today_tmp directory service";
       serviceConfig = {
         User = cfg.user;
-        RemainAfterExit = true;
         Type = "oneshot";
         ExecStart = concatStringsSep " " [
           "${pkgs.python38}/bin/python"

@@ -104,7 +104,7 @@ def git_has_changes(repo: Path):
         check=True,
         cwd=repo,
     )
-    return not proc.stdout.strip()
+    return bool(proc.stdout.strip())
 
 
 def latest_day_dir(path: Path) -> Optional[Path]:

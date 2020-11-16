@@ -81,5 +81,6 @@ in {
   nix.nixPath = options.nix.nixPath.default
     ++ [ "nixpkgs-overlays=/etc/nixos/overlays/nix-path/" ];
 
-  system.stateVersion = "20.03"; # Don't change this. Check the docs first.
+  # Check https://nixos.org/manual/nixos/stable/release-notes.html before changing!
+  system.stateVersion = "20.09";
 }

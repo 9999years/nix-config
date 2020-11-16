@@ -32,54 +32,78 @@ def main(args_: Optional[Args] = None):
         # We're good, print a message and quit
         print(f"{day_dir} already exists, nothing to do.")
     else:
+        remove_empty_dirs(args.repo_path)
+
         # Commit our work to the git repo.
         git_commit(args.repo_path)
 
-        # Remove empty directories...?
         latest = latest_day_dir(args.repo_path)
 
         # Make a new day folder for today.
+        print(f"Creating {day_dir}")
         day_dir.mkdir(exist_ok=True, parents=True)
-        print(f"Created {day_dir}")
         if args.working_path.exists():
             if not args.working_path.is_symlink():
                 print(f"working path ({args.working_path}) isn't a symlink")
                 sys.exit(1)
 
             # Remove the *link* to the previous day.
+            print(f"Unlinking symlink at {args.working_path}")
             args.working_path.unlink()
 
         args.working_path.parent.mkdir(exist_ok=True, parents=True)
-        # Link the working path to today's dir.
+        print(f"Linking {args.working_path} to {day_dir}")
         args.working_path.symlink_to(day_dir)
-        print(f"Linked {args.working_path} to {day_dir}")
 
         # If we have a previous day, make a link to it.
         if latest is not None:
-            print(f"Previous working path was {latest}")
             prev_link = args.working_path / "prev"
+            print(f"Linking {prev_link} to {latest}")
             prev_link.symlink_to(latest)
+
+
+def remove_empty_dirs(path: Path) -> None:
+    """Removes empty child directories of a ``Path``.
+    """
+    for child in path.iterdir():
+        if child.is_dir() and not list(child.iterdir()):
+            print(f"{child} is empty, removing")
+            child.rmdir()
 
 
 def git_commit(repo: Path):
     if repo.exists():
-        date = datetime.now().strftime("%F")
-        subprocess.run(["git", "add", "."], cwd=repo, check=True)
-        subprocess.run(
-            [
-                "git",
-                "commit",
-                "-m",
-                date,
-                "-m",
-                f"Temporary / scratch work until {date}",
-            ],
-            cwd=repo,
-            check=True,
-        )
+        if git_has_changes(repo):
+            print(f"{repo} has local changes, comitting")
+            date = datetime.now().strftime("%F")
+            subprocess.run(["git", "add", "."], cwd=repo, check=True)
+            subprocess.run(
+                [
+                    "git",
+                    "commit",
+                    "-m",
+                    date,
+                    "-m",
+                    f"Temporary / scratch work until {date}",
+                ],
+                cwd=repo,
+                check=True,
+            )
     else:
+        print(f"{repo} doesn't exist, creating")
         repo.mkdir(parents=True)
+        print(f"Running `git init` in {repo}")
         subprocess.run(["git", "init"], cwd=repo, check=True)
+
+
+def git_has_changes(repo: Path):
+    proc = subprocess.run(
+        ["git", "status", "--porcelain", "--untracked-files"],
+        capture_output=True,
+        check=True,
+        cwd=repo,
+    )
+    return not proc.stdout.strip()
 
 
 def latest_day_dir(path: Path) -> Optional[Path]:

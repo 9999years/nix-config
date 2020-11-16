@@ -35,7 +35,7 @@ def main(args_: Optional[Args] = None):
         # Don't worry about empty directories; git doesn't track those.
         git_commit(args.repo_path)
 
-        remove_empty_dirs(args.repo_path)
+        remove_empty_dirs(args.repo_path, other_than=[day_dir])
 
         latest = latest_day_dir(args.repo_path)
 
@@ -43,8 +43,6 @@ def main(args_: Optional[Args] = None):
         if not day_dir_is_ok:
             print(f"Creating {day_dir}")
             day_dir.mkdir(exist_ok=True, parents=True)
-
-        ensure_symlink_to(args.working_path, day_dir)
 
         # If we have a previous day, make a link to it.
         if latest is not None:
@@ -87,10 +85,13 @@ def backup_path(path: Path) -> Path:
     return new_path
 
 
-def remove_empty_dirs(path: Path) -> None:
+def remove_empty_dirs(path: Path, other_than: List[Path] = []) -> None:
     """Removes empty child directories of a ``Path``.
     """
     for child in path.iterdir():
+        if child in other_than:
+            continue
+
         if child.is_dir() and not list(child.iterdir()):
             print(f"{child} is empty, removing")
             child.rmdir()

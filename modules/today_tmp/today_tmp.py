@@ -32,10 +32,11 @@ def main(args_: Optional[Args] = None):
         # We're good, print a message and quit
         print(f"{day_dir} already exists, nothing to do.")
     else:
-        remove_empty_dirs(args.repo_path)
-
         # Commit our work to the git repo.
+        # Don't worry about empty directories; git doesn't track those.
         git_commit(args.repo_path)
+
+        remove_empty_dirs(args.repo_path)
 
         latest = latest_day_dir(args.repo_path)
 

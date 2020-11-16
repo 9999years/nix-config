@@ -24,14 +24,16 @@ def main(args_: Optional[Args] = None):
 
     date = datetime.now().strftime("%F")  # YYYY-mm-dd
     day_dir = args.repo_path / date
-    if (
+    working_path_is_ok = (
         day_dir.exists()
         and args.working_path.is_symlink()
         and (args.working_path / os.readlink(args.working_path)) == day_dir
-    ):
+    )
+    if working_path_is_ok:
         # We're good, print a message and quit
         print(f"{day_dir} already exists, nothing to do.")
-    else:
+
+    if args.full or not working_path_is_ok:
         # Commit our work to the git repo.
         # Don't worry about empty directories; git doesn't track those.
         git_commit(args.repo_path)
@@ -41,11 +43,11 @@ def main(args_: Optional[Args] = None):
         latest = latest_day_dir(args.repo_path)
 
         # Make a new day folder for today.
-        print(f"Creating {day_dir}")
+        print(f"Creating {day_dir} if it doesn't exist")
         day_dir.mkdir(exist_ok=True, parents=True)
         if args.working_path.exists():
             if not args.working_path.is_symlink():
-                print(f"working path ({args.working_path}) isn't a symlink")
+                print(f"ERROR: Working path ({args.working_path}) isn't a symlink!")
                 sys.exit(1)
 
             # Remove the *link* to the previous day.
@@ -90,6 +92,8 @@ def git_commit(repo: Path):
                 cwd=repo,
                 check=True,
             )
+        else:
+            print(f"{repo} has no local changes")
     else:
         print(f"{repo} doesn't exist, creating")
         repo.mkdir(parents=True)
@@ -136,11 +140,14 @@ def latest_day_dir(path: Path) -> Optional[Path]:
 class Args:
     repo_path: Path
     working_path: Path
+    full: bool
 
     @classmethod
     def parse_args(cls, parser: argparse.ArgumentParser) -> Args:
         args = parser.parse_args()
-        return cls(repo_path=args.repo_path, working_path=args.working_path,)
+        return cls(
+            repo_path=args.repo_path, working_path=args.working_path, full=args.full,
+        )
 
 
 def argparser() -> argparse.ArgumentParser:
@@ -148,6 +155,13 @@ def argparser() -> argparse.ArgumentParser:
     parser.add_argument("--repo-path", type=Path, help="Path to the main repository.")
     parser.add_argument(
         "--working-path", type=Path, help="Path to the daily temporary directory."
+    )
+    parser.add_argument(
+        "--full",
+        action="store_true",
+        help="""Perform a full check; this removes empty directories, makes a
+        git commit if there's new work, etc. even if today's directory already
+        exists.""",
     )
 
     return parser

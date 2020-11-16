@@ -274,11 +274,15 @@ let
     perl = [ perl ];
 
     python = [
+      ctags
+      pipenv
       (highPriority (python38.withPackages (pyPkgs:
         with pyPkgs; [
           # Linters & devtools
+          autopep8
           bandit
           black
+          conda
           flake8
           hypothesis # property tests
           isort
@@ -290,25 +294,19 @@ let
           pydocstyle
           pylama
           pylint
-          pytest # tests
+          pytest
           python-ctags3
           rope # refactoring library
           yapf
+
           # Utilities
           attrs
           beautifulsoup4
-          cached-property
-          dateutil
           grip
-          more-itertools
-          numpy
-          pillow
           pynvim
           pyyaml
           requests
-          termcolor
           toml
-          unidecode
           urllib3
           wcwidth
         ])))

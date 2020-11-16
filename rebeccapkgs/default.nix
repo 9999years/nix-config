@@ -13,7 +13,6 @@ let
     background-images = callPackage ./background-images { };
     colortest = callPackage ./colortest { };
     fontbase = callPackage ./fontbase { };
-    gitflow = callPackage ./gitflow { };
     glimpse = callPackage ./glimpse { };
     init_coc_python = callPackage ./init_coc_python { };
     latexdef = callPackage ./latexdef { };

@@ -37,6 +37,8 @@ in {
     rebeccapkgs.sddm-faces
     rebeccapkgs.plasma.whitesur-kde
     rebeccapkgs.plasma.whitesur-icon-theme
+    rebeccapkgs.plasma.whitesur-gtk-theme
+    rebeccapkgs.plasma.whitesur-cursors
     pkgs.libsForQt5.qtstyleplugin-kvantum
     sddmBreezeTheme
   ];

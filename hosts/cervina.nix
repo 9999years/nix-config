@@ -19,8 +19,9 @@
     kernelModules = [ "coretemp" ];
     loader = {
       grub.fontSize = 32;
-      # Wait until we select something rather than booting the default.
-      timeout = null;
+      # `null` doesn't seem to work as advertised. we'll wait 2 minutes
+      # instead, until i can figure it out.
+      timeout = 120;
     };
   };
 

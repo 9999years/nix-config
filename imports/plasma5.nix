@@ -32,6 +32,10 @@ in {
     };
   };
 
-  environment.systemPackages =
-    [ rebeccapkgs.background-images rebeccapkgs.sddm-faces sddmBreezeTheme ];
+  environment.systemPackages = [
+    rebeccapkgs.background-images
+    rebeccapkgs.sddm-faces
+    rebeccapkgs.plasma.whitesur-kde
+    sddmBreezeTheme
+  ];
 }

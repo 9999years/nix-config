@@ -36,6 +36,7 @@ in {
     rebeccapkgs.background-images
     rebeccapkgs.sddm-faces
     rebeccapkgs.plasma.whitesur-kde
+    pkgs.libsForQt5.qtstyleplugin-kvantum
     sddmBreezeTheme
   ];
 }

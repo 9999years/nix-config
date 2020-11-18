@@ -9,6 +9,9 @@ from datetime import datetime
 from pathlib import Path
 from typing import List, Optional, cast
 
+DATE_FMT = "%Y-%m-%d"
+FILENAME_DATETIME_FMT = "%Y-%m-%dT%H_%M_%S"
+
 
 def main(args_: Optional[Args] = None):
     if args_ is None:
@@ -22,7 +25,7 @@ def main(args_: Optional[Args] = None):
     # - can we make git know where the repo is?
     # - journald logging?
 
-    date = datetime.now().strftime("%F")  # YYYY-mm-dd
+    date = datetime.now().strftime(DATE_FMT)
     day_dir = args.repo_path / date
     day_dir_is_ok = day_dir.exists()
     working_path_is_ok = ensure_symlink_to(args.working_path, day_dir)
@@ -46,6 +49,7 @@ def main(args_: Optional[Args] = None):
 
         # If we have a previous day, make a link to it.
         if latest is not None:
+            print(f"Previous working path was {latest}")
             prev_link = args.working_path / "prev"
             ensure_symlink_to(prev_link, latest)
 
@@ -78,7 +82,7 @@ def ensure_symlink_to(path: Path, dest: Path) -> bool:
 
 
 def backup_path(path: Path) -> Path:
-    basename = path.name + datetime.now().strftime("-%FT%H_%M_%S")
+    basename = path.name + "-" + datetime.now().strftime(FILENAME_DATETIME_FMT)
     new_path = path.with_name(basename)
     if new_path.exists():
         raise ValueError(f"Backup path {new_path} already exists")
@@ -101,7 +105,7 @@ def git_commit(repo: Path):
     if repo.exists():
         if git_has_changes(repo):
             print(f"{repo} has local changes, comitting")
-            date = datetime.now().strftime("%F")
+            date = datetime.now().strftime(DATE_FMT)
             subprocess.run(["git", "add", "."], cwd=repo, check=True)
             subprocess.run(
                 [
@@ -145,8 +149,8 @@ def latest_day_dir(path: Path) -> Optional[Path]:
     latest_path = path
     for subdir in path.iterdir():
         try:
-            date = datetime.strptime(subdir.name, "%F")
-        except ValueError:
+            date = datetime.strptime(subdir.name, DATE_FMT)
+        except ValueError as e:
             continue
 
         if date > latest:

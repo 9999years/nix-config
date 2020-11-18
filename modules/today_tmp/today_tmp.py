@@ -7,10 +7,11 @@ import sys
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import List, Optional, cast
+from typing import List, Optional, Tuple, cast
 
 DATE_FMT = "%Y-%m-%d"
 FILENAME_DATETIME_FMT = "%Y-%m-%dT%H_%M_%S"
+PREV_LINK = "prev"
 
 
 def main(args_: Optional[Args] = None):
@@ -50,7 +51,7 @@ def main(args_: Optional[Args] = None):
         # If we have a previous day, make a link to it.
         if latest is not None:
             print(f"Previous working path was {latest}")
-            prev_link = args.working_path / "prev"
+            prev_link = args.working_path / PREV_LINK
             ensure_symlink_to(prev_link, latest)
 
 
@@ -96,14 +97,21 @@ def remove_empty_dirs(path: Path, other_than: List[Path] = []) -> None:
         if child in other_than:
             continue
 
-        if child.is_dir() and not list(child.iterdir()):
-            print(f"{child} is empty, removing")
-            child.rmdir()
+        if not child.is_dir():
+            continue
+
+        contents = [path for path in child.iterdir() if path.name != PREV_LINK]
+        if contents:
+            continue
+
+        print(f"{child} is empty, removing")
+        child.rmdir()
 
 
 def git_commit(repo: Path):
     if repo.exists():
-        if git_has_changes(repo):
+        changes = any(path.name != PREV_LINK for _, path in git_changes(repo))
+        if changes:
             print(f"{repo} has local changes, comitting")
             date = datetime.now().strftime(DATE_FMT)
             subprocess.run(["git", "add", "."], cwd=repo, check=True)
@@ -128,14 +136,15 @@ def git_commit(repo: Path):
         subprocess.run(["git", "init"], cwd=repo, check=True)
 
 
-def git_has_changes(repo: Path):
+def git_changes(repo: Path) -> List[Tuple[str, Path]]:
     proc = subprocess.run(
         ["git", "status", "--porcelain", "--untracked-files"],
         capture_output=True,
+        encoding="utf-8",
         check=True,
         cwd=repo,
     )
-    return bool(proc.stdout.strip())
+    return [(line[:2], repo / line[3:]) for line in proc.stdout.strip().splitlines()]
 
 
 def latest_day_dir(path: Path) -> Optional[Path]:

@@ -35,11 +35,7 @@ in {
   environment.systemPackages = [
     rebeccapkgs.background-images
     rebeccapkgs.sddm-faces
-    rebeccapkgs.plasma.whitesur-kde
-    rebeccapkgs.plasma.whitesur-icon-theme
-    rebeccapkgs.plasma.whitesur-gtk-theme
-    rebeccapkgs.plasma.whitesur-cursors
-    pkgs.libsForQt5.qtstyleplugin-kvantum
     sddmBreezeTheme
+    # pkgs.libsForQt5.qtstyleplugin-kvantum
   ];
 }

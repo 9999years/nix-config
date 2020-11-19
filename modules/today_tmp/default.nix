@@ -37,7 +37,6 @@ in {
     systemd.services.today-tmp = {
       wantedBy = [ "multi-user.target" ];
       path = [ pkgs.gitAndTools.git ];
-      description = "keeps a daily temporary folder linked to a repository";
       serviceConfig = {
         User = cfg.user;
         Type = "oneshot";
@@ -51,7 +50,6 @@ in {
     };
 
     systemd.timers.today-tmp = {
-      description = "tells today-tmp when to refresh the daily folder";
       timerConfig = {
         # Run on startup if we missed a run.
         Persistent = true;

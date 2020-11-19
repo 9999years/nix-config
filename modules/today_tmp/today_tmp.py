@@ -7,24 +7,24 @@ import sys
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import List, Optional, Tuple, cast
+from typing import Iterable, List, Optional, Tuple, cast
 
+# ISO 8601 date.
 DATE_FMT = "%Y-%m-%d"
+# Datetime format for filenames; colons aren't allowed in Windows paths, so we
+# use underscores instead to avoid potential problems.
 FILENAME_DATETIME_FMT = "%Y-%m-%dT%H_%M_%S"
 PREV_LINK = "prev"
+# Basenames to ignore in tmp folders; used to ignore "prev" links right now,
+# could be used to ignore "next" links as well.
+IGNORE_FILES = [PREV_LINK]
 
 
-def main(args_: Optional[Args] = None):
+def main(args_: Optional[Args] = None) -> None:
     if args_ is None:
-        args = Args.parse_args(argparser())
+        args = Args.parse_args()
     else:
         args = args_
-
-    # - when we log on / every day, check for the latest day in the repo.
-    #
-    # other stuff:
-    # - can we make git know where the repo is?
-    # - journald logging?
 
     date = datetime.now().strftime(DATE_FMT)
     day_dir = args.repo_path / date
@@ -90,7 +90,7 @@ def backup_path(path: Path) -> Path:
     return new_path
 
 
-def remove_empty_dirs(path: Path, other_than: List[Path] = []) -> None:
+def remove_empty_dirs(path: Path, other_than: Iterable[Path] = ()) -> None:
     """Removes empty child directories of a ``Path``.
     """
     for child in path.iterdir():
@@ -100,17 +100,38 @@ def remove_empty_dirs(path: Path, other_than: List[Path] = []) -> None:
         if not child.is_dir():
             continue
 
-        contents = [path for path in child.iterdir() if path.name != PREV_LINK]
-        if contents:
-            continue
+        # We have some files like prev links that are "ignored" in the sense
+        # that they don't constitute "use" of a temporary folder, but we don't
+        # want to ignore them in git, so we do some workarounds here.
+        #
+        # Additionally, if we try to `rmdir` on a `Path` with ignored files in
+        # it, we get a non-empty error; therefore, we have to figure out if
+        # there's ignored files in the directory (and if so, which ones), if
+        # there's other files, and then remove the directory after the ignored
+        # files.
+        #
+        # This kinda sucks and I'd like to replace it. with something that
+        # makes me feel less sketchy.
+        should_remove = True
 
-        print(f"{child} is empty, removing")
-        child.rmdir()
+        ignored: List[Path] = []
+        for child_path in child.iterdir():
+            if child_path.name in IGNORE_FILES:
+                ignored.append(child_path)
+            else:
+                # We found a non-ignored file.
+                should_remove = False
+
+        if should_remove:
+            print(f"{child} is empty, removing")
+            for child_path in ignored:
+                child_path.unlink()
+            child.rmdir()
 
 
-def git_commit(repo: Path):
+def git_commit(repo: Path) -> None:
     if repo.exists():
-        changes = any(path.name != PREV_LINK for _, path in git_changes(repo))
+        changes = any(path.name not in IGNORE_FILES for _, path in git_changes(repo))
         if changes:
             print(f"{repo} has local changes, comitting")
             date = datetime.now().strftime(DATE_FMT)
@@ -151,56 +172,56 @@ def latest_day_dir(path: Path) -> Optional[Path]:
     """Gets the latest day in YYYY-mm-dd format.
     """
 
-    # Safety: This program will never be run before the year 1900.
-    # If you set your computer's time to a year before 1900, eat shit.
-    sentinel = datetime(1900, 1, 1)
-    latest = sentinel
-    latest_path = path
+    # The date represented by the latest path and the path itself.
+    latest: Optional[Tuple[datetime, Path]] = None
     for subdir in path.iterdir():
         try:
             date = datetime.strptime(subdir.name, DATE_FMT)
-        except ValueError as e:
+        except ValueError:
             continue
 
-        if date > latest:
-            latest = date
-            latest_path = subdir
+        if latest is None or date > latest[0]:
+            latest = (date, subdir)
 
-    if latest == sentinel:
-        return None
-    else:
-        return latest_path
+    return None if latest is None else latest[1]
 
 
 @dataclass
 class Args:
+    """Command-line arguments.
+    """
+
     repo_path: Path
     working_path: Path
     full: bool
 
     @classmethod
-    def parse_args(cls, parser: argparse.ArgumentParser) -> Args:
-        args = parser.parse_args()
+    def parse_args(cls) -> Args:
+        args = cls.parser().parse_args()
         return cls(
             repo_path=args.repo_path, working_path=args.working_path, full=args.full,
         )
 
+    @classmethod
+    def parser(cls) -> argparse.ArgumentParser:
+        parser = argparse.ArgumentParser(
+            description="Manage a daily scratch directory."
+        )
+        parser.add_argument(
+            "--repo-path", type=Path, help="Path to the main repository."
+        )
+        parser.add_argument(
+            "--working-path", type=Path, help="Path to the daily temporary directory."
+        )
+        parser.add_argument(
+            "--full",
+            action="store_true",
+            help="""Perform a full check; this removes empty directories, makes a
+            git commit if there's new work, etc. even if today's directory already
+            exists.""",
+        )
 
-def argparser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Manage a daily scratch directory.")
-    parser.add_argument("--repo-path", type=Path, help="Path to the main repository.")
-    parser.add_argument(
-        "--working-path", type=Path, help="Path to the daily temporary directory."
-    )
-    parser.add_argument(
-        "--full",
-        action="store_true",
-        help="""Perform a full check; this removes empty directories, makes a
-        git commit if there's new work, etc. even if today's directory already
-        exists.""",
-    )
-
-    return parser
+        return parser
 
 
 if __name__ == "__main__":

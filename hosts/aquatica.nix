@@ -56,6 +56,11 @@
       vendor = "04d9";
       product = "0141";
     }
+    {
+      # Razer Basilisk mouse
+      vendor = "1532";
+      product = "0064";
+    }
   ];
 
   # Sound

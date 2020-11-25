@@ -53,6 +53,7 @@ in {
   };
   system.autoUpgrade = {
     enable = true;
+    allowReboot = lib.mkDefault false;
     dates = "14:00"; # daily at 2 PM
   };
   # Try resolving domain names relative to becca.ooo

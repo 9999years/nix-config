@@ -44,15 +44,13 @@ let
   '';
 
 in {
-  options = {
-    services.syncthing = {
-      extraConfig = mkOption {
-        type = types.attrs;
-        default = { };
-        description = ''
-          Extra Syncthing configuration options, applied as JSON.
-        '';
-      };
+  options.services.syncthing = {
+    extraConfig = mkOption {
+      type = types.attrs;
+      default = { };
+      description = ''
+        Extra Syncthing configuration options, applied as JSON.
+      '';
     };
   };
 

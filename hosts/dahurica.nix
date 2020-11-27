@@ -2,14 +2,21 @@
 let passwords = import ../resources/passwords.nix;
 in {
   imports = [
-    ../imports/server.nix
-    ../imports/syncthing-server.nix
-    ../imports/hydra.nix
+    ../modules
+    <nixpkgs/nixos/modules/virtualisation/openstack-config.nix>
     ../imports/yubikey-server.nix
     ./dahurica-hardware-configuration.nix
   ];
 
   networking.hostName = "dahurica";
+
+  rebecca = {
+    server.enable = true;
+    syncthing.server.enable = true;
+    hydra.enable = true;
+    yubikey.server.enable = true;
+    pkgs.core.enable = true;
+  };
 
   users.users = {
     root.hashedPassword = passwords.dahurica.root;
@@ -39,12 +46,10 @@ in {
     };
   };
 
-  swapDevices = [
-    {
-      device = "/var/swap";
-      size = 16000; # 16GB
-    }
-  ];
+  swapDevices = [{
+    device = "/var/swap";
+    size = 16000; # 16GB
+  }];
 
   system.stateVersion = "21.03"; # Don't change this.
 }

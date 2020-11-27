@@ -33,36 +33,34 @@ let
       ])));
 
 in {
-  options = {
-    hardware.usb.wakeupDisabled = mkOption {
-      description =
-        "Prevent USB devices from waking the computer from sleep/hibernation.";
-      default = [ ];
-      type = types.listOf (types.submodule {
-        options = {
-          vendor = mkOption {
-            description = vendorProductStrDesc "Vendor";
-            type = vendorProductStr;
-            example = "046d";
-          };
-          product = mkOption {
-            description = vendorProductStrDesc "Product";
-            type = vendorProductStr;
-            example = "c52b";
-          };
-          wakeup = mkOption {
-            description = ''
-              Is this device allowed to wake the computer from sleep?
-              By default, any devices here are explicitly
-              <emphasis>not</emphasis> allowed to wake the computer from sleep.
-            '';
-            type = types.bool;
-            default = false;
-            example = true;
-          };
+  options.hardware.usb.wakeupDisabled = mkOption {
+    description =
+      "Prevent USB devices from waking the computer from sleep/hibernation.";
+    default = [ ];
+    type = types.listOf (types.submodule {
+      options = {
+        vendor = mkOption {
+          description = vendorProductStrDesc "Vendor";
+          type = vendorProductStr;
+          example = "046d";
         };
-      });
-    };
+        product = mkOption {
+          description = vendorProductStrDesc "Product";
+          type = vendorProductStr;
+          example = "c52b";
+        };
+        wakeup = mkOption {
+          description = ''
+            Is this device allowed to wake the computer from sleep?
+            By default, any devices here are explicitly
+            <emphasis>not</emphasis> allowed to wake the computer from sleep.
+          '';
+          type = types.bool;
+          default = false;
+          example = true;
+        };
+      };
+    });
   };
 
   config = { services.udev.packages = optional (length cfg != 0) udevRules; };

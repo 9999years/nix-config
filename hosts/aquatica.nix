@@ -1,5 +1,11 @@
 { config, pkgs, lib, ... }: {
-  imports = [ ../imports/desktop.nix ./aquatica-hardware-configuration.nix ];
+  imports = [ ../modules ./aquatica-hardware-configuration.nix ];
+
+  rebecca = {
+    desktop.enable = true;
+    fonts.enable = true;
+    pkgs.all.enable = true;
+  };
 
   networking.hostName = "aquatica";
 

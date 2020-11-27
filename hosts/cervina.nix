@@ -1,11 +1,17 @@
 { config, pkgs, lib, ... }: {
   imports = [
+    ../modules
     <nixos-hardware/dell/xps/15-9550>
-    ../imports/desktop.nix
     ./cervina-hardware-configuration.nix
   ];
 
   networking.hostName = "cervina";
+
+  rebecca = {
+    desktop.enable = true;
+    # laptop.enable = true;
+    pkgs.all.enable = true;
+  };
 
   # Why is the WiFi card called that!!
   networking = {

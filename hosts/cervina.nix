@@ -36,7 +36,7 @@
   # Save our fans / CPU temps.
   powerManagement = {
     enable = true;
-    cpuFreqGovernor = "performance";
+    cpuFreqGovernor = "powersave";
     powertop.enable = true;
   };
 

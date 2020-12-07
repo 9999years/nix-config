@@ -31,7 +31,7 @@ let
       rebecca.background-images
       psensor # view CPU usage / temps, etc.
       # standardnotes
-      calibre # ebook mgmt
+      # calibre # ebook mgmt  # broken...?
       # libreoffice-fresh
       signal-desktop
       todoist-electron

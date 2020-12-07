@@ -235,12 +235,6 @@ in stdenvNoCC.mkDerivation {
     })
     (fetchurl {
       url =
-        "https://live.staticflickr.com/65535/49576939202_d4f5ee5b54_6k_d.jpg";
-      sha256 = "01hsb8r7szlgbjkjlbya0kn1m6k964kdljfnyw7gy70ds0fyg0mi";
-      name = "hubble-ngc-5194.jpg";
-    })
-    (fetchurl {
-      url =
         "https://live.staticflickr.com/65535/49229718218_c45cb73370_o_d.jpg";
       sha256 = "08y43s4m7ps0xahnx0i3n0rw3y6nlwxgrpph7x071b8dkndg9wqq";
       name = "nasa-caldwell-5.jpg";
@@ -262,18 +256,6 @@ in stdenvNoCC.mkDerivation {
         "https://live.staticflickr.com/65535/49199725743_912e33e1f0_o_d.jpg";
       sha256 = "09vribwl4r6y9q0fihmpmy23hz5g4r03cdqz66i2jmylirya95r6";
       name = "hubble-caldwell-38.jpg";
-    })
-    (fetchurl {
-      url =
-        "https://live.staticflickr.com/65535/49199557378_84b0dfe84b_6k_d.jpg";
-      sha256 = "10w7mw865v71c9k81l1rwyb3adb0pp9vnvly2mj01ajw10a11k5h";
-      name = "hubble-ngc-6960.jpg";
-    })
-    (fetchurl {
-      url =
-        "https://live.staticflickr.com/65535/49165607577_89760ba897_6k_d.jpg";
-      sha256 = "1rdrq9fyk08f9q6lbs9za4i0n8s2dzjq629hk0wv0c84d36pzd54";
-      name = "hubble-ngc-4449.jpg";
     })
   ];
 

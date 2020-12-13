@@ -39,12 +39,16 @@ in {
     trustedUsers = [ "root" "becca" ];
     allowedUsers = trustedUsers;
 
-    trustedBinaryCaches =
-      [ "https://cache.nixos.org" "https://all-hies.cachix.org" ];
+    trustedBinaryCaches = [
+      "https://cache.nixos.org"
+      "https://all-hies.cachix.org"
+      "https://hydra.iohk.io"
+    ];
     binaryCaches = trustedBinaryCaches;
     binaryCachePublicKeys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "all-hies.cachix.org-1:JjrzAOEUsD9ZMt8fdFbzo3jNAyEWlPAwdVuHw4RD43k="
+      "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
     ];
     gc = {
       automatic = true;

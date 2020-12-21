@@ -19,8 +19,8 @@ let
     mdcat = callPackage ./mdcat { };
     navi = callPackage ./navi { };
     nix-query = callPackage ./nix-query { };
-    plasma = callPackage ./plasma { };
     pijul = callPackage ./pijul { };
+    plasma = callPackage ./plasma { };
     psftools = callPackage ./psftools { };
     puppy = callPackage ./puppy { };
     sddm-breeze-rbt-theme = callPackage ./sddm-breeze-rbt-theme { };
@@ -28,6 +28,7 @@ let
     spdx-tool = callPackage ./spdx-tool { };
     standardnotes = callPackage ./standardnotes { };
     star-tsp100 = callPackage ./star-tsp100 { };
+    todoist = callPackage ./todoist { };
     typefaces = callPackage ./typefaces { };
     vscode-cpptools = callPackage ./vscode-cpptools { };
     webapp = callPackage ./webapp { };

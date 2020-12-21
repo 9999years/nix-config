@@ -34,7 +34,7 @@ let
       # calibre # ebook mgmt  # broken...?
       # libreoffice-fresh
       signal-desktop
-      todoist-electron
+      rebecca.todoist
       xclip
     ];
 

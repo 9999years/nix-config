@@ -4,11 +4,15 @@
 # Base URL
 url
 
-# Icons to install. A list of attrsets, each of which should contain:
-#   - size
-#   - file (or a derivation)
-#   - theme (otherwise, "hicolor" is assumed)
-#   - type (otherwise, "app" is assumed)
+# Derivation name; if non-null, used for `desktopItem.name`,
+# `desktopItem.icon`, and each icon in `icons`.
+, name ? null
+
+  # Icons to install. A list of attrsets, each of which should contain:
+  #   - size
+  #   - file (or a derivation)
+  #   - theme (otherwise, "hicolor" is assumed)
+  #   - type (otherwise, "app" is assumed)
 , icons ? [ ]
 
   # Arguments passed directly to `makeDesktopItem`
@@ -25,8 +29,13 @@ url
 , desktopItem }:
 
 let
+  outerName = name;
+
   item = makeDesktopItem ({
     exec = ''${google-chrome}/bin/google-chrome-stable "--app=${url}"'';
+  } // lib.optionalAttrs (name != null) {
+    inherit name;
+    icon = name;
   } // desktopItem);
 
   writeIcon = attrs@{ size # Icon size, like "64x64" or "scalable"
@@ -40,7 +49,13 @@ let
       builder = ./icon-builder.sh;
     };
 
-in symlinkJoin {
+  iconsWithName =
+    if name != null then map (icon: { inherit name; } // icon) icons else icons;
+
+in symlinkJoin ({
+  paths = [ item ] ++ map writeIcon iconsWithName;
+} // (if name != null then {
+  inherit name;
+} else {
   inherit (desktopItem) name;
-  paths = [ item ] ++ map writeIcon icons;
-}
+}))

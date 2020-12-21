@@ -30,7 +30,7 @@ let
       qpdfview # pdf viewer with tabs
       rebecca.background-images
       psensor # view CPU usage / temps, etc.
-      # standardnotes
+      rebecca.standardnotes
       # calibre # ebook mgmt  # broken...?
       # libreoffice-fresh
       signal-desktop

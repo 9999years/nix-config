@@ -26,9 +26,11 @@ let
     sddm-breeze-rbt-theme = callPackage ./sddm-breeze-rbt-theme { };
     sddm-faces = callPackage ./sddm-faces { };
     spdx-tool = callPackage ./spdx-tool { };
+    standardnotes = callPackage ./standardnotes { };
     star-tsp100 = callPackage ./star-tsp100 { };
     typefaces = callPackage ./typefaces { };
     vscode-cpptools = callPackage ./vscode-cpptools { };
+    webapp = callPackage ./webapp { };
   };
 
 in rebeccapkgs

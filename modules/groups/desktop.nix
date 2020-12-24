@@ -28,8 +28,7 @@ in {
       grub.useOSProber = true;
     };
 
-    # TODO: upgrade kernel back to 'latest' once nvidia drivers are fixed for 5.9
-    boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_5_8;
+    boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
     # Set the font earlier in the boot process.
     console.earlySetup = true;
 

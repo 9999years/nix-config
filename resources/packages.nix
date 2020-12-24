@@ -11,6 +11,29 @@ let
   lowPriority = withPriority "15";
   highPriority = withPriority "-1";
 
+  pythonWithPkgs = pkgs.python38.withPackages (pypkgs:
+    with pypkgs; [
+      autopep8
+      bandit
+      black
+      flake8
+      hypothesis
+      isort
+      jedi
+      mypy
+      pep8
+      ptpython
+      pydocstyle
+      pylama
+      pylint
+      pynvim
+      pytest
+      python-ctags3
+      requests
+      rope
+      yapf
+    ]);
+
   corePkgs = with pkgs;
     [
       htop
@@ -41,8 +64,7 @@ let
       any-nix-shell
       nodejs-12_x
       yarn
-      (python38.withPackages
-        (pypkgs: with pypkgs; [ black mypy ptpython pytest pynvim requests ]))
+      pythonWithPkgs
     ] ++ (with pkgs.gitAndTools; [ gitFull hub delta ]);
 
   allPkgs = with pkgs;
@@ -88,15 +110,7 @@ let
 
       # Python
       ctags
-      (python38.withPackages (pypkgs:
-        with pypkgs; [
-          (black.overridePythonAttrs { doCheck = false; })
-          mypy
-          ptpython
-          pytest
-          pynvim
-          requests
-        ]))
+      pythonWithPkgs
 
       # Misc
       patchelf

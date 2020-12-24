@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Any, Dict, Optional
 
 
-def main():
+def main() -> None:
     args = Args.parse_args(argparser())
     coc_settings = CocSettings.from_root(args.root)
 
@@ -72,15 +72,14 @@ class CocSettings:
         return vim_dir / "coc-settings.json"
 
     def maybe_backup(self) -> Optional[Path]:
-        """Backup the settings if the file exists and return its new path.
-        """
+        """Backup the settings if the file exists and return its new path."""
         if self.path.exists():
             path_backup = self.path.with_suffix(".json.bak")
             print("Saving old coc settings to", path_backup)
             return self.path.rename(path_backup)
         return None
 
-    def write(self):
+    def write(self) -> None:
         with open(self.path, "w") as settings_file:
             json.dump(self.settings, settings_file, indent=True, sort_keys=True)
 
@@ -138,8 +137,7 @@ def get_root_dir() -> Path:
 
 
 def try_git_root() -> Optional[Path]:
-    """Returns the Git repo root or None.
-    """
+    """Returns the Git repo root or None."""
     try:
         proc = subprocess.run(
             ["git", "rev-parse", "--show-toplevel"],

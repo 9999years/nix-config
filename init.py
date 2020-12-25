@@ -1,5 +1,9 @@
 #! /usr/bin/env nix-shell
 #! nix-shell -i python -p python38 gitAndTools.git gitAndTools.delta nixfmt
+"""Utility script to help with initializing the repository.
+
+Run ``./init.py --help`` to see options available.
+"""
 
 from __future__ import annotations
 
@@ -8,17 +12,27 @@ import filecmp
 import os
 import re
 import subprocess
-import sys
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List, NoReturn, Optional, Union
+from typing import Optional
+
+from util import (
+    dbg,
+    show_dbg,
+    p,
+    get_output,
+    info,
+    warn,
+    fatal,
+    cmd,
+    error,
+    BOLD,
+    RESET_BOLD,
+)
 
 # Line-start regex for new/modified files in the output of
 #   `git status --porcelain --untracked-files`
 GIT_STATUS_MODIFIED = re.compile(r"\?\?|A | M")
-
-# Include debug output?
-DEBUG = False
 
 # Touch the filesystem?
 DRY_RUN = False
@@ -106,7 +120,7 @@ def diff_hw_config(hardware_cfg: Path) -> None:
         warn(f"delta exited with non-zero return code {delta.returncode}")
 
 
-def update_hw_config_force(hardware_cfg: Path):
+def update_hw_config_force(hardware_cfg: Path) -> None:
     """Generate and replace the hardware configuration.
 
     Performs no safety checks, but doesn't write if ``DRY_RUN`` is true.
@@ -122,12 +136,12 @@ def update_hw_config_force(hardware_cfg: Path):
         hardware_cfg.write_text(new_hardware_config)
 
 
-def update_hw_config(args: Args, repo_root: Path, hardware_cfg: Path):
-    """Update ``hardware_cfg``, checking that it's not modified in the repo.
-    """
+def update_hw_config(args: Args, repo_root: Path, hardware_cfg: Path) -> None:
+    """Update ``hardware_cfg``, checking that it's not modified in the repo."""
     dbg("Getting `git status` to check if hardware config has been modified.")
     git_status = get_output(
-        ["git", "status", "--porcelain", "--untracked-files"], cwd=repo_root,
+        ["git", "status", "--porcelain", "--untracked-files"],
+        cwd=repo_root,
     ).splitlines()
 
     # Determine if the local hardware configuration is modified by seeing if
@@ -157,7 +171,9 @@ def update_hw_config(args: Args, repo_root: Path, hardware_cfg: Path):
             args.update = False
         else:
             info(
-                f"There are uncomitted changes to {p(hardware_cfg)} but {p('--force')} was given; overwriting"
+                f"There are uncomitted changes to {p(hardware_cfg)} but "
+                + p("--force")
+                + " was given; overwriting"
             )
 
     # We may have updated `args.update` above, so double-check it here.
@@ -166,21 +182,27 @@ def update_hw_config(args: Args, repo_root: Path, hardware_cfg: Path):
         update_hw_config_force(hardware_cfg)
 
 
-def check_hw_config(host_cfg: Path, hardware_cfg: Path, old_hardware_cfg: Path):
+def check_hw_config(host_cfg: Path, hardware_cfg: Path, old_hardware_cfg: Path) -> None:
     """Check that ``hardware_cfg`` exists and ``old_hardware_cfg`` doesn't.
 
     Also imports ``hardware_cfg`` in ``cfg`` if it's not otherwise imported.
     """
+    # `old_hardware_cfg` is repo_root / "hardware-configuration.nix"; NixOS
+    # might generate one by default while installing, so this check should stay
+    # here even though all of my hosts have been using this script for a while
+    # now.
     if old_hardware_cfg.is_symlink():
         warn(
             f"{p(old_hardware_cfg)} is a symlink to "
             + p(hardware_cfg.parent / os.readlink(old_hardware_cfg))
         )
         warn("That's probably not needed; consider deleting it.")
+
     elif old_hardware_cfg.exists():
         if not hardware_cfg.exists():
             info(
-                f"{p(old_hardware_cfg)} exists but {p(hardware_cfg)} doesn't, renaming {p(old_hardware_cfg)}."
+                f"{p(old_hardware_cfg)} exists but {p(hardware_cfg)}"
+                + f" doesn't, renaming {p(old_hardware_cfg)}."
             )
             if not DRY_RUN:
                 old_hardware_cfg.rename(hardware_cfg)
@@ -238,10 +260,13 @@ def check_hw_config(host_cfg: Path, hardware_cfg: Path, old_hardware_cfg: Path):
                         dbg(line)
 
 
-def main():
-    global DEBUG, DRY_RUN
-    args = Args.parse_args(argparser())
-    DEBUG = args.verbose
+def main(args: Optional[Args] = None) -> None:
+    """Entry point."""
+    global DRY_RUN  # pylint: disable=global-statement
+
+    if args is None:
+        args = Args.parse_args()
+    show_dbg(args.verbose)
     DRY_RUN = args.dry_run
 
     repo_root = git_repo_root()
@@ -272,8 +297,7 @@ def main():
 
 @dataclass
 class Args:
-    """Parsed command-line arguments.
-    """
+    """Parsed command-line arguments."""
 
     verbose: bool
     update: bool
@@ -283,8 +307,9 @@ class Args:
     dry_run: bool
 
     @classmethod
-    def parse_args(cls, parser: argparse.ArgumentParser):
-        args = parser.parse_args()
+    def parse_args(cls) -> Args:
+        """Type-safe wrapper around ``argparse.ArgumentParser.parse_args``."""
+        args = cls._parser().parse_args()
         return cls(
             verbose=args.verbose,
             update=args.update,
@@ -296,143 +321,48 @@ class Args:
             dry_run=args.dry_run,
         )
 
-
-def argparser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(
-        description="initializes the nix-config repository"
-    )
-    parser.add_argument(
-        "--verbose", action="store_true", help="Include more verbose / debug output",
-    )
-    parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="""
-        Don't actually touch the filesystem; no messages are changed, so
-        init.py may still act as though it's writing and changing files
-        """,
-    )
-    parser.add_argument(
-        "--update",
-        action="store_true",
-        help="Update the hardware configuration with `nixos-generate-config`",
-    )
-    parser.add_argument(
-        "--force",
-        action="store_true",
-        help="""
-        With --update, overwrite changes to the hardware configuration, even if
-        uncommitted changes already exist in the repo.
-        """,
-    )
-    parser.add_argument(
-        "--diff",
-        action="store_true",
-        help="Show what would change if ./init.py was run with --update",
-    )
-    parser.add_argument(
-        "--hostname",
-        default=None,
-        help="Force a particular hostname rather than whatever `hostname` returns",
-    )
-    return parser
-
-
-RESET = "\x1b[0m"
-BOLD = "\x1b[1m"
-RESET_BOLD = "\x1b[21m"
-DIM = "\x1b[2m"
-RESET_DIM = "\x1b[22m"
-UNDERLINED = "\x1b[4m"
-RESET_UNDERLINED = "\x1b[24m"
-
-RED = "\x1b[31m"
-BRRED = "\x1b[91m"
-GREEN = "\x1b[32m"
-BRGREEN = "\x1b[92m"
-YELLOW = "\x1b[33m"
-BRYELLOW = "\x1b[93m"
-BLUE = "\x1b[34m"
-BRBLUE = "\x1b[94m"
-PURPLE = "\x1b[35m"
-BRPURPLE = "\x1b[95m"
-CYAN = "\x1b[36m"
-BRCYAN = "\x1b[96m"
-GRAY = "\x1b[37m"
-BRGRAY = "\x1b[97m"
-RESET_FG = "\x1b[39m"
-
-
-def p(path: object) -> str:
-    """Format an object as a path for terminal output.
-    """
-    return UNDERLINED + str(path) + RESET_UNDERLINED
-
-
-def dbg(msg: str) -> None:
-    if DEBUG:
-        print(f"{GRAY}{DIM}🖝  {msg}{RESET}")
-
-
-def info(msg: str) -> None:
-    print(f"{BRGREEN}🛈  {msg}{RESET}")
-
-
-def warn(msg: str) -> None:
-    print(f"{BRYELLOW}⚠️  {msg}{RESET}")
-
-
-def error(msg: str) -> None:
-    print(f"{BRRED}⛔ {msg}{RESET}")
-
-
-def fatal(msg: str) -> NoReturn:
-    print(f"{BOLD}{BRRED}💀 [FATAL] {msg}{RESET}")
-    sys.exit(1)
-
-
-def cmd(cmd_: str) -> None:
-    print(f"{BOLD}${RESET} {CYAN}{UNDERLINED}{cmd_}{RESET}")
-
-
-def get_output(
-    args: List[str],
-    cwd: Optional[Path] = None,
-    log: bool = False,
-    strip: bool = True,
-    ok_returncodes: List[int] = [0],
-    input: Optional[Union[bytes, str]] = None,
-) -> str:
-    if log or DEBUG:
-        cmd(" ".join(args))
-
-    proc = subprocess.run(
-        args, check=False, capture_output=True, encoding="utf-8", cwd=cwd, input=input,
-    )
-
-    if proc.returncode not in ok_returncodes:
-        msg = (
-            UNDERLINED
-            + " ".join(args)
-            + RESET_UNDERLINED
-            + f" exited with code {proc.returncode}."
+    @classmethod
+    def _parser(cls) -> argparse.ArgumentParser:
+        parser = argparse.ArgumentParser(
+            description="initializes the nix-config repository"
         )
-
-        if proc.stdout:
-            msg += f"\nstdout: {proc.stdout}"
-
-        if proc.stderr:
-            msg += f"\nstderr: {proc.stdout}"
-
-        fatal(msg)
-
-    if proc.stderr:
-        dbg(f"{args[0]} wrote to stderr: {proc.stderr}")
-
-    if strip:
-        return proc.stdout.strip()
-    else:
-        return proc.stdout
+        parser.add_argument(
+            "--verbose",
+            action="store_true",
+            help="Include more verbose / debug output",
+        )
+        parser.add_argument(
+            "--dry-run",
+            action="store_true",
+            help="""
+            Don't actually touch the filesystem; no messages are changed, so
+            init.py may still act as though it's writing and changing files
+            """,
+        )
+        parser.add_argument(
+            "--update",
+            action="store_true",
+            help="Update the hardware configuration with `nixos-generate-config`",
+        )
+        parser.add_argument(
+            "--force",
+            action="store_true",
+            help="""
+            With --update, overwrite changes to the hardware configuration, even if
+            uncommitted changes already exist in the repo.
+            """,
+        )
+        parser.add_argument(
+            "--diff",
+            action="store_true",
+            help="Show what would change if ./init.py was run with --update",
+        )
+        parser.add_argument(
+            "--hostname",
+            default=None,
+            help="Force a particular hostname rather than whatever `hostname` returns",
+        )
+        return parser
 
 
 if __name__ == "__main__":

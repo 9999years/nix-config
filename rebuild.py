@@ -33,12 +33,11 @@ def main(args: Optional[Args] = None) -> None:
         args = Args.parse_args()
 
     cmd(f"cd {p(args.repo)}")
-    os.chdir(args.repo)
 
     if args.pull:
         cmd("git pull --no-edit")
         proc = subprocess.run(
-            args.sudo_prefix + ["git", "pull", "--no-edit"], check=False
+            args.sudo_prefix + ["git", "pull", "--no-edit"], check=False, cwd=args.repo
         )
         if proc.returncode != 0:
             # git pull failed, maybe reset?
@@ -47,20 +46,20 @@ def main(args: Optional[Args] = None) -> None:
                 proc = subprocess.run(
                     args.sudo_prefix + ["git", "reset", "--hard", args.remote_branch],
                     check=True,
+                    cwd=args.repo,
                 )
             else:
                 fatal("`git pull` failed. Pass `--reset` to reset the repository.")
 
     info(f"{args.repo} is now at commit:")
-    subprocess.run(["git", "log", "HEAD^1..HEAD", "--oneline"], check=False)
+    subprocess.run(
+        ["git", "log", "HEAD^1..HEAD", "--oneline"], check=False, cwd=args.repo
+    )
     cmd("./init.py")
-    subprocess.run(args.sudo_prefix + ["./init.py"], check=True)
+    subprocess.run(args.sudo_prefix + ["./init.py"], check=True, cwd=args.repo)
     rebuild = ["nixos-rebuild", args.rebuild_subcommand] + args.extra_rebuild_args
     cmd(" ".join(rebuild))
-    subprocess.run(
-        args.sudo_prefix + rebuild,
-        check=True,
-    )
+    subprocess.run(args.sudo_prefix + rebuild, check=True, cwd=args.repo)
 
 
 @dataclass

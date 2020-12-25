@@ -1,19 +1,30 @@
 #! /usr/bin/env nix-shell
 #! nix-shell -i python -p python38
 """Script for rebuilding the NixOS configuration.
+
+Run `./rebuild.py --help` for options.
 """
+
+# Unported part of the fish function used for non-NixOS rebuilds:
+#  if is_darwin
+#  set __nix_pkg_expr "$HOME/.config/nix-config/macos.nix"
+#  echo -s (set_color --bold --underline) "On MacOS; building environment from $__nix_pkg_expr" (set_color normal)
+#  echo "Installing:"
+#  nix-instantiate --eval --strict \
+#  --expr "builtins.map (p: p.name) (import $__nix_pkg_expr {})"
+#  nix-env --install --remove-all --file "$__nix_pkg_expr"
 
 from __future__ import annotations
 
 import argparse
 import os
+import shlex
 import subprocess
 from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional
-import shlex
 
-from util import p, show_dbg, dbg, info, error, warn, fatal, cmd
+from util import cmd, dbg, error, fatal, info, p, show_dbg, warn
 
 
 def main(args: Optional[Args] = None) -> None:

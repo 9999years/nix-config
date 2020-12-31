@@ -35,6 +35,7 @@ in {
       signal-desktop
       rebecca.todoist
       xclip
+      rebecca.workflowy # https://workflowy.com/
     ];
   };
 }

@@ -32,6 +32,7 @@ let
     typefaces = callPackage ./typefaces { };
     vscode-cpptools = callPackage ./vscode-cpptools { };
     webapp = callPackage ./webapp { };
+    workflowy = callPackage ./workflowy { };
   };
 
 in rebeccapkgs

@@ -1,8 +1,7 @@
 { pkgs ? import <nixpkgs> { } }:
 
-# TODO:
-# - Gui packages aren't here
-# - fonts aren't here
+# See ../modules/xserver-packages.nix for GUI programs.
+# See ../modules/fonts.nix for fonts.
 
 let
   inherit (pkgs) rebecca; # ../rebeccapkgs

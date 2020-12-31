@@ -24,7 +24,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional
 
-from util import cmd, dbg, error, fatal, info, p, show_dbg, warn
+from util import cmd, dbg, error, fatal, info, p, show_dbg, warn, run_or_fatal
 
 
 def main(args: Optional[Args] = None) -> None:
@@ -43,9 +43,8 @@ def main(args: Optional[Args] = None) -> None:
             # git pull failed, maybe reset?
             if args.reset:
                 cmd(f"git reset --hard {args.remote_branch}")
-                proc = subprocess.run(
+                run_or_fatal(
                     args.sudo_prefix + ["git", "reset", "--hard", args.remote_branch],
-                    check=True,
                     cwd=args.repo,
                 )
             else:
@@ -56,10 +55,10 @@ def main(args: Optional[Args] = None) -> None:
         ["git", "log", "HEAD^1..HEAD", "--oneline"], check=False, cwd=args.repo
     )
     cmd("./init.py")
-    subprocess.run(args.sudo_prefix + ["./init.py"], check=True, cwd=args.repo)
+    run_or_fatal(args.sudo_prefix + ["./init.py"], cwd=args.repo)
     rebuild = ["nixos-rebuild", args.rebuild_subcommand] + args.extra_rebuild_args
     cmd(" ".join(rebuild))
-    subprocess.run(args.sudo_prefix + rebuild, check=True, cwd=args.repo)
+    run_or_fatal(args.sudo_prefix + rebuild, cwd=args.repo)
 
 
 @dataclass

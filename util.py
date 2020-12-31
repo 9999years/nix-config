@@ -2,11 +2,13 @@
 
 See ``init.py`` and ``rebuild.py`` for use.
 """
+from __future__ import annotations
 
 import subprocess
 import sys
 from pathlib import Path
-from typing import List, NoReturn, Optional, Union, cast
+from typing import (TYPE_CHECKING, Callable, Iterable, List, NoReturn,
+                    Optional, Union, cast)
 
 # Print ``dbg`` calls?
 _DEBUG = False
@@ -133,3 +135,35 @@ def get_output(  # pylint: disable=too-many-arguments
         return cast(str, proc.stdout.strip())
     else:
         return cast(str, proc.stdout)
+
+
+if TYPE_CHECKING:
+    Process = subprocess.CompletedProcess[Union[str, bytes]]
+
+
+def run_or_fatal(
+    args: List[str],
+    returncode: Union[int, Iterable[int]] = 0,
+    failed_when: Optional[Callable[[Process], bool]] = None,
+    **kwargs: object,
+) -> Process:
+    """Run a command and fatally error if it fails.
+
+    Keyword-arguments are passed to ``subprocess.run``.
+
+    :param rc: Allowed process return-codes. Ignored if `failed_when` is not None.
+    """
+    proc: Process = subprocess.run(args, check=False, **kwargs)  # type: ignore  # sorry
+    failed = False
+    if failed_when is not None:
+        failed = failed_when(proc)
+    else:
+        if isinstance(returncode, int):
+            failed = proc.returncode != returncode
+        elif proc.returncode not in returncode:
+            failed = True
+
+    if failed:
+        fatal(f"Process {' '.join(args)} failed.")
+
+    return proc

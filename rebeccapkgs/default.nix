@@ -19,6 +19,7 @@ let
     mdcat = callPackage ./mdcat { };
     navi = callPackage ./navi { };
     nix-query = callPackage ./nix-query { };
+    notion = callPackage ./notion { };
     pijul = callPackage ./pijul { };
     plasma = callPackage ./plasma { };
     psftools = callPackage ./psftools { };

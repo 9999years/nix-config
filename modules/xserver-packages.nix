@@ -36,6 +36,7 @@ in {
       rebecca.todoist
       xclip
       rebecca.workflowy # https://workflowy.com/
+      rebecca.notion # https://notion.so/
     ];
   };
 }

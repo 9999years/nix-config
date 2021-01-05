@@ -145,6 +145,7 @@ def run_or_fatal(
     args: List[str],
     returncode: Union[int, Iterable[int]] = 0,
     failed_when: Optional[Callable[[Process], bool]] = None,
+    log: bool = False,
     **kwargs: object,
 ) -> Process:
     """Run a command and fatally error if it fails.
@@ -153,6 +154,9 @@ def run_or_fatal(
 
     :param rc: Allowed process return-codes. Ignored if `failed_when` is not None.
     """
+    if log or _DEBUG:
+        cmd(" ".join(args))
+
     proc: Process = subprocess.run(args, check=False, **kwargs)  # type: ignore  # sorry
     failed = False
     if failed_when is not None:

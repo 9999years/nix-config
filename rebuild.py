@@ -23,8 +23,23 @@ import subprocess
 from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional
+from tempfile import TemporaryDirectory
 
-from util import cmd, dbg, error, fatal, info, p, show_dbg, warn, run_or_fatal
+from util import cmd, dbg, error, fatal, info, p, run_or_fatal, show_dbg, warn
+
+# Subcommands for `nixos-rebuild`.
+# See: `man 8 nixos-rebuild`.
+REBUILD_SUBCOMMANDS = [
+    "switch",
+    "build",
+    "boot",
+    "test",
+    "dry-build",
+    "dry-activate",
+    "edit",
+    "build-vm",
+    "build-vm-with-bootloader",
+]
 
 
 def main(args: Optional[Args] = None) -> None:
@@ -32,8 +47,22 @@ def main(args: Optional[Args] = None) -> None:
     if args is None:
         args = Args.parse_args()
 
+    # Okay, so we don't actually use `os.chdir` here. Why? If we split a panel
+    # while rebuilding (or open a new window), tmux starts the new shell in the
+    # current process' cwd. Therefore, so we don't end up accidentally mucking
+    # around in `/etc/nixos`, we don't change the cwd and instead use
+    # `cwd=args.repo` for `subprocess.run` invocations.
     cmd(f"cd {p(args.repo)}")
 
+    if args.fix_full_boot:
+        fix_full_boot(args)
+
+    pull(args)
+    rebuild(args.rebuild_args, args.sudo_prefix, args.repo)
+
+
+def pull(args: Args) -> None:
+    """Update ``args.repo`` with ``git pull``."""
     if args.pull:
         cmd("git pull --no-edit")
         proc = subprocess.run(
@@ -42,9 +71,9 @@ def main(args: Optional[Args] = None) -> None:
         if proc.returncode != 0:
             # git pull failed, maybe reset?
             if args.reset:
-                cmd(f"git reset --hard {args.remote_branch}")
                 run_or_fatal(
                     args.sudo_prefix + ["git", "reset", "--hard", args.remote_branch],
+                    log=True,
                     cwd=args.repo,
                 )
             else:
@@ -54,11 +83,63 @@ def main(args: Optional[Args] = None) -> None:
     subprocess.run(
         ["git", "log", "HEAD^1..HEAD", "--oneline"], check=False, cwd=args.repo
     )
-    cmd("./init.py")
-    run_or_fatal(args.sudo_prefix + ["./init.py"], cwd=args.repo)
-    rebuild = ["nixos-rebuild", args.rebuild_subcommand] + args.extra_rebuild_args
-    cmd(" ".join(rebuild))
-    run_or_fatal(args.sudo_prefix + rebuild, cwd=args.repo)
+
+
+def rebuild(
+    rebuild_args: List[str],
+    sudo_prefix: List[str],
+    repo: Path,
+    rebuild_cwd: Optional[Path] = None,
+) -> None:
+    """Run ``nixos-rebuild``."""
+    if rebuild_cwd is None:
+        rebuild_cwd = repo
+
+    run_or_fatal(sudo_prefix + ["./init.py"], log=True, cwd=repo)
+    run_or_fatal(
+        rebuild_args,
+        log=True,
+        cwd=rebuild_cwd,
+    )
+
+
+def fix_full_boot(args: Args) -> None:
+    """Fixes 'no space left on device' error by deleting old generations."""
+    info(
+        "Cleaning up full /boot partition; removing old generations and garbage-collecting the Nix store."
+    )
+
+    # Before we try `./rebuild.py --fix-full-boot`, we probably built the whole
+    # profile but couldn't switch to it. We're going to run the Nix garbage
+    # collector, so we're going to do a plain `nixos-rebuild build` to prevent
+    # the newly-built profile from being deleted, forcing us to recompile all
+    # our work and wasting a lot of time.
+    with TemporaryDirectory() as tmpdir:
+        # Temporarily set `args.rebuild_subcommand` to `build`.
+        old_rebuild_subcommand, args.rebuild_subcommand = (
+            args.rebuild_subcommand,
+            "build",
+        )
+        rebuild(
+            rebuild_args=args.rebuild_args,
+            sudo_prefix=args.sudo_prefix,
+            repo=args.repo,
+            rebuild_cwd=Path(tmpdir),
+        )
+        # Undo changing `args.rebuild_subcommand`.
+        args.rebuild_subcommand = old_rebuild_subcommand
+
+        profile_path = os.readlink(os.path.join(tmpdir, "result"))
+        info(f"Newly-built profile: {p(profile_path)}")
+
+        # Collect garbage.
+        # TODO: Are these commented out commands needed?
+        # run_or_fatal(args.sudo_prefix + ["nix-env", "--delete-generations", "old"])
+        # run_or_fatal(args.sudo_prefix + ["nix-env", "--profile", "/nix/var/nix/profiles/system",
+        # "--delete-generations", "old"])
+        run_or_fatal(
+            args.sudo_prefix + ["nix-collect-garbage", "--delete-old"], log=True
+        )
 
 
 @dataclass
@@ -73,6 +154,7 @@ class Args:
     rebuild_subcommand: str
     extra_rebuild_args: List[str]
     extra_sudo_args: List[str]
+    fix_full_boot: bool
 
     @property
     def sudo_prefix(self) -> List[str]:
@@ -84,6 +166,15 @@ class Args:
             return ["sudo"] + self.extra_sudo_args
         else:
             return []
+
+    @property
+    def rebuild_args(self) -> List[str]:
+        """Arguments to run ``nixos-rebuild``."""
+        return (
+            self.sudo_prefix
+            + ["nixos-rebuild", self.rebuild_subcommand]
+            + self.extra_rebuild_args
+        )
 
     @classmethod
     def _argparser(cls) -> argparse.ArgumentParser:
@@ -130,10 +221,11 @@ class Args:
             help="""Remote branch to reset to, if needed. Default: "origin/main".""",
         )
         parser.add_argument(
-            "-c",
-            "--subcommand",
-            default="switch",
-            help="""Subcommand to pass to `nixos-rebuild`. Default: "switch".""",
+            "-f",
+            "--fix-full-boot",
+            action="store_true",
+            help="""Fix the 'no space left on device' error when switching to a
+            new configuration; deletes old profiles before rebuilding.""",
         )
         return parser
 
@@ -147,10 +239,19 @@ class Args:
             reset=args.reset,
             pull=args.pull,
             sudo=args.sudo,
-            rebuild_subcommand=args.subcommand,
+            rebuild_subcommand=cls._rebuild_subcommand(rest),
             extra_sudo_args=args.sudo_args,
             extra_rebuild_args=rest,
+            fix_full_boot=args.fix_full_boot,
         )
+
+    @classmethod
+    def _rebuild_subcommand(cls, extra_rebuild_args: List[str]) -> str:
+        for arg in extra_rebuild_args:
+            if arg in REBUILD_SUBCOMMANDS:
+                return arg
+        # Default: switch to the new configuration.
+        return "switch"
 
 
 if __name__ == "__main__":

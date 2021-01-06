@@ -20,6 +20,7 @@ let
     navi = callPackage ./navi { };
     nix-query = callPackage ./nix-query { };
     notion = callPackage ./notion { };
+    pagelabels = callPackage ./pagelabels { };
     pijul = callPackage ./pijul { };
     plasma = callPackage ./plasma { };
     psftools = callPackage ./psftools { };

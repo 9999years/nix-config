@@ -192,6 +192,7 @@ let
       rebecca.mdcat
       pandoc
       pdftk
+      rebecca.pagelabels
       poppler_utils # pdftotext
       # mupdf # mutool; marked insecure
       # k2pdfopt # depends on insecure mupdf :(

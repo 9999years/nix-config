@@ -35,7 +35,12 @@ in {
 
   config = mkIf cfg.enable {
     systemd.services.today-tmp = {
-      wantedBy = [ "multi-user.target" ];
+      wantedBy = [ "multi-user.target" "sleep.target" ];
+      after = [
+        "systemd-suspend.service"
+        "systemd-hybrid-sleep.service"
+        "systemd-hibernate.service"
+      ];
       path = [ pkgs.gitAndTools.git ];
       serviceConfig = {
         User = cfg.user;

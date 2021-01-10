@@ -162,3 +162,25 @@ def test_commits(today: TodayTmp) -> None:
     # We didn't do anything, so this *shouldn't* make a commit.
     today.run(tomorrow=True)
     assert git_log_stdout() == stdout_1
+
+
+def test_delete_empty(today: TodayTmp) -> None:
+    """today_tmp should delete old empty directories."""
+    (today.work / "puppy").write_text("dog")  # In 2021-01-11, write a file.
+    today.run(tomorrow=True)  # 2021-01-11
+    today.run(tomorrow=True)  # 2021-01-12
+    today.run(tomorrow=True)  # 2021-01-13
+    today.run(tomorrow=True)  # 2021-01-14
+    assert set(today.repo.iterdir()) == {
+        today.repo / ".git",
+        today.repo / "2021-01-10",  # First day.
+        today.repo / "2021-01-14",  # Current day.
+    }
+    assert set((today.repo / "2021-01-10").iterdir()) == {
+        today.repo / "2021-01-10" / "puppy",
+    }
+    assert set((today.repo / "2021-01-14").iterdir()) == {
+        today.repo / "2021-01-14" / "prev",
+    }
+    assert readlink(today.work) == today.repo / "2021-01-14"
+    assert readlink(today.work / "prev") == today.repo / "2021-01-10"

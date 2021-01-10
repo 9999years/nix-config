@@ -23,7 +23,6 @@
     ntfs3g # ntfs mounting support
     slack
     # ripcord
-    openjdk14_headless
     alsaTools
   ];
 

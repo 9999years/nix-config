@@ -25,8 +25,12 @@ in {
       type = str;
     };
     dates = mkOption {
-      description =
-        "When to run the today_tmp script; see <code>systemd.time(7)</code>.";
+      description = ''
+        When to run the today_tmp script; see <code>systemd.time(7)</code>.
+
+        Note that today_tmp will also run on startup and after resuming from
+        sleep or hibernation.
+      '';
       default = "04:00";
       example = "weekly";
       type = str;

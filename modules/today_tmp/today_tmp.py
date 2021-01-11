@@ -78,7 +78,7 @@ def main(args: Optional[Args] = None) -> None:
         if latest is not None:
             print(f"Previous working path was {latest}")
             prev_link = args.working_path / args.prev_link
-            ensure_symlink_to(prev_link, latest)
+            ensure_symlink_to(prev_link, Path(f"../{latest.name}"))
 
     print("Goodbye!")
 
@@ -93,7 +93,7 @@ def ensure_symlink_to(path: Path, dest: Path) -> bool:
         path.parent.mkdir(parents=True)
 
     if path.is_symlink():
-        actual_dest = path.parent / os.readlink(path)
+        actual_dest = path.resolve()
         if actual_dest == dest:
             print(f"{path} is already a link to {dest}")
             return False

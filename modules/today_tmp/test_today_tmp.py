@@ -107,7 +107,7 @@ def today_fixture() -> Fixture[TodayTmp]:
 
 def readlink(path: Path) -> Path:
     """Read the symbolic link destination of ``path``."""
-    return Path(os.readlink(path))
+    return Path(path.parent / os.readlink(path)).resolve()
 
 
 def test_prev_regression(today: TodayTmp) -> None:
@@ -184,3 +184,4 @@ def test_delete_empty(today: TodayTmp) -> None:
     }
     assert readlink(today.work) == today.repo / "2021-01-14"
     assert readlink(today.work / "prev") == today.repo / "2021-01-10"
+    assert os.readlink(today.work / "prev") == "../2021-01-10"

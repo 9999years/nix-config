@@ -20,7 +20,7 @@ import argparse
 import os
 import shlex
 import subprocess
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import List, Optional
 from tempfile import TemporaryDirectory
@@ -115,28 +115,21 @@ def fix_full_boot(args: Args) -> None:
     # the newly-built profile from being deleted, forcing us to recompile all
     # our work and wasting a lot of time.
     with TemporaryDirectory() as tmpdir:
-        # Temporarily set `args.rebuild_subcommand` to `build`.
-        old_rebuild_subcommand, args.rebuild_subcommand = (
-            args.rebuild_subcommand,
-            "build",
-        )
+        # We need to use the `nixos-rebuild build` command, so we create a new
+        # `Args` object with `rebuild_subcommand` set to `build`.
+        args = replace(args, rebuild_subcommand='build')
+
         rebuild(
             rebuild_args=args.rebuild_args,
             sudo_prefix=args.sudo_prefix,
             repo=args.repo,
             rebuild_cwd=Path(tmpdir),
         )
-        # Undo changing `args.rebuild_subcommand`.
-        args.rebuild_subcommand = old_rebuild_subcommand
 
         profile_path = os.readlink(os.path.join(tmpdir, "result"))
         info(f"Newly-built profile: {p(profile_path)}")
 
-        # Collect garbage.
-        # TODO: Are these commented out commands needed?
-        # run_or_fatal(args.sudo_prefix + ["nix-env", "--delete-generations", "old"])
-        # run_or_fatal(args.sudo_prefix + ["nix-env", "--profile", "/nix/var/nix/profiles/system",
-        # "--delete-generations", "old"])
+        # Finally, collect garbage.
         run_or_fatal(
             args.sudo_prefix + ["nix-collect-garbage", "--delete-old"], log=True
         )

@@ -73,9 +73,22 @@
   hardware.cpu.intel.updateMicrocode = true;
   hardware.pulseaudio.enable = true;
   hardware.enableAllFirmware = true;
+  # Okay, this modprobe stuff is horrible to deal with. Relevant resources:
+  # See: https://www.alsa-project.org/wiki/Matrix:Module-hda-intel
+  # See: https://www.alsa-project.org/wiki/Matrix:Module-usb-audio
+  # Run:
+  #     modinfo soundcore
+  #     modinfo snd_hda_intel
+  #     modinfo snd_usb_audio
+  # I still don't really understand it, but this seems to work for now.
+  # I think there's some relevant source in the linux kernel repo as well, but
+  # I couldn't find it when I checked. Maybe check the alsa source too...?
+  # NOTE: I *think* this won't work if /tmp won't mount (see comment attached
+  # to `tmpOnTmpfs` below); check that if this breaks before messing with this
+  # stuff again.
   boot.extraModprobeConfig = ''
-    options snd_hda_intel index=1,0
-    options snd_usb_audio
+    options snd_hda_intel enable=1 model=auto
+    options snd_usb_audio enable=1
   '';
 
   # Drives

@@ -17,6 +17,7 @@ let
     init_coc_python = callPackage ./init_coc_python { };
     latexdef = callPackage ./latexdef { };
     mdcat = callPackage ./mdcat { };
+    misc-gitology = callPackage ./misc-gitology { };
     navi = callPackage ./navi { };
     nix-query = callPackage ./nix-query { };
     notion = callPackage ./notion { };

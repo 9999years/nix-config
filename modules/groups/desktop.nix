@@ -71,7 +71,6 @@ in {
       nixos.includeAllModules = true;
     };
 
-    # environment.systemPackages = packages.all;  # TODO: Fix packages
     nixpkgs.overlays = lib.attrValues (import ../../overlays);
     nix.nixPath = options.nix.nixPath.default
       ++ [ "nixpkgs-overlays=/etc/nixos/overlays/nix-path/" ];

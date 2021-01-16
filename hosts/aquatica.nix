@@ -92,7 +92,20 @@
   '';
 
   # Drives
-  boot.supportedFilesystems = [ "ntfs" ];
+  boot = {
+    supportedFilesystems = [ "ntfs" ];
+    cleanTmpDir = true; # Wipe /tmp on boot.
+    # Okay, aquatica *really* doesn't like mounting /tmp as of 2021-01-14
+    # (evening). systemd gives this error message:
+    #     systemd[1]: Mounting /tmp...
+    #     mount[8910]: mount: /tmp: special device tmpfs does not exist.
+    #     systemd[1]: tmp.mount: Mount process exited, code=exited, status=32/n/a
+    #     systemd[1]: tmp.mount: Failed with result 'exit-code'.
+    #     systemd[1]: Failed to mount /tmp.
+    # Sure. Can't figure out a way to avoid this, so we don't *really* need
+    # /tmp in RAM, do we...? :)
+    tmpOnTmpfs = false;
+  };
 
   fileSystems."/mnt/c" = {
     device = "/dev/disk/by-uuid/D854297E5429610C";

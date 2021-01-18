@@ -64,6 +64,7 @@ let
       nodejs-12_x
       yarn
       pythonWithPkgs
+      chezmoi # dotfiles manager
     ] ++ (with pkgs.gitAndTools; [ gitFull hub delta ]);
 
   allPkgs = with pkgs;

@@ -5,10 +5,6 @@ let
   cfg = config.rebecca.plasma5;
 
   rebeccapkgs = import ../rebeccapkgs { inherit pkgs; };
-  sddmBreezeTheme = rebeccapkgs.sddm-breeze-rbt-theme.override {
-    background =
-      "${rebeccapkgs.background-images}/share/wallpapers/night-stars.jpg";
-  };
 
 in {
   options.rebecca.plasma5 = {
@@ -26,10 +22,7 @@ in {
       };
 
       displayManager = {
-        sddm = {
-          enable = true;
-          theme = "${sddmBreezeTheme}/share/sddm/themes/breeze-rbt";
-        };
+        sddm.enable = true;
         defaultSession = "plasma5";
       };
 
@@ -45,7 +38,6 @@ in {
     environment.systemPackages = [
       rebeccapkgs.background-images
       rebeccapkgs.sddm-faces
-      sddmBreezeTheme
       # pkgs.libsForQt5.qtstyleplugin-kvantum
     ];
   };

@@ -122,7 +122,6 @@ let
       bottom
       rebecca.colortest
       calc
-      rebecca.puppy
       rebecca.spdx-tool
       (aspellWithDicts (dicts:
         with dicts; [

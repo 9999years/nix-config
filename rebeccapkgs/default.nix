@@ -25,7 +25,6 @@ let
     pijul = callPackage ./pijul { };
     plasma = callPackage ./plasma { };
     psftools = callPackage ./psftools { };
-    puppy = callPackage ./puppy { };
     sddm-breeze-rbt-theme = callPackage ./sddm-breeze-rbt-theme { };
     sddm-faces = callPackage ./sddm-faces { };
     spdx-tool = callPackage ./spdx-tool { };

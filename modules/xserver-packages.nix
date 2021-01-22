@@ -22,7 +22,7 @@ in {
       dosfstools # for fat/fat32 filesystems
       mtools # for fat/fat32 filesystems
       hfsprogs # macos file system support for gparted, etc.
-      kdeApplications.spectacle # screenshot tool
+      spectacle # screenshot tool
       gnome3.eog # photo viewer
       qalculate-gtk # calculator
       evince # pdf viewer

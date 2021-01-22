@@ -2,10 +2,10 @@
 let
   inherit (lib) recursiveUpdate types mkEnableOption mkOption mkIf;
 
-  cfg = config.rebecca.fonts;
+  cfg = config.berry.fonts;
 
 in {
-  options.rebecca.fonts = { enable = mkEnableOption "fonts"; };
+  options.berry.fonts = { enable = mkEnableOption "fonts"; };
 
   config = mkIf cfg.enable {
     fonts = {
@@ -30,7 +30,7 @@ in {
           wineWowPackages.fonts
           twitter-color-emoji
           jetbrains-mono # https://www.jetbrains.com/lp/mono/
-        ] ++ (with rebecca.typefaces; [
+        ] ++ (with berry.typefaces; [
           atkinson-hyperlegible-font # https://www.brailleinstitute.org/freefont
           velvetyne
           dotcolon

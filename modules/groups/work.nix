@@ -2,10 +2,10 @@
 let
   inherit (lib) recursiveUpdate types mkMerge mkEnableOption mkOption mkIf;
 
-  cfg = config.rebecca;
+  cfg = config.berry;
 
 in {
-  options.rebecca = {
+  options.berry = {
     work.enable =
       mkEnableOption "configuration for work-owned and work-related computers";
     personal.enable = mkEnableOption "configuration for personal computers";

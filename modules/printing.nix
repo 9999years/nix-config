@@ -2,17 +2,17 @@
 let
   inherit (lib) recursiveUpdate types mkEnableOption mkOption mkIf;
 
-  cfg = config.rebecca.printing;
+  cfg = config.berry.printing;
 
 in {
-  options.rebecca.printing = {
+  options.berry.printing = {
     enable = mkEnableOption "physical printer support";
   };
 
   config = mkIf cfg.enable {
     services.printing = {
       enable = true;
-      drivers = [ pkgs.hplip pkgs.rebecca.star-tsp100 ];
+      drivers = [ pkgs.hplip pkgs.berry.star-tsp100 ];
     };
 
     hardware.printers.ensurePrinters = [{

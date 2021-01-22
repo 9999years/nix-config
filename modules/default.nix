@@ -3,7 +3,7 @@
 #
 # We have
 # 1. Implementing features (Git support, YubiKey support, etc.)
-#    (i.e. as options under `rebecca`)
+#    (i.e. as options under `berry`)
 #    - Do I want the option names to match the filesystem...?
 #      - No
 #    - Done

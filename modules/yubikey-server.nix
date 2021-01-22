@@ -2,7 +2,7 @@
 let
   inherit (lib) recursiveUpdate types mkEnableOption mkOption mkIf;
 
-  cfg = config.rebecca.yubikey.server;
+  cfg = config.berry.yubikey.server;
 
   inherit (pkgs) writeText;
   inherit (lib) concatStringsSep mapAttrsToList;
@@ -13,7 +13,7 @@ let
       keyAttrs);
   u2fAuthFile = keyAttrs: writeText "u2f_mappings" (u2fAuth keyAttrs);
 in {
-  options.rebecca.yubikey.server = {
+  options.berry.yubikey.server = {
     enable = mkEnableOption "YubiKey authorization";
   };
 
@@ -40,7 +40,7 @@ in {
         authFile = with keys.${config.networking.hostName};
           u2fAuthFile {
             root = [ mobile cervina aquatica ];
-            becca = [ mobile cervina aquatica ];
+            berry = [ mobile cervina aquatica ];
           };
       };
     };

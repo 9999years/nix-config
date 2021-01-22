@@ -1,12 +1,12 @@
 { pkgs ? import <nixpkgs> { } }:
 let
-  allPkgs = pkgs // rebeccapkgs;
+  allPkgs = pkgs // berrypkgs;
   callPackage = path: overrides:
     let f = import path;
     in f
     ((builtins.intersectAttrs (builtins.functionArgs f) allPkgs) // overrides);
 
-  rebeccapkgs = {
+  berrypkgs = {
     inherit callPackage;
     amazing-marvin = callPackage ./amazing-marvin { };
     appimage = callPackage ./appimage { };
@@ -37,4 +37,4 @@ let
     workflowy = callPackage ./workflowy { };
   };
 
-in rebeccapkgs
+in berrypkgs

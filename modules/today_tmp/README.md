@@ -4,16 +4,16 @@ So I usually have a folder like this at `~/Documents/tmp` or somewhere similar
 to keep whatever garbage files I need to quickly write and maybe copy/paste to
 a friend:
 
-    .rw-r--r--  117 becca 24 Aug 16:30 default.nix
-    .rw-r--r--  180 becca  2 Sep 14:25 euc.py
-    .rwxr-xr-x  863 becca 15 Sep 21:02 flag.py
-    .rw-r--r--  952 becca  7 Nov 20:46 gen_dict.py
-    .rw-r--r--  320 becca 16 Sep 15:17 image-viewers.txt
-    .rw-r--r-- 227k becca 29 Oct 22:01 nixos-services.txt
-    .rwxr-xr-x   29 becca 14 Nov 17:17 q
-    .rw-r--r-- 2.5k becca 15 Oct 15:23 response.md
-    .rw-r--r--    0 becca 29 Sep 21:08 tmp.py
-    .rw-r--r-- 1.1k becca  1 Sep 12:18 whatever.fish
+    .rw-r--r--  117 berry 24 Aug 16:30 default.nix
+    .rw-r--r--  180 berry  2 Sep 14:25 euc.py
+    .rwxr-xr-x  863 berry 15 Sep 21:02 flag.py
+    .rw-r--r--  952 berry  7 Nov 20:46 gen_dict.py
+    .rw-r--r--  320 berry 16 Sep 15:17 image-viewers.txt
+    .rw-r--r-- 227k berry 29 Oct 22:01 nixos-services.txt
+    .rwxr-xr-x   29 berry 14 Nov 17:17 q
+    .rw-r--r-- 2.5k berry 15 Oct 15:23 response.md
+    .rw-r--r--    0 berry 29 Sep 21:08 tmp.py
+    .rw-r--r-- 1.1k berry  1 Sep 12:18 whatever.fish
 
 But there's a few issues here. It's not clean, for one — files are never moved
 out or deleted, so they just linger around getting older and older until I

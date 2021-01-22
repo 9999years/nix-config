@@ -4,7 +4,7 @@
 # See ../modules/fonts.nix for fonts.
 
 let
-  inherit (pkgs) rebecca; # ../rebeccapkgs
+  inherit (pkgs) berry; # ../berrypkgs
 
   withPriority = p: drv: drv.overrideAttrs (old: { meta.priority = p; });
   lowPriority = withPriority "15";
@@ -120,9 +120,9 @@ let
       units
       htop
       bottom
-      rebecca.colortest
+      berry.colortest
       calc
-      rebecca.spdx-tool
+      berry.spdx-tool
       (aspellWithDicts (dicts:
         with dicts; [
           en
@@ -188,11 +188,11 @@ let
       yank
       # python37Packages.howdoi
       # tldr
-      # rebecca.navi
-      rebecca.mdcat
+      # berry.navi
+      berry.mdcat
       pandoc
       pdftk
-      rebecca.pagelabels
+      berry.pagelabels
       poppler_utils # pdftotext
       # mupdf # mutool; marked insecure
       # k2pdfopt # depends on insecure mupdf :(
@@ -235,7 +235,7 @@ let
         cargo-make # https://github.com/sagiegurari/cargo-make
 
         # LaTeX
-        rebecca.latexdef
+        berry.latexdef
         texlab
       ];
 

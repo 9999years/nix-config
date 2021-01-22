@@ -11,17 +11,17 @@ in {
     enable = mkEnableOption "today_tmp service";
     user = mkOption {
       description = "User for today_tmp to run as.";
-      example = "becca";
+      example = "berry";
       type = str;
     };
     repository = mkOption {
       description = "Temporary repository";
-      example = "/home/becca/.config/today_tmp/repo";
+      example = "/home/berry/.config/today_tmp/repo";
       type = str;
     };
     workspace = mkOption {
       description = "Working directory";
-      example = "/home/becca/Documents/tmp";
+      example = "/home/berry/Documents/tmp";
       type = str;
     };
     dates = mkOption {

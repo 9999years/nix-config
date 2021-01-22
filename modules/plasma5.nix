@@ -2,12 +2,12 @@
 let
   inherit (lib) recursiveUpdate types mkEnableOption mkOption mkIf;
 
-  cfg = config.rebecca.plasma5;
+  cfg = config.berry.plasma5;
 
-  rebeccapkgs = import ../rebeccapkgs { inherit pkgs; };
+  berrypkgs = import ../berrypkgs { inherit pkgs; };
 
 in {
-  options.rebecca.plasma5 = {
+  options.berry.plasma5 = {
     enable = mkEnableOption "KDE Plasma 5 display manager";
   };
 
@@ -36,8 +36,8 @@ in {
     };
 
     environment.systemPackages = [
-      rebeccapkgs.background-images
-      rebeccapkgs.sddm-faces
+      berrypkgs.background-images
+      berrypkgs.sddm-faces
       # pkgs.libsForQt5.qtstyleplugin-kvantum
     ];
   };

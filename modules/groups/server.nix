@@ -3,10 +3,10 @@
 let
   inherit (lib) optional types mkEnableOption mkOption mkIf mkMerge;
 
-  cfg = config.rebecca.server;
+  cfg = config.berry.server;
 
 in {
-  options.rebecca.server = { enable = mkEnableOption "server config"; };
+  options.berry.server = { enable = mkEnableOption "server config"; };
 
   # TODO !!!!
   # See: /nix/var/nix/profiles/per-user/root/channels/nixos/nixpkgs/nixos/modules/virtualisation/openstack-config.nix

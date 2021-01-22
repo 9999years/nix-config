@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }: {
   imports = [ ../modules ./aquatica-hardware-configuration.nix ];
 
-  rebecca = {
+  berry = {
     desktop.enable = true;
     fonts.enable = true;
     pkgs.all.enable = true;
@@ -44,9 +44,9 @@
 
   services.today_tmp = {
     enable = true;
-    user = "becca";
-    repository = "${config.users.users.becca.home}/.config/today_tmp/repo";
-    workspace = "${config.users.users.becca.home}/Documents/tmp";
+    user = "berry";
+    repository = "${config.users.users.berry.home}/.config/today_tmp/repo";
+    workspace = "${config.users.users.berry.home}/Documents/tmp";
   };
 
   # Don't let USB devices wake the computer from sleep.
@@ -110,25 +110,25 @@
   fileSystems."/mnt/c" = {
     device = "/dev/disk/by-uuid/D854297E5429610C";
     fsType = "ntfs";
-    options = [ "rw" "uid=${builtins.toString config.users.users.becca.uid}" ];
+    options = [ "rw" "uid=${builtins.toString config.users.users.berry.uid}" ];
   };
 
   # fileSystems."/mnt/d" = {
   # device = "/dev/disk/by-partuuid/25324fe6-c414-11e2-bb89-c85593649ce7";
   # fsType = "ntfs";
-  # options = [ "rw" "uid=${builtins.toString config.users.users.becca.uid}" ];
+  # options = [ "rw" "uid=${builtins.toString config.users.users.berry.uid}" ];
   # };
 
   fileSystems."/mnt/e" = {
     device = "/dev/disk/by-uuid/4ED6AD0AD6ACF37F";
     fsType = "ntfs";
-    options = [ "rw" "uid=${builtins.toString config.users.users.becca.uid}" ];
+    options = [ "rw" "uid=${builtins.toString config.users.users.berry.uid}" ];
   };
 
   # RAID 1 volume; /dev/sdb and /dev/sdc
   fileSystems."/mnt/mirrored" = {
     device = "/dev/disk/by-uuid/7CC46C67C46C259C";
     fsType = "ntfs";
-    options = [ "rw" "uid=${builtins.toString config.users.users.becca.uid}" ];
+    options = [ "rw" "uid=${builtins.toString config.users.users.berry.uid}" ];
   };
 }

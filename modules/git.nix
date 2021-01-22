@@ -2,10 +2,10 @@
 let
   inherit (lib) recursiveUpdate types mkEnableOption mkOption mkIf;
 
-  cfg = config.rebecca.git;
+  cfg = config.berry.git;
 
 in {
-  options.rebecca.git = { enable = mkEnableOption "Git development support"; };
+  options.berry.git = { enable = mkEnableOption "Git development support"; };
 
   config = mkIf cfg.enable {
     # Credential managment

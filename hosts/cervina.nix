@@ -7,7 +7,7 @@
 
   networking.hostName = "cervina";
 
-  rebecca = {
+  berry = {
     desktop.enable = true;
     # laptop.enable = true;
     pkgs.all.enable = true;

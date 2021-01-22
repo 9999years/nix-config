@@ -2,10 +2,10 @@
 let
   inherit (lib) recursiveUpdate types mkEnableOption mkOption mkIf;
 
-  cfg = config.rebecca.yubikey.desktop;
+  cfg = config.berry.yubikey.desktop;
 
 in {
-  options.rebecca.yubikey.desktop = {
+  options.berry.yubikey.desktop = {
     enable = mkEnableOption "YubiKey support (laptops/desktops)";
   };
 

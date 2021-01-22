@@ -2,7 +2,7 @@
 stdenv.mkDerivation {
   name = "sddm-faces";
   version = "1.1.0";
-  srcs = [ ./becca.face.icon ];
+  srcs = [ ./berry.face.icon ];
 
   dontUnpack = true;
   dontConfigure = true;

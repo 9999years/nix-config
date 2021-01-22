@@ -1,6 +1,6 @@
 {
   discord = import ./discord.nix;
   mathematica = import ./mathematica;
-  rebecca = import ./rebeccapkgs.nix;
+  berry = import ./berrypkgs.nix;
   tmux = import ./tmux.nix;
 }

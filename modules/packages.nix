@@ -3,10 +3,10 @@ let
   inherit (lib)
     recursiveUpdate optionals types mkEnableOption mkMerge mkOption mkIf;
 
-  cfg = config.rebecca.pkgs;
+  cfg = config.berry.pkgs;
 
 in {
-  options.rebecca.pkgs = {
+  options.berry.pkgs = {
     core.enable =
       mkEnableOption "enable <emphasis>only</emphasis> core packages";
     all.enable = mkEnableOption "enable all packages (includes core packages)";

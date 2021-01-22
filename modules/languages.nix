@@ -5,7 +5,7 @@ let
     any removeAttrs concatMapStringsSep optionals optionalString mapAttrs
     recursiveUpdate types mkEnableOption mkOption mkIf;
 
-  cfg = config.rebecca.langs;
+  cfg = config.berry.langs;
 
   langs = mapAttrs (lang: value:
     let
@@ -98,7 +98,7 @@ let
 
       rust = [
         rustup
-        # rebecca.rust-analyzer
+        # berry.rust-analyzer
         # rust-analyzer
         # cargo-deps # Generates a dep graph, https://github.com/m-cat/cargo-deps
         cargo-generate # https://github.com/ashleygwilliams/cargo-generate
@@ -111,14 +111,14 @@ let
       ];
 
       tex = [
-        rebecca.latexdef
+        berry.latexdef
         texlab
         (texlive.combine { inherit (texlive) scheme-small latexmk; })
       ];
     });
 
 in {
-  options.rebecca.langs = mkOption {
+  options.berry.langs = mkOption {
     type = types.listOf (types.enum attrNames langs);
     default = [ ];
     description = ''

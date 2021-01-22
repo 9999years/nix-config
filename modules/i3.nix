@@ -2,14 +2,14 @@
 let
   inherit (lib) recursiveUpdate types mkEnableOption mkOption mkIf;
 
-  cfg = config.rebecca.i3;
+  cfg = config.berry.i3;
 
-  rebeccapkgs = import ../rebeccapkgs { inherit pkgs; };
+  berrypkgs = import ../berrypkgs { inherit pkgs; };
   background =
-    "${rebeccapkgs.background-images}/share/wallpapers/night-stars.jpg";
+    "${berrypkgs.background-images}/share/wallpapers/night-stars.jpg";
 
 in {
-  options.rebecca.i3 = { enable = mkEnableOption "i3 display manager"; };
+  options.berry.i3 = { enable = mkEnableOption "i3 display manager"; };
 
   config = mkIf cfg.enable {
     services.xserver = {
@@ -25,7 +25,7 @@ in {
         lightdm.background = background;
         # Automatic login
         auto.enable = true;
-        auto.user = "becca";
+        auto.user = "berry";
       };
 
       desktopManager = rec {

@@ -10,7 +10,7 @@ in {
 
   networking.hostName = "dahurica";
 
-  rebecca = {
+  berry = {
     server.enable = true;
     syncthing.server.enable = true;
     hydra.enable = true;
@@ -20,7 +20,7 @@ in {
 
   users.users = {
     root.hashedPassword = passwords.dahurica.root;
-    becca.hashedPassword = passwords.dahurica.becca;
+    berry.hashedPassword = passwords.dahurica.berry;
   };
 
   security.acme = {
@@ -31,7 +31,7 @@ in {
   services.nginx = {
     enable = true;
     virtualHosts = {
-      "cache.dahurica.becca.ooo" = {
+      "cache.dahurica.berry.ooo" = {
         forceSSL = true;
         enableACME = true;
         locations."/".extraConfig = ''

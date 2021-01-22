@@ -2,9 +2,9 @@
 let
   inherit (lib) mkEnableOption mkIf mkOption types;
   ssh-keys = import ../resources/ssh-keys.nix;
-  cfg = config.rebecca.common;
+  cfg = config.berry.common;
 in {
-  options.rebecca.common = {
+  options.berry.common = {
     enable = (mkEnableOption "configuration for all computers") // {
       default = true;
     };
@@ -26,9 +26,9 @@ in {
             aquatica-yubikey-2020-11-05
           ];
         };
-        becca = {
+        berry = {
           isNormalUser = true;
-          description = "Rebecca Turner";
+          description = "berry 🍓";
           extraGroups = [ "wheel" ];
           uid = 1000;
           openssh.authorizedKeys.keys = with ssh-keys; [
@@ -43,7 +43,7 @@ in {
     programs.fish.enable = true;
     nixpkgs.config.allowUnfree = true;
     nix = rec {
-      trustedUsers = [ "root" "becca" ];
+      trustedUsers = [ "root" "berry" ];
       allowedUsers = trustedUsers;
 
       trustedBinaryCaches = [

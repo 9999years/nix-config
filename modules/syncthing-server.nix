@@ -2,10 +2,10 @@
 let
   inherit (lib) recursiveUpdate types mkEnableOption mkOption mkIf;
 
-  cfg = config.rebecca.syncthing.server;
+  cfg = config.berry.syncthing.server;
 
 in {
-  options.rebecca.syncthing.server = {
+  options.berry.syncthing.server = {
     enable = mkEnableOption "Syncthing service (server-side)";
   };
 

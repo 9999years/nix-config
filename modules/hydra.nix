@@ -2,7 +2,7 @@
 let
   inherit (lib) recursiveUpdate types mkEnableOption mkOption mkIf;
 
-  cfg = config.rebecca.hydra;
+  cfg = config.berry.hydra;
 
   inherit (lib)
     mapAttrsToList escapeShellArg optional optionalString concatStringsSep
@@ -10,7 +10,7 @@ let
   hydra-users = import ../resources/hydra-users.nix;
 
 in {
-  options.rebecca.hydra = {
+  options.berry.hydra = {
     enable = mkEnableOption "Hydra CI server (experimental!)";
   };
 

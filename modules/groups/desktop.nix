@@ -2,15 +2,15 @@
 let
   inherit (lib) recursiveUpdate types mkEnableOption mkOption mkIf;
 
-  cfg = config.rebecca.desktop;
+  cfg = config.berry.desktop;
 
 in {
-  options.rebecca.desktop = {
+  options.berry.desktop = {
     enable = mkEnableOption "Desktop configuration";
   };
 
   config = mkIf cfg.enable {
-    rebecca = {
+    berry = {
       git.enable = true;
       plasma5.enable = true;
       yubikey.desktop.enable = true;
@@ -58,7 +58,7 @@ in {
 
     # Don't forget to set a password with ‘passwd’.
     users.users = {
-      becca = {
+      berry = {
         extraGroups = [ "wheel" "audio" "sound" "video" "networkmanager" ];
       };
     };

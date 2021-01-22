@@ -1,7 +1,7 @@
 { pkgs ? import <nixpkgs> { } }:
 let
   inherit (pkgs) mkShell python3 lib;
-  init_coc_python = pkgs.rebecca.init_coc_python or null;
+  init_coc_python = pkgs.berry.init_coc_python or null;
 in mkShell {
   buildInputs = [
     (python3.withPackages (py:

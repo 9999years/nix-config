@@ -2,10 +2,10 @@
 let
   inherit (lib) recursiveUpdate types mkEnableOption mkOption mkIf;
 
-  cfg = config.rebecca.nvim;
+  cfg = config.berry.nvim;
 
 in {
-  options.rebecca.nvim = { enable = mkEnableOption "neovim support"; };
+  options.berry.nvim = { enable = mkEnableOption "neovim support"; };
 
   config = mkIf cfg.enable {
     environment.systemPackages = (with pkgs; [

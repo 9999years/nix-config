@@ -55,10 +55,10 @@ Scripts / files for generating bootable [copy-on-write disk images][qcow2] for
 [nixpkgs] overlays; `overlays/all.nix` is a list of all overlays and
 `overlays/default.nix` is an attrset of overlays.
 
-## `rebeccapkgs/`
+## `berrypkgs/`
 
 A [nixpkgs]-like repository (in the sense of a package repository, not a git
-repository) using the [inputs] and [`callPackage`] design patterns. rebeccapkgs
+repository) using the [inputs] and [`callPackage`] design patterns. berrypkgs
 contains various packages and derivations not in nixpkgs.
 
 [nixpkgs]: https://github.com/NixOS/nixpkgs/

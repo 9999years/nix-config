@@ -14,7 +14,7 @@ in {
       (spotify.override { deviceScaleFactor = 1.66; }) # unfree
       discord # unfree
       # typora # md editor (unfree)
-      # rebecca.glimpse
+      # berry.glimpse
       gimp # admitting defeat
       pinta # paint tool
       inkscape
@@ -27,16 +27,16 @@ in {
       qalculate-gtk # calculator
       evince # pdf viewer
       qpdfview # pdf viewer with tabs
-      rebecca.background-images
+      berry.background-images
       psensor # view CPU usage / temps, etc.
-      rebecca.standardnotes
+      berry.standardnotes
       calibre # ebook mgmt
       # libreoffice-fresh
       signal-desktop
-      rebecca.todoist
+      berry.todoist
       xclip
-      rebecca.workflowy # https://workflowy.com/
-      rebecca.notion # https://notion.so/
+      berry.workflowy # https://workflowy.com/
+      berry.notion # https://notion.so/
     ];
   };
 }
